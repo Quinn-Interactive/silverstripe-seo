@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/vulcandigital/silverstripe-seo.svg?branch=master)](https://travis-ci.org/vulcandigital/silverstripe-seo) [![codecov](https://codecov.io/gh/vulcandigital/silverstripe-seo/branch/master/graph/badge.svg)](https://codecov.io/gh/vulcandigital/silverstripe-seo) [![Latest Stable Version](https://poser.pugx.org/vulcandigital/silverstripe-seo/v/stable)](https://packagist.org/packages/vulcandigital/silverstripe-seo) [![Total Downloads](https://poser.pugx.org/vulcandigital/silverstripe-seo/downloads)](https://packagist.org/packages/vulcandigital/silverstripe-seo) [![Latest Unstable Version](https://poser.pugx.org/vulcandigital/silverstripe-seo/v/unstable)](https://packagist.org/packages/vulcandigital/silverstripe-seo) [![License](https://poser.pugx.org/vulcandigital/silverstripe-seo/license)](https://packagist.org/packages/vulcandigital/silverstripe-seo) [![Monthly Downloads](https://poser.pugx.org/vulcandigital/silverstripe-seo/d/monthly)](https://packagist.org/packages/vulcandigital/silverstripe-seo)
 # silverstripe-seo
 An all-in-one SEO module for SilverStripe
 
@@ -86,7 +87,7 @@ You must override this method as this is where you will perform all your checks,
 ### Explained: `responses()`
 All analyses must override the `responses()` method to provide response messages and the response level (which is used for the indicator).
 
-`run()` should return an integer that matches a key in the array that `responses()` returns, for example if `run()` were to return `1`, then using the above example the message displayed would be `Hoorah!!! "Hello World!" appears in the page title` with a indicator level of `success`
+`run()` should return an integer that matches a key in the array that `responses()` returns, for example if `run()` were to return `1`, then using the above example the message displayed would be `Hoorah!!! "Hello World!" appears in the page title` with an indicator level of `success`
 
 The available indicator levels are: `default`, `danger`, `warning`, `success` which are grey, red, orange and green respectively.
 
