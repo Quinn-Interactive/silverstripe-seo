@@ -1,0 +1,12 @@
+Page:
+  extensions:
+    - Vulcan\Seo\Extensions\PageHealthExtension
+    - Vulcan\Seo\Extensions\PageSeoExtension
+
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - Vulcan\Seo\Extensions\SiteConfigSettingsExtension
+
+SilverStripe\Security\Member:
+  extensions:
+    - Vulcan\Seo\Extensions\MemberExtension
