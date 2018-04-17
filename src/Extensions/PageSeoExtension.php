@@ -4,6 +4,7 @@ namespace Vulcan\Seo\Extensions;
 
 use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\Image;
+use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextareaField;
@@ -31,6 +32,8 @@ use Vulcan\Seo\Builders\TwitterMetaGenerator;
  */
 class PageSeoExtension extends DataExtension
 {
+    use Configurable;
+
     private static $db = [
         'FacebookPageType'        => 'Varchar(50)',
         'FacebookPageTitle'       => 'Varchar(255)',
@@ -54,6 +57,14 @@ class PageSeoExtension extends DataExtension
         'FacebookPageImage',
         'TwitterPageImage'
     ];
+
+    /**
+     * The "creator tag" is the meta tag for Twitter to specify the creators Twitter account. Enabled by default
+     *
+     * @config
+     * @var bool
+     */
+    private static $enable_creator_tag = true;
 
     public function onBeforeWrite()
     {
@@ -133,7 +144,7 @@ class PageSeoExtension extends DataExtension
         $generator->setDescription($owner->FacebookPageDescription ?: $owner->MetaDescription ?: $owner->Content);
         $generator->setImageUrl(($owner->FacebookPageImage()->exists()) ? $owner->FacebookPageImage()->AbsoluteLink() : null);
 
-        if ($owner->Creator()->exists() && $owner->Creator()->TwitterAccountName) {
+        if ($this->config()->get('enable_creator_tag') && $owner->Creator()->exists() && $owner->Creator()->TwitterAccountName) {
             $generator->setCreator($owner->Creator()->TwitterAccountName);
         }
 
