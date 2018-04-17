@@ -8,6 +8,10 @@ namespace Vulcan\Seo\Analysis;
  */
 class FocusKeywordUniqueAnalysis extends Analysis
 {
+    const FOCUS_KEYWORD_UNSET = -1;
+    const FOCUS_KEYWORD_INUSE = 0;
+    const FOCUS_KEYWORD_SUCCESS = 1;
+
     /**
      * You must override this in your subclass and perform your own checks. An integer must be returned
      * that references an index of the array you return in your response() method override in your subclass.
@@ -17,14 +21,14 @@ class FocusKeywordUniqueAnalysis extends Analysis
     public function run()
     {
         if (!$this->getKeyword()) {
-            return 0;
+            return static::FOCUS_KEYWORD_UNSET;
         }
 
         if (\Page::get()->filter(['FocusKeyword' => $this->getKeyword(), 'ID:not' => $this->getPage()->ID])->first()) {
-            return 1;
+            return static::FOCUS_KEYWORD_INUSE;
         }
 
-        return 2;
+        return static::FOCUS_KEYWORD_SUCCESS;
     }
 
     /**
@@ -33,9 +37,15 @@ class FocusKeywordUniqueAnalysis extends Analysis
     public function responses()
     {
         return [
-            0 => ['The focus keyword has not been set, consider setting this to improve content analysis', 'default'],
-            1 => ['The focus keyword you want this page to rank for is already being used on another page, consider changing that if you truly want this page to rank', 'danger'],
-            2 => ['The focus keyword has never been used before, nice!', 'success']
+            static::FOCUS_KEYWORD_UNSET   => [
+                'The focus keyword has not been set, consider setting this to improve content analysis',
+                'default'
+            ],
+            static::FOCUS_KEYWORD_INUSE   => [
+                'The focus keyword you want this page to rank for is already being used on another page, consider changing that if you truly want this page to rank',
+                'danger'
+            ],
+            static::FOCUS_KEYWORD_SUCCESS => ['The focus keyword has never been used before, nice!', 'success']
         ];
     }
 

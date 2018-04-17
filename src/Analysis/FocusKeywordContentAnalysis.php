@@ -8,6 +8,10 @@ namespace Vulcan\Seo\Analysis;
  */
 class FocusKeywordContentAnalysis extends Analysis
 {
+    const FOCUS_KEYWORD_UNSET = -1;
+    const FOCUS_KEYWORD_NOT_FOUND = 0;
+    const FOCUS_KEYWORD_SUCCESS = 1;
+
     private static $hidden_levels = [
         'default'
     ];
@@ -21,14 +25,14 @@ class FocusKeywordContentAnalysis extends Analysis
     public function run()
     {
         if (!$this->getKeyword()) {
-            return 0;
+            return static::FOCUS_KEYWORD_UNSET;
         }
 
-        if (!strstr($this->getContent(), $this->getKeyword())) {
-            return 1;
+        if (!strstr($this->getContentFromDom(), $this->getKeyword())) {
+            return static::FOCUS_KEYWORD_NOT_FOUND;
         }
 
-        return 2;
+        return static::FOCUS_KEYWORD_SUCCESS;
     }
 
     /**
@@ -37,19 +41,28 @@ class FocusKeywordContentAnalysis extends Analysis
     public function responses()
     {
         return [
-            0 => ['The focus keyword has not been set, consider setting this to improve content analysis', 'default'],
-            1 => ['The focus keyword was not found in the content of this page', 'danger'],
-            2 => ['The focus keyword was found <strong>' . $this->findOccurrences() . '</strong> times.', 'success']
+            static::FOCUS_KEYWORD_UNSET     => [
+                'The focus keyword has not been set, consider setting this to improve content analysis',
+                'default'
+            ],
+            static::FOCUS_KEYWORD_NOT_FOUND => [
+                'The focus keyword was not found in the content of this page',
+                'danger'
+            ],
+            static::FOCUS_KEYWORD_SUCCESS   => [
+                'The focus keyword was found <strong>' . $this->findOccurrences() . '</strong> times.',
+                'success'
+            ]
         ];
     }
 
     /**
-     * By default, this will only check the default "Content" field, override $seo_content_fields in the correct order of display
-     * to include other fields
+     * By default, this will only check the default "Content" field, override $seo_content_fields in the correct order
+     * of display to include other fields
      *
      * @return string
      */
-    public function getContent()
+    public function getContentFromDom()
     {
         $dom = $this->getPage()->getRenderedHtmlDomParser();
         $result = $dom->find('body', 0);
@@ -70,10 +83,12 @@ class FocusKeywordContentAnalysis extends Analysis
      */
     public function findOccurrences()
     {
-        if (!strlen($this->getContent()) || !$this->getKeyword()) {
+        $content = $this->getContentFromDom();
+
+        if (!strlen($content) || !$this->getKeyword()) {
             return 0;
         }
 
-        return substr_count($this->getContent(), $this->getKeyword());
+        return substr_count($content, $this->getKeyword());
     }
 }

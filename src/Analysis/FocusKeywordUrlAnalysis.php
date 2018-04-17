@@ -10,6 +10,10 @@ use SilverStripe\View\Parsers\URLSegmentFilter;
  */
 class FocusKeywordUrlAnalysis extends Analysis
 {
+    const FOCUS_KEYWORD_UNSET = -1;
+    const FOCUS_KEYWORD_NOT_IN_URL = 0;
+    const FOCUS_KEYWORD_SUCCESS = 1;
+
     private static $hidden_levels = [
         'default'
     ];
@@ -23,16 +27,16 @@ class FocusKeywordUrlAnalysis extends Analysis
     public function run()
     {
         if (!$this->getKeyword()) {
-            return 0;
+            return static::FOCUS_KEYWORD_UNSET;
         }
 
         $slug = URLSegmentFilter::create()->filter($this->getKeyword());
 
         if (!strstr($this->getPage()->URLSegment, $slug)) {
-            return 1;
+            return static::FOCUS_KEYWORD_NOT_IN_URL;
         }
 
-        return 2;
+        return static::FOCUS_KEYWORD_SUCCESS;
     }
 
     /**
@@ -41,9 +45,15 @@ class FocusKeywordUrlAnalysis extends Analysis
     public function responses()
     {
         return [
-            0 => ['The focus keyword has not been set, consider setting this to improve content analysis', 'default'],
-            1 => ['The focus keyword is not in the url segment, consider changing this and if you do SilverStripe will automatically redirect your old URL!', 'warning'],
-            2 => ['The focus keyword is in the url segment, this is great!', 'success'],
+            static::FOCUS_KEYWORD_UNSET => [
+                'The focus keyword has not been set, consider setting this to improve content analysis',
+                'default'
+            ],
+            static::FOCUS_KEYWORD_NOT_IN_URL => [
+                'The focus keyword is not in the url segment, consider changing this and if you do SilverStripe will automatically redirect your old URL!',
+                'warning'
+            ],
+            static::FOCUS_KEYWORD_SUCCESS => ['The focus keyword is in the url segment, this is great!', 'success'],
         ];
     }
 
