@@ -7,6 +7,10 @@ use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\View\ArrayData;
 use Vulcan\Seo\Extensions\PageHealthExtension;
 
+/**
+ * Class Analysis
+ * @package Vulcan\Seo\Analysis
+ */
 abstract class Analysis
 {
     use Injectable, Configurable;
@@ -14,8 +18,16 @@ abstract class Analysis
     /** @var \Page|PageHealthExtension */
     protected $page;
 
+    /** @var int The result, set after {@link inspect()} completes successfully */
     protected $result;
 
+    /**
+     * Allows you to hide certain levels (default, danger, success) from appearing in the content analysis.
+     * You can specif this on a per analysis basis via YML or add the below to your own analysis instead
+     *
+     * @config
+     * @var array
+     */
     private static $hidden_levels = [];
 
     /**
@@ -113,5 +125,13 @@ abstract class Analysis
     public function getPage()
     {
         return $this->page;
+    }
+
+    /**
+     * @return int
+     */
+    public function getResult()
+    {
+        return $this->result;
     }
 }
