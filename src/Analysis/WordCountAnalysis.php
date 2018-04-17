@@ -8,6 +8,9 @@ namespace Vulcan\Seo\Analysis;
  */
 class WordCountAnalysis extends Analysis
 {
+    const WORD_COUNT_BELOW_MIN = 0;
+    const WORD_COUNT_ABOVE_MIN = 1;
+
     /**
      * You must override this in your subclass and perform your own checks. An integer must be returned
      * that references an index of the array you return in your response() method override in your subclass.
@@ -19,10 +22,10 @@ class WordCountAnalysis extends Analysis
         $wordCount = $this->getWordCount();
 
         if ($wordCount < 300) {
-            return 0;
+            return static::WORD_COUNT_BELOW_MIN;
         }
 
-        return 1;
+        return static::WORD_COUNT_ABOVE_MIN;
     }
 
     /**
@@ -31,8 +34,14 @@ class WordCountAnalysis extends Analysis
     public function responses()
     {
         return [
-            0 => ['The content of this page contains ' . $this->getWordCount() . ' words which is less than the 300 recommended minimum', 'danger'],
-            1 => ['The content of this page contains ' . $this->getWordCount() . ' which is above the 300 recommended minimum', 'success'],
+            static::WORD_COUNT_BELOW_MIN => [
+                'The content of this page contains ' . $this->getWordCount() . ' words which is less than the 300 recommended minimum',
+                'danger'
+            ],
+            static::WORD_COUNT_ABOVE_MIN => [
+                'The content of this page contains ' . $this->getWordCount() . ' which is above the 300 recommended minimum',
+                'success'
+            ],
         ];
     }
 
