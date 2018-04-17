@@ -30,6 +30,14 @@ abstract class Analysis
      */
     private static $hidden_levels = [];
 
+    private static $indicator_levels = [
+        'hidden',
+        'default',
+        'warning',
+        'danger',
+        'success'
+    ];
+
     /**
      * One of: default, danger, warning or success
      *
@@ -71,6 +79,17 @@ abstract class Analysis
             throw new \InvalidArgumentException('Expected the response for result ' . $result . ' to be an array containing two items, first is the message, second is the indicator status: danger, warning, success, default');
         }
 
+        if (!in_array($responses[$result][1], $this->config()->get('indicator_levels'))) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'The specified indicator (%s) in the response for key %s is not a valid level, valid levels are: %s',
+                    $responses[$result][1],
+                    $result,
+                    implode(', ', $this->config()->get('indicator_levels'))
+                )
+            );
+        }
+
         $this->result = $result;
         $this->resultLevel = $responses[$result][1];
 
@@ -79,7 +98,10 @@ abstract class Analysis
             'Result'   => $result,
             'Response' => $responses[$result][0],
             'Level'    => $this->resultLevel,
-            'Hidden'   => in_array($this->resultLevel, $this->config()->get('hidden_levels'))
+            'Hidden'   => $this->resultLevel === 'hidden' ? true : in_array(
+                $this->resultLevel,
+                $this->config()->get('hidden_levels')
+            )
         ]);
     }
 
@@ -96,10 +118,12 @@ abstract class Analysis
     }
 
     /**
-     * All analyses must override the `responses()` method to provide response messages and the response level (which is used for the indicator).
-     * `run()` should return an integer that matches a key in the array that `responses()` returns, for example if `run()` were to return `1`, then using the above example
-     * the message displayed would be `Hoorah!!! "Hello World!" appears in the page title` with a indicator level of `success`.
-     * The available indicator levels are: `default`, `danger`, `warning`, `success` which are grey, red, orange and green respectively.
+     * All analyses must override the `responses()` method to provide response messages and the response level (which
+     * is used for the indicator).
+     * `run()` should return an integer that matches a key in the array that `responses()` returns, for example if
+     * `run()` were to return `1`, then using the above example the message displayed would be `Hoorah!!! "Hello
+     * World!" appears in the page title` with a indicator level of `success`. The available indicator levels are:
+     * `default`, `danger`, `warning`, `success` which are grey, red, orange and green respectively.
      *
      * @return array
      */
