@@ -2,6 +2,8 @@
 
 namespace Vulcan\Seo\Analysis;
 
+use Vulcan\Seo\Seo;
+
 /**
  * Class WordCountAnalysis
  * @package Vulcan\Seo\Analysis
@@ -50,6 +52,6 @@ class WordCountAnalysis extends Analysis
      */
     public function getWordCount()
     {
-        return count(array_filter(explode(' ', $this->getPage()->collateContentFields())));
+        return count(array_filter(explode(' ', Seo::collateContentFields($this->getPage()))));
     }
 }

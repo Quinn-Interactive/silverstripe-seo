@@ -36,8 +36,6 @@ class PageHealthExtension extends DataExtension
     {
         parent::updateCMSFields($fields);
 
-        $this->renderedHtml = file_get_contents($this->getOwner()->AbsoluteLink());
-
         $fields->addFieldsToTab('Root.Main', [
             ToggleCompositeField::create(null, 'SEO Health Analysis', [
                 GoogleSearchPreview::create('GoogleSearchPreview', 'Search Preview', $this->getOwner(), $this->getRenderedHtmlDomParser()),
@@ -54,6 +52,10 @@ class PageHealthExtension extends DataExtension
      */
     public function getRenderedHtml()
     {
+        if (!$this->renderedHtml) {
+            $this->renderedHtml = file_get_contents($this->getOwner()->AbsoluteLink());
+        }
+
         return $this->renderedHtml;
     }
 
@@ -88,25 +90,5 @@ class PageHealthExtension extends DataExtension
         return [
             'Content'
         ];
-    }
-
-    /**
-     * Collates all content fields from {@link seoContentFields()} into a single string. Which makes it very important
-     * that the seoContentFields array is in the correct order as to which they display.
-     *
-     * @return string
-     */
-    public function collateContentFields()
-    {
-        $contentFields = $this->getOwner()->seoContentFields();
-
-        $content = [];
-        foreach ($contentFields as $field) {
-            $content[] = $this->getOwner()->relObject($field)->forTemplate();
-        }
-
-        $content = implode(' ', $content);
-
-        return strtolower(strip_tags($content));
     }
 }
