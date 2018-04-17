@@ -1,0 +1,13 @@
+Page:
+  one:
+    ID: 1
+    Title: Home
+    URLSegment: home
+    Content: Lorem ipsum dolor sit ameta
+  two:
+    ID: 2
+    Title: Awesome Industrial Panel Tanks
+    URLSegment: industrial-panel-tanks
+    Content: Something awesome about industrial panel tanks
+    FocusKeyword: industrial panel tanks
+    MetaDescrpition: some long meta description that contains the focus keyword industrial panel tanks
