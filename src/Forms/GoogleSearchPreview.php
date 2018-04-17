@@ -46,15 +46,23 @@ class GoogleSearchPreview extends LiteralField
         parent::__construct($name, ArrayData::create([
             'Title'           => $title,
             'Page'            => $page,
-            'AbsoluteLink'    => Controller::join_links(Director::absoluteBaseURL(),
+            'AbsoluteLink'    => Controller::join_links(
+                Director::absoluteBaseURL(),
                 str_replace($page->URLSegment, '', $page->Link()),
-                $this->urlSegmentHighlight($page->URLSegment, $page->FocusKeyword)),
-            'MetaDescription' => $page->MetaDescription ? $this->highlight($page->MetaDescription,
-                $page->FocusKeyword) : null,
-            'FirstParagraph'  => $firstParagraph ? $this->highlight($firstParagraph->innertext(),
-                $page->FocusKeyword) : null,
-            'RenderedTitle'   => $renderedTitle ? $this->highlight($renderedTitle->innertext(),
-                $page->FocusKeyword) : null
+                $this->urlSegmentHighlight($page->URLSegment, $page->FocusKeyword)
+            ),
+            'MetaDescription' => $page->MetaDescription ? $this->highlight(
+                $page->MetaDescription,
+                $page->FocusKeyword
+            ) : null,
+            'FirstParagraph'  => $firstParagraph ? $this->highlight(
+                $firstParagraph->innertext(),
+                $page->FocusKeyword
+            ) : null,
+            'RenderedTitle'   => $renderedTitle ? $this->highlight(
+                $renderedTitle->innertext(),
+                $page->FocusKeyword
+            ) : null
         ])->renderWith(self::class));
     }
 

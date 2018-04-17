@@ -70,8 +70,8 @@ class PageSeoExtension extends DataExtension
     {
         parent::onBeforeWrite();
 
-        if (!$this->getOwner()->Creator()->exists()) {
-            $this->getOwner()->CreatorID = Security::getCurrentUser()->ID;
+        if (!$this->getOwner()->ID && !$this->getOwner()->Creator()->exists() && $member = Security::getCurrentUser()) {
+            $this->getOwner()->CreatorID = $member->ID;
         }
     }
 
@@ -183,6 +183,8 @@ class PageSeoExtension extends DataExtension
     }
 
     /**
+     * Added to improve IDE syntax highlighting
+     *
      * @return \Page|static
      */
     public function getOwner()
