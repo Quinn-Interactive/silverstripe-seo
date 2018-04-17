@@ -58,20 +58,23 @@ use Vulcan\Seo\Analysis\Analysis;
 
 class HelloWorldTitleAnalysis extends Analysis 
 {
+    const FAILED = 0;
+    const SUCCESS = 1;
+    
     public function run() 
     {
         if (!strstr($this->getPage()->Title, 'Hello World!')) {
-            return 0;
+            return static::FAILED;
         }
         
-        return 1;
+        return static::SUCCESS;
     }
     
     public function responses() 
     {
         return [
-            0 => ['The string "Hello World!" does not appear in the page title', 'danger'],
-            1 => ['Hoorah!!! "Hello World!" appears in the page title', 'success'],
+            static::FAILED => ['The string "Hello World!" does not appear in the page title', 'danger'],
+            static::SUCCESS => ['Hoorah!!! "Hello World!" appears in the page title', 'success'],
         ];
     }
 }
@@ -79,10 +82,12 @@ class HelloWorldTitleAnalysis extends Analysis
 
 Then dev/build. You will immediately see this new analysis running in the CMS under the "SEO Health Analysis" accordion when editing any page, then change the title to include "Hello World" and you will notice the indicator will display success.
 
+One thing to keep in mind is, that the analysis always has access to the `\Page` object that it is running against, via `$this->getPage()`, so your responses can also be dynamic.
+ 
 > If you have created an analysis and think it would be beneficial as an addition to this module then we urge you to submit a Pull Request and you will receive full credit for your work
 
 ### Explained: `run()`
-You must override this method as this is where you will perform all your checks, and then return with an integer respective of the keys you define in `responses()`
+You must override this method as this is where you will perform all your checks, and then return with an integer respective of the keys you define in `responses()`. It's a good idea to use constants that represent those integers for readability
 
 ### Explained: `responses()`
 All analyses must override the `responses()` method to provide response messages and the response level (which is used for the indicator).
@@ -97,6 +102,19 @@ You can optionally prevent certain levels from displaying in the content analysi
 private static $hidden_levels = [
     'success'
 ];
+```
+
+## Configuration Options
+
+#### `enable_creator_tag`:
+By default, this module adds an extension to `\SilverStripe\Securit\Member` that adds a single field named `TwitterAccountName`, if this is set
+and when this particular user creates a page, the `twitter:creator` meta tag will automatically generate with the Members account name
+
+You can disable this via YML:
+
+```yml
+Vulcan\Seo\Extensions\PageSeoExtension:
+    enable_creator_tag: false
 ```
 
 ## Assumptions
