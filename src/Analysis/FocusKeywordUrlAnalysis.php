@@ -10,6 +10,7 @@ use SilverStripe\View\Parsers\URLSegmentFilter;
  */
 class FocusKeywordUrlAnalysis extends Analysis
 {
+    const FOCUS_KEYWORD_IRRELEVANT = -2;
     const FOCUS_KEYWORD_UNSET = -1;
     const FOCUS_KEYWORD_NOT_IN_URL = 0;
     const FOCUS_KEYWORD_SUCCESS = 1;
@@ -32,6 +33,10 @@ class FocusKeywordUrlAnalysis extends Analysis
 
         $slug = URLSegmentFilter::create()->filter($this->getKeyword());
 
+        if ($this->getPage()->URLSegment === 'home' && !$this->getPage()->ParentID) {
+            return static::FOCUS_KEYWORD_IRRELEVANT;
+        }
+
         if (!strstr($this->getPage()->URLSegment, $slug)) {
             return static::FOCUS_KEYWORD_NOT_IN_URL;
         }
@@ -45,6 +50,10 @@ class FocusKeywordUrlAnalysis extends Analysis
     public function responses()
     {
         return [
+            static::FOCUS_KEYWORD_IRRELEVANT => [
+                'The focus keyword is irrelevant on the home page, this message will not display',
+                'default'
+            ],
             static::FOCUS_KEYWORD_UNSET => [
                 'The focus keyword has not been set, consider setting this to improve content analysis',
                 'default'
