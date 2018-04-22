@@ -4,6 +4,7 @@ namespace Vulcan\Seo\Tests\Extensions;
 
 use SilverStripe\Control\Director;
 use SilverStripe\Dev\FunctionalTest;
+use SilverStripe\ORM\FieldType\DBDatetime;
 use Vulcan\Seo\Extensions\PageSeoExtension;
 use Vulcan\Seo\Seo;
 
@@ -35,12 +36,18 @@ class PageSeoExtensionTest extends FunctionalTest
 
     public function testArticleTags()
     {
+        /** @var DBDatetime $created */
+        $created = $this->page->dbObject('Created');
+
+        /** @var DBDatetime $lastEdited */
+        $lastEdited = $this->page->dbObject('LastEdited');
+
         $this->assertContains(
-            $this->page->dbObject('Created')->Rfc3339(),
+            $created->Rfc3339(),
             Seo::getArticleTags($this->page)[0]
         );
         $this->assertContains(
-            $this->page->dbObject('LastEdited')->Rfc3339(),
+            $lastEdited->Rfc3339(),
             Seo::getArticleTags($this->page)[1]
         );
     }

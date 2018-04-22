@@ -5,10 +5,12 @@ namespace Vulcan\Seo;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\SiteConfig\SiteConfig;
 use Vulcan\Seo\Builders\FacebookMetaGenerator;
 use Vulcan\Seo\Builders\TwitterMetaGenerator;
 use Vulcan\Seo\Extensions\PageHealthExtension;
 use Vulcan\Seo\Extensions\PageSeoExtension;
+use Vulcan\Seo\Extensions\SiteConfigSettingsExtension;
 
 /**
  * Class Seo
@@ -117,5 +119,40 @@ class Seo
         $generator->setUrl($owner->AbsoluteLink());
 
         return $generator->process();
+    }
+
+    /**
+     * Get all PixelFields
+     * @return array
+     */
+    public static function getPixels()
+    {
+        $output = [];
+        $siteConfig = SiteConfig::current_site_config();
+        $ours = array_keys(SiteConfigSettingsExtension::config()->get('db'));
+        $db = SiteConfig::config()->get('db');
+
+        foreach ($db as $k => $v) {
+            if (strstr($k, 'Pixel') && in_array($k, $ours)) {
+                if (is_null($siteConfig->{$k})) {
+                    continue;
+                }
+
+                $output[] = $siteConfig->{$k};
+            }
+        }
+
+        return $output;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getGoogleAnalytics()
+    {
+        /** @var SiteConfig|SiteConfigSettingsExtension $sc */
+        $sc = SiteConfig::current_site_config();
+
+        return ($sc->GoogleAnalytics) ? [$sc->GoogleAnalytics] : [];
     }
 }
