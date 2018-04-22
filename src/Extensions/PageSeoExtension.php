@@ -111,8 +111,11 @@ class PageSeoExtension extends DataExtension
             Seo::getCanonicalUrlLink($this->getOwner()),
             Seo::getFacebookMetaTags($this->getOwner()),
             Seo::getTwitterMetaTags($this->getOwner()),
-            Seo::getArticleTags($this->getOwner())
+            Seo::getArticleTags($this->getOwner()),
+            Seo::getGoogleAnalytics(),
+            Seo::getPixels()
         );
+
         $tags = implode(PHP_EOL, $tags);
     }
 }
