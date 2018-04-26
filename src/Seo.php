@@ -6,6 +6,7 @@ use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\SiteConfig\SiteConfig;
+use Vulcan\Seo\Analysis\Analysis;
 use Vulcan\Seo\Builders\FacebookMetaGenerator;
 use Vulcan\Seo\Builders\TwitterMetaGenerator;
 use Vulcan\Seo\Extensions\PageHealthExtension;
@@ -26,20 +27,13 @@ class Seo
      *
      * @param \Page|PageHealthExtension $owner
      *
+     * @deprecated 2.0 Use Analysis::getContent() instead
+     *
      * @return string
      */
     public static function collateContentFields($owner)
     {
-        $contentFields = $owner->seoContentFields();
-
-        $content = [];
-        foreach ($contentFields as $field) {
-            $content[] = $owner->relObject($field)->forTemplate();
-        }
-
-        $content = implode(' ', $content);
-
-        return strtolower(strip_tags($content));
+        return (new Analysis($owner))->getContent();
     }
 
     /**

@@ -52,6 +52,7 @@ class WordCountAnalysis extends Analysis
      */
     public function getWordCount()
     {
-        return count(array_filter(explode(' ', Seo::collateContentFields($this->getPage()))));
+        $this->getContent();
+        return count(explode(' ', $this->getContent()));
     }
 }

@@ -7,12 +7,14 @@ use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\View\ArrayData;
 use Sunra\PhpSimple\HtmlDomParser;
 use Vulcan\Seo\Extensions\PageHealthExtension;
+use Vulcan\Seo\Extensions\PageSeoExtension;
+use Vulcan\Seo\Models\RenderedHtml;
 
 /**
  * Class Analysis
  * @package Vulcan\Seo\Analysis
  */
-abstract class Analysis
+class Analysis
 {
     use Injectable, Configurable;
 
@@ -137,7 +139,7 @@ abstract class Analysis
     }
 
     /**
-     * @return \Page|PageHealthExtension
+     * @return \Page|PageHealthExtension|PageSeoExtension
      */
     public function getPage()
     {
@@ -161,7 +163,15 @@ abstract class Analysis
             return $this->domParser;
         }
 
-        $this->domParser = HtmlDomParser::str_get_html(file_get_contents($this->getPage()->AbsoluteLink()));
+        $page = $this->getPage();
+
+        if (!$page->RenderedHtml()->exists()) {
+            $page->RenderedHtmlID = RenderedHtml::findOrMake($page)->ID;
+            $page->write();
+            $page->publishRecursive();
+        }
+
+        $this->domParser = HtmlDomParser::str_get_html($page->RenderedHtml()->Result);
 
         foreach ($this->domParser->find('header,footer,nav') as $item) {
             $item->outertext = '';

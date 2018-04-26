@@ -28,7 +28,7 @@ class FocusKeywordContentAnalysis extends Analysis
             return static::FOCUS_KEYWORD_UNSET;
         }
 
-        if (!strstr($this->getContentFromDom(), $this->getKeyword())) {
+        if (!strstr(strtolower($this->getContent()), $this->getKeyword())) {
             return static::FOCUS_KEYWORD_NOT_FOUND;
         }
 
@@ -60,14 +60,13 @@ class FocusKeywordContentAnalysis extends Analysis
      * By default, this will only check the default "Content" field, override $seo_content_fields in the correct order
      * of display to include other fields
      *
+     * @deprecated 2.0 Use $this->getContent() instead
+     *
      * @return string
      */
     public function getContentFromDom()
     {
-        $dom = $this->getPage()->getRenderedHtmlDomParser();
-        $result = $dom->find('body', 0);
-
-        return strtolower(strip_tags($result ? $result->innertext() : ''));
+        return strtolower($this->getContent());
     }
 
     /**
@@ -79,11 +78,11 @@ class FocusKeywordContentAnalysis extends Analysis
     }
 
     /**
-     *
+     * Find occurrences of the focus keyword in the rendered content
      */
     public function findOccurrences()
     {
-        $content = $this->getContentFromDom();
+        $content = strtolower($this->getContent());
 
         if (!strlen($content) || !$this->getKeyword()) {
             return 0;

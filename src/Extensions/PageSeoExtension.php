@@ -16,6 +16,7 @@ use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
 use Vulcan\Seo\Builders\FacebookMetaGenerator;
 use Vulcan\Seo\Builders\TwitterMetaGenerator;
+use Vulcan\Seo\Models\RenderedHtml;
 use Vulcan\Seo\Seo;
 
 /**
@@ -25,9 +26,12 @@ use Vulcan\Seo\Seo;
  * @property string FacebookPageType
  * @property string FacebookPageTitle
  * @property string FacebookPageDescription
+ *
  * @property int    FacebookPageImageID
  * @property int    CreatorID
+ * @property int    RenderedHtmlID
  *
+ * @method RenderedHtml RenderedHtml()
  * @method Image FacebookPageImage()
  * @method Member|MemberExtension Creator()
  */
@@ -40,10 +44,12 @@ class PageSeoExtension extends DataExtension
         'FacebookPageTitle'       => 'Varchar(255)',
         'FacebookPageDescription' => 'Text',
         'TwitterPageTitle'        => 'Varchar(255)',
-        'TwitterPageDescription'  => 'Text'
+        'TwitterPageDescription'  => 'Text',
+        'RenderedHtml'            => 'Text'
     ];
 
     private static $has_one = [
+        'RenderedHtml'      => RenderedHtml::class,
         'FacebookPageImage' => Image::class,
         'TwitterPageImage'  => Image::class,
         'Creator'           => Member::class
@@ -73,6 +79,19 @@ class PageSeoExtension extends DataExtension
 
         if (!$this->getOwner()->ID && !$this->getOwner()->Creator()->exists() && $member = Security::getCurrentUser()) {
             $this->getOwner()->CreatorID = $member->ID;
+        }
+    }
+
+    public function onAfterWrite()
+    {
+        parent::onAfterWrite();
+
+        if ($this->getOwner()->RenderedHtml()->exists()) {
+            $this->getOwner()->RenderedHtml()->refresh();
+        } else {
+            $this->getOwner()->RenderedHtmlID = RenderedHtml::findOrMake($this->getOwner())->ID;
+            $this->getOwner()->write();
+            $this->getOwner()->publishRecursive();
         }
     }
 

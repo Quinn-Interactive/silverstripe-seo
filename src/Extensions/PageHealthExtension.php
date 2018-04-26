@@ -38,7 +38,7 @@ class PageHealthExtension extends DataExtension
 
         $fields->addFieldsToTab('Root.Main', [
             ToggleCompositeField::create(null, 'SEO Health Analysis', [
-                GoogleSearchPreview::create('GoogleSearchPreview', 'Search Preview', $this->getOwner(), $this->getRenderedHtmlDomParser()),
+                GoogleSearchPreview::create('GoogleSearchPreview', 'Search Preview', $this->getOwner(), (new Analysis($this->getOwner()))->getRenderedHtmlDomParser()),
                 TextField::create('FocusKeyword', 'Set focus keyword'),
                 HealthAnalysisField::create('ContentAnalysis', 'Content Analysis', $this->getOwner()),
             ])
@@ -62,11 +62,15 @@ class PageHealthExtension extends DataExtension
     /**
      * Gets the DOM parser for the rendered html
      *
+     * @deprecated 2.0 Use Analysis::getRenderedHtmlDomParser() instead
+     *
      * @return \simplehtmldom_1_5\simple_html_dom
      */
     public function getRenderedHtmlDomParser()
     {
-        return HtmlDomParser::str_get_html($this->getRenderedHtml());
+        $analysis = new Analysis($this->getOwner());
+
+        return $analysis->getRenderedHtmlDomParser();
     }
 
     /**
@@ -83,12 +87,12 @@ class PageHealthExtension extends DataExtension
      * Override this if you have more than just `Content` (or don't have `Content` at all). Fields should
      * be in the order for which they appear for a frontend user
      *
+     * @deprecated 2.0 Not even used anymore, rendered html is fetched instead
+     *
      * @return array
      */
     public function seoContentFields()
     {
-        return [
-            'Content'
-        ];
+        return [];
     }
 }
