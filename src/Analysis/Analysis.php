@@ -5,6 +5,7 @@ namespace Vulcan\Seo\Analysis;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\View\ArrayData;
+use Sunra\PhpSimple\HtmlDomParser;
 use Vulcan\Seo\Extensions\PageHealthExtension;
 
 /**
@@ -20,6 +21,8 @@ abstract class Analysis
 
     /** @var int The result, set after {@link inspect()} completes successfully */
     protected $result;
+
+    protected $domParser;
 
     /**
      * Allows you to hide certain levels (default, danger, success) from appearing in the content analysis.
@@ -80,14 +83,7 @@ abstract class Analysis
         }
 
         if (!in_array($responses[$result][1], $this->config()->get('indicator_levels'))) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'The specified indicator (%s) in the response for key %s is not a valid level, valid levels are: %s',
-                    $responses[$result][1],
-                    $result,
-                    implode(', ', $this->config()->get('indicator_levels'))
-                )
-            );
+            throw new \InvalidArgumentException(sprintf('The specified indicator (%s) in the response for key %s is not a valid level, valid levels are: %s', $responses[$result][1], $result, implode(', ', $this->config()->get('indicator_levels'))));
         }
 
         $this->result = $result;
@@ -98,10 +94,7 @@ abstract class Analysis
             'Result'   => $result,
             'Response' => $responses[$result][0],
             'Level'    => $this->resultLevel,
-            'Hidden'   => $this->resultLevel === 'hidden' ? true : in_array(
-                $this->resultLevel,
-                $this->config()->get('hidden_levels')
-            )
+            'Hidden'   => $this->resultLevel === 'hidden' ? true : in_array($this->resultLevel, $this->config()->get('hidden_levels'))
         ]);
     }
 
@@ -157,5 +150,43 @@ abstract class Analysis
     public function getResult()
     {
         return $this->result;
+    }
+
+    /**
+     * @return \simplehtmldom_1_5\simple_html_dom
+     */
+    public function getRenderedHtmlDomParser()
+    {
+        if ($this->domParser) {
+            return $this->domParser;
+        }
+
+        $this->domParser = HtmlDomParser::str_get_html(file_get_contents($this->getPage()->AbsoluteLink()));
+
+        foreach ($this->domParser->find('header,footer,nav') as $item) {
+            $item->outertext = '';
+        }
+        
+        return $this->domParser;
+    }
+
+    /**
+     * Fetches the rendered content from the dom parser. This is why it's important that your templates are semantically
+     * correct. `<div>` tags should be used for layout and positioning purposes and using `<p>` tags for content is
+     * semantically correct. Semantically correct pages tend to rank higher in search engines for various reasons (such
+     * as how effectively crawlers parse your website etc.).
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        $parser = $this->getRenderedHtmlDomParser();
+        $output = [];
+        foreach ($parser->find('p,h1,h2,h3,h4,h5') as $item) {
+            $output[] = strip_tags(html_entity_decode($item->innertext()));
+        }
+
+        $output = array_filter($output);
+        return implode(' ', $output);
     }
 }
