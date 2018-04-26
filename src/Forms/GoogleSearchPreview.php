@@ -38,6 +38,12 @@ class GoogleSearchPreview extends LiteralField
     public function __construct($name, $title, $page, simple_html_dom $domParser)
     {
         $renderedTitle = $domParser->find('title', 0);
+
+        $body = $domParser->find('body', 0);
+        foreach ($body->find('header,footer,nav') as $header) {
+            $header->outertext = '';
+        }
+
         $firstParagraph = $domParser->find('p', 0);
 
         Requirements::javascript('vulcandigital/silverstripe-seo:dist/javascript/main.min.js');
