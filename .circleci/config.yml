@@ -52,6 +52,6 @@ jobs:
 
       # run test,upload coverage
       #- run: vendor/bin/phpstan analyze code
-      - run: phpdbg -qrr vendor/bin/phpunit -d memory_limit=512M --coverage-clover=coverage.xml tests/
+      - run: phpdbg -qrr vendor/bin/phpunit -d memory_limit=1024M --coverage-clover=coverage.xml tests/
       - run: bash <(curl -s https://codecov.io/bash) -f coverage.xml
 
