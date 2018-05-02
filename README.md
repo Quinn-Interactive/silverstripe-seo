@@ -80,23 +80,32 @@ class HelloWorldTitleAnalysis extends Analysis
 }
 ```
 
-Then dev/build. You will immediately see this new analysis running in the CMS under the "SEO Health Analysis" accordion when editing any page, then change the title to include "Hello World" and you will notice the indicator will display success.
+Then dev/build. You will immediately see this new analysis running in the CMS under the "SEO Health Analysis" accordion
+when editing any page, then change the title to include "Hello World" and you will notice the indicator will display success.
 
-One thing to keep in mind is, that the analysis always has access to the `\Page` object that it is running against, via `$this->getPage()`, so your responses can also be dynamic.
+One thing to keep in mind is, that the analysis always has access to the `\Page` object that it is running against, via
+ `$this->getPage()`, so your responses can also be dynamic.
  
-> If you have created an analysis and think it would be beneficial as an addition to this module then we urge you to submit a Pull Request and you will receive full credit for your work
+> If you have created an analysis and think it would be beneficial as an addition to this module then we urge you to 
+submit a Pull Request and you will receive full credit for your work
 
 ### Explained: `run()`
-You must override this method as this is where you will perform all your checks, and then return with an integer respective of the keys you define in `responses()`. It's a good idea to use constants that represent those integers for readability
+You must override this method as this is where you will perform all your checks, and then return with an integer 
+respective of the keys you define in `responses()`. It's a good idea to use constants that represent those integers for 
+readability
 
 ### Explained: `responses()`
-All analyses must override the `responses()` method to provide response messages and the response level (which is used for the indicator).
+All analyses must override the `responses()` method to provide response messages and the response level (which is used 
+for the indicator).
 
-`run()` should return an integer that matches a key in the array that `responses()` returns, for example if `run()` were to return `1`, then using the above example the message displayed would be `Hoorah!!! "Hello World!" appears in the page title` with an indicator level of `success`
+`run()` should return an integer that matches a key in the array that `responses()` returns, for example if `run()` 
+were to return `1`, then using the above example the message displayed would be `Hoorah!!! "Hello World!" appears in the page title` with an indicator level of `success`
 
-The available indicator levels are: `default`, `danger`, `warning`, `success` which are grey, red, orange and green respectively.
+The available indicator levels are: `default`, `danger`, `warning`, `success` which are grey, red, orange and green 
+respectively.
 
-You can optionally prevent certain levels from displaying in the content analysis tab. The following added to the above example would cause it to only display an entry if the indicator level is not of value `success`:
+You can optionally prevent certain levels from displaying in the content analysis tab. The following added to the above 
+example would cause it to only display an entry if the indicator level is not of value `success`:
 
 ```php
 private static $hidden_levels = [
@@ -107,8 +116,10 @@ private static $hidden_levels = [
 ## Configuration Options
 
 #### `enable_creator_tag`:
-By default, this module adds an extension to `\SilverStripe\Securit\Member` that adds a single field named `TwitterAccountName`, if this is set
-and when this particular user creates a page, the `twitter:creator` meta tag will automatically generate with the Members account name
+By default, this module adds an extension to `\SilverStripe\Securit\Member` that adds a single field named 
+`TwitterAccountName`, if this is set
+and when this particular user creates a page, the `twitter:creator` meta tag will automatically generate with the 
+Members account name
 
 You can disable this via YML:
 
@@ -117,8 +128,21 @@ Vulcan\Seo\Extensions\PageSeoExtension:
     enable_creator_tag: false
 ```
 
+#### Different Internal/External URLs
+By default, the public URL is used to load HTML content for DOM parsing when editing in /admin.  If this needs overridden
+use the config below in /mysite/_config.php
+
+```yml
+# The extension loads the publicly visible page, which is *usually* the public URL.  However with a docker setup, this
+# may not be the case, as such this provides an override.  From the perspective of the php-fpm container, the site is
+# not localhost:80, but nginx:80, nginx in this case being the name of the container hosting the webserver
+Vulcan\Seo\Extensions\PageHealthExtension:
+  internal_server_url: 'http://nginx'
+```
+
 ## Assumptions
-This module assumes that you make use of the default `Content` field provided by `\Page`. If a specific page does not then you can specify one or multiple fields that contain your content.
+This module assumes that you make use of the default `Content` field provided by `\Page`. If a specific page does not 
+then you can specify one or multiple fields that contain your content.
 
 They should be ordered in the correct order that they appear for the end user
 
@@ -138,12 +162,17 @@ public function seoContentFields()
 ```
 
 ## Bugs
-It is to our knowledge that this module is currently bug free, if you do find a bug please create an issue immediately (or even better, PR in the fix) and we will promptly investigate, fix and release a new version accordingly.
+It is to our knowledge that this module is currently bug free, if you do find a bug please create an issue immediately 
+(or even better, PR in the fix) and we will promptly investigate, fix and release a new version accordingly.
 
 ## Roadmap
 * Finish implementing internationalisation to this module and it's analyses
 * More content analyses
-* Given the ability to practically have content coming from anywhere on a SilverStripe page, the `seoContentFields` method was introduced to better improve content analysis by collating all content fields into a single string, this supports dot notation for `has_one` relationships, but may not (or does not) support `has_many` and `many_many` relationships at this time. Ideally moving forward we will want to use the DOM parser (partially implemented) and rely on this instead.
+* Given the ability to practically have content coming from anywhere on a SilverStripe page, the `seoContentFields` 
+method was introduced to better improve content analysis by collating all content fields into a single string, this 
+supports dot notation for `has_one` relationships, but may not (or does not) support `has_many` and `many_many` 
+relationships at this time. Ideally moving forward we will want to use the DOM parser (partially implemented) and rely 
+on this instead.
 * Finding community support to help improve and better this module for all SilverStripe users
 
 ## License
