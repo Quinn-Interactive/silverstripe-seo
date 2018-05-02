@@ -1,3 +1,6 @@
+---
+name: vulcan-silverstripe-seo-extensions
+---
 Page:
   extensions:
     - Vulcan\Seo\Extensions\PageHealthExtension

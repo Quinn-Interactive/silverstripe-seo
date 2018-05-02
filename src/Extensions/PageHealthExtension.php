@@ -3,6 +3,7 @@
 namespace Vulcan\Seo\Extensions;
 
 use SilverStripe\Core\ClassInfo;
+use SilverStripe\Core\Config\Config;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
@@ -52,8 +53,12 @@ class PageHealthExtension extends DataExtension
      */
     public function getRenderedHtml()
     {
+        // use the public URL unless an override is provided, e.g. in a Docker container setup
         if (!$this->renderedHtml) {
-            $this->renderedHtml = file_get_contents($this->getOwner()->AbsoluteLink());
+            $providedInternalServer = Config::inst()->get('Vulcan\Seo\Extensions\PageHealthExtension', 'internal_server_url');
+            $pageURL = !empty($providedInternalServer) ?
+                $providedInternalServer . $this->owner->Link() : $this->getOwner()->AbsoluteLink();
+            $this->renderedHtml = file_get_contents($pageURL);
         }
 
         return $this->renderedHtml;
