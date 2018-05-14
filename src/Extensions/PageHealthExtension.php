@@ -11,6 +11,7 @@ use Sunra\PhpSimple\HtmlDomParser;
 use Vulcan\Seo\Analysis\Analysis;
 use Vulcan\Seo\Forms\GoogleSearchPreview;
 use Vulcan\Seo\Forms\HealthAnalysisField;
+use SilverStripe\ErrorPage\ErrorPage;
 
 /**
  * Class PageHealthExtension
@@ -35,14 +36,17 @@ class PageHealthExtension extends DataExtension
     public function updateCMSFields(FieldList $fields)
     {
         parent::updateCMSFields($fields);
-
-        $fields->addFieldsToTab('Root.Main', [
-            ToggleCompositeField::create(null, 'SEO Health Analysis', [
-                GoogleSearchPreview::create('GoogleSearchPreview', 'Search Preview', $this->getOwner(), $this->getRenderedHtmlDomParser()),
-                TextField::create('FocusKeyword', 'Set focus keyword'),
-                HealthAnalysisField::create('ContentAnalysis', 'Content Analysis', $this->getOwner()),
-            ])
-        ], 'Metadata');
+        
+        $errorPageClass = ErrorPage::class;
+        if(!$this->owner instanceof $errorPageClass){
+            $fields->addFieldsToTab('Root.Main', [
+                ToggleCompositeField::create(null, 'SEO Health Analysis', [
+                    GoogleSearchPreview::create('GoogleSearchPreview', 'Search Preview', $this->getOwner(), $this->getRenderedHtmlDomParser()),
+                    TextField::create('FocusKeyword', 'Set focus keyword'),
+                    HealthAnalysisField::create('ContentAnalysis', 'Content Analysis', $this->getOwner()),
+                ])
+            ], 'Metadata');
+        }
     }
 
     /**
