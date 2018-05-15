@@ -35,7 +35,11 @@ class PageHealthExtension extends DataExtension
     public function updateCMSFields(FieldList $fields)
     {
         parent::updateCMSFields($fields);
-
+        
+        if ($this->owner instanceof SilverStripe\ErrorPage\ErrorPage) {
+            return;
+        }
+        
         $fields->addFieldsToTab('Root.Main', [
             ToggleCompositeField::create(null, 'SEO Health Analysis', [
                 GoogleSearchPreview::create('GoogleSearchPreview', 'Search Preview', $this->getOwner(), $this->getRenderedHtmlDomParser()),
