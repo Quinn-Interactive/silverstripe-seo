@@ -36,7 +36,7 @@ class PageHealthExtension extends DataExtension
     {
         parent::updateCMSFields($fields);
         
-        if ($this->owner instanceof SilverStripe\ErrorPage\ErrorPage) {
+        if ($this->owner instanceof \SilverStripe\ErrorPage\ErrorPage) {
             return;
         }
         
