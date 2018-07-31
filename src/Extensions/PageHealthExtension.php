@@ -57,9 +57,13 @@ class PageHealthExtension extends DataExtension
     public function getRenderedHtml()
     {
         if (!$this->renderedHtml) {
-            $this->renderedHtml = file_get_contents($this->getOwner()->AbsoluteLink());
+            $this->renderedHtml = @file_get_contents($this->getOwner()->AbsoluteLink());
         }
-
+        
+        if ($this->renderedHtml === false) {
+            $this->renderedHtml = '<p></p>';
+        }
+        
         return $this->renderedHtml;
     }
 
