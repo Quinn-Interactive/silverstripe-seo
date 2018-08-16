@@ -2,6 +2,7 @@
 
 namespace Vulcan\Seo\Extensions;
 
+use SilverStripe\CMS\Controllers\ModelAsController;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
@@ -57,9 +58,14 @@ class PageHealthExtension extends DataExtension
     public function getRenderedHtml()
     {
         if (!$this->renderedHtml) {
-            $this->renderedHtml = file_get_contents($this->getOwner()->AbsoluteLink());
+            if ($controller = ModelAsController::controller_for($this->getOwner())) {
+                $this->renderedHtml = $controller->render();
+            }
+            else if ($content = $this->getOwner()->Content) {
+                $this->renderedHtml = $content;
+            }
         }
-
+        
         return $this->renderedHtml;
     }
 
