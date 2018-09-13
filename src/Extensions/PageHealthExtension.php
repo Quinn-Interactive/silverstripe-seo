@@ -35,11 +35,11 @@ class PageHealthExtension extends DataExtension
     public function updateCMSFields(FieldList $fields)
     {
         parent::updateCMSFields($fields);
-        
+
         if ($this->owner instanceof \SilverStripe\ErrorPage\ErrorPage) {
             return;
         }
-        
+
         $fields->addFieldsToTab('Root.Main', [
             ToggleCompositeField::create(null, 'SEO Health Analysis', [
                 GoogleSearchPreview::create('GoogleSearchPreview', 'Search Preview', $this->getOwner(), $this->getRenderedHtmlDomParser()),
@@ -59,7 +59,11 @@ class PageHealthExtension extends DataExtension
         if (!$this->renderedHtml) {
             $this->renderedHtml = file_get_contents($this->getOwner()->AbsoluteLink().'?stage=Stage');
         }
-
+        
+        if ($this->renderedHtml === false) {
+            $this->renderedHtml = '<p></p>';
+        }
+        
         return $this->renderedHtml;
     }
 

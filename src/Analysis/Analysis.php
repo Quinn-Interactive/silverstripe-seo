@@ -2,6 +2,7 @@
 
 namespace Vulcan\Seo\Analysis;
 
+use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\View\ArrayData;
@@ -51,9 +52,9 @@ abstract class Analysis
     /**
      * Analysis constructor.
      *
-     * @param \Page $page
+     * @param SiteTree $page
      */
-    public function __construct(\Page $page)
+    public function __construct(SiteTree $page)
     {
         $this->setPage($page);
     }
@@ -126,18 +127,17 @@ abstract class Analysis
     }
 
     /**
-     * @param \Page $page
-     *
+     * @param SiteTree $page
      * @return $this
      */
-    public function setPage(\Page $page)
+    public function setPage(SiteTree $page)
     {
         $this->page = $page;
         return $this;
     }
 
     /**
-     * @return \Page|PageHealthExtension
+     * @return SiteTree|PageHealthExtension
      */
     public function getPage()
     {
@@ -166,7 +166,7 @@ abstract class Analysis
         foreach ($this->domParser->find('header,footer,nav') as $item) {
             $item->outertext = '';
         }
-        
+
         return $this->domParser;
     }
 
