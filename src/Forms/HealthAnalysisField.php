@@ -2,6 +2,7 @@
 
 namespace Vulcan\Seo\Forms;
 
+use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\ORM\ArrayList;
@@ -37,7 +38,7 @@ class HealthAnalysisField extends LiteralField
      * @param \SilverStripe\Forms\FormField|string $title
      * @param \Page                                $page
      */
-    public function __construct($name, $title, \Page $page)
+    public function __construct($name, $title, SiteTree $page)
     {
         $this->setPage($page);
         Requirements::javascript('vulcandigital/silverstripe-seo:dist/javascript/main.min.js');
@@ -88,18 +89,17 @@ class HealthAnalysisField extends LiteralField
     }
 
     /**
-     * @param \Page $page
-     *
+     * @param SiteTree $page
      * @return $this
      */
-    public function setPage(\Page $page)
+    public function setPage(SiteTree $page)
     {
         $this->page = $page;
         return $this;
     }
 
     /**
-     * @return \Page|PageHealthExtension
+     * @return SiteTree|PageHealthExtension
      */
     public function getPage()
     {
