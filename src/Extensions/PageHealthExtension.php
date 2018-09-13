@@ -52,12 +52,19 @@ class PageHealthExtension extends DataExtension
     /**
      * Gets the rendered html (current version, either draft or live)
      *
+     * @todo Solve authentication issue with ?stage=Stage
      * @return string|null
      */
     public function getRenderedHtml()
     {
         if (!$this->renderedHtml) {
-            $this->renderedHtml = file_get_contents($this->getOwner()->AbsoluteLink().'?stage=Stage');
+            $link = $this->getOwner()->AbsoluteLink();
+            
+            if (!$this->getOwner()->isPublished()) {
+                $link .='?stage=Stage';
+            }
+
+            $this->renderedHtml = file_get_contents($link);
         }
         
         if ($this->renderedHtml === false) {
