@@ -14,7 +14,7 @@
     "silverstripe/cms": "^4.1",
     "jonom/silverstripe-text-target-length": "^2",
     "wilr/silverstripe-googlesitemaps": "^2.1",
-    "sunra/php-simple-html-dom-parser": "^1.5",
+    "kub-at/php-simple-html-dom-parser": "^1.7",
     "axllent/silverstripe-trailing-slash": "^2.1"
   },
   "require-dev": {
