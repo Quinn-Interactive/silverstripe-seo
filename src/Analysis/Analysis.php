@@ -153,7 +153,7 @@ abstract class Analysis
     }
 
     /**
-     * @return \simplehtmldom_1_5\simple_html_dom
+     * @return \simple_html_dom\simple_html_dom
      */
     public function getRenderedHtmlDomParser()
     {
