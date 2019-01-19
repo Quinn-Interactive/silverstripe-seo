@@ -6,7 +6,7 @@ use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\View\ArrayData;
-use Sunra\PhpSimple\HtmlDomParser;
+use KubAT\PhpSimple\HtmlDomParser;
 use Vulcan\Seo\Extensions\PageHealthExtension;
 
 /**
@@ -153,7 +153,7 @@ abstract class Analysis
     }
 
     /**
-     * @return \simplehtmldom_1_5\simple_html_dom
+     * @return \simple_html_dom\simple_html_dom
      */
     public function getRenderedHtmlDomParser()
     {

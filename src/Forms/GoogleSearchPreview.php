@@ -8,7 +8,7 @@ use SilverStripe\Forms\LiteralField;
 use SilverStripe\View\ArrayData;
 use SilverStripe\View\Parsers\URLSegmentFilter;
 use SilverStripe\View\Requirements;
-use simplehtmldom_1_5\simple_html_dom;
+use simple_html_dom\simple_html_dom;
 use Vulcan\Seo\Extensions\PageHealthExtension;
 use Vulcan\Seo\Extensions\PageSeoExtension;
 

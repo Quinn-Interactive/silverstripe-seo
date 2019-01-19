@@ -7,7 +7,7 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\ORM\DataExtension;
-use Sunra\PhpSimple\HtmlDomParser;
+use KubAT\PhpSimple\HtmlDomParser;
 use Vulcan\Seo\Analysis\Analysis;
 use Vulcan\Seo\Forms\GoogleSearchPreview;
 use Vulcan\Seo\Forms\HealthAnalysisField;
@@ -59,18 +59,18 @@ class PageHealthExtension extends DataExtension
         if (!$this->renderedHtml) {
             $this->renderedHtml = file_get_contents($this->getOwner()->AbsoluteLink().'?stage=Stage');
         }
-        
+
         if ($this->renderedHtml === false) {
             $this->renderedHtml = '<p></p>';
         }
-        
+
         return $this->renderedHtml;
     }
 
     /**
      * Gets the DOM parser for the rendered html
      *
-     * @return \simplehtmldom_1_5\simple_html_dom
+     * @return \simple_html_dom\simple_html_dom
      */
     public function getRenderedHtmlDomParser()
     {
