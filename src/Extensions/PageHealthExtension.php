@@ -2,6 +2,8 @@
 
 namespace Vulcan\Seo\Extensions;
 
+use SilverStripe\CMS\Controllers\ModelAsController;
+use SilverStripe\Control\Controller;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
@@ -41,7 +43,7 @@ class PageHealthExtension extends DataExtension
         }
 
         $fields->addFieldsToTab('Root.Main', [
-            ToggleCompositeField::create(null, 'SEO Health Analysis', [
+            ToggleCompositeField::create('SEOHealthAnalysis', 'SEO Health Analysis', [
                 GoogleSearchPreview::create('GoogleSearchPreview', 'Search Preview', $this->getOwner(), $this->getRenderedHtmlDomParser()),
                 TextField::create('FocusKeyword', 'Set focus keyword'),
                 HealthAnalysisField::create('ContentAnalysis', 'Content Analysis', $this->getOwner()),
@@ -57,7 +59,8 @@ class PageHealthExtension extends DataExtension
     public function getRenderedHtml()
     {
         if (!$this->renderedHtml) {
-            $this->renderedHtml = file_get_contents($this->getOwner()->AbsoluteLink().'?stage=Stage');
+            $controllerName = $this->owner->getControllerName();
+            $this->renderedHtml = $controllerName::singleton()->render($this->owner);
         }
 
         if ($this->renderedHtml === false) {
