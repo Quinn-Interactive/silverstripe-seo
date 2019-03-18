@@ -40,8 +40,11 @@ class GoogleSearchPreview extends LiteralField
         $renderedTitle = $domParser->find('title', 0);
 
         $body = $domParser->find('body', 0);
-        foreach ($body->find('header,footer,nav') as $header) {
-            $header->outertext = '';
+        
+        if ($body) {
+            foreach ($body->find('header,footer,nav') as $header) {
+                $header->outertext = '';
+            }
         }
 
         $firstParagraph = $domParser->find('p', 0);
