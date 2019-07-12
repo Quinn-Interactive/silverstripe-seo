@@ -2,6 +2,9 @@
 # silverstripe-seo
 An all-in-one SEO module for SilverStripe
 
+# SEMI-ABANDONED
+Unfortunately, I don't have time to manage this repo anymore and given that it's quite popular I was wondering if anyone would like to take over management of this module. If so; feel free to email me at reece.alexander [at] gmail.com
+
 ## Features
 * SEO Health Analysis in the Page Editor ![SEO Health Analysis](https://i.imgur.com/L2MTFDd.png)
 * Automatic Facebook OpenGraph meta-tag generation (can override) ![Facebook SEO Control](https://i.imgur.com/FcK0ExJ.png)
