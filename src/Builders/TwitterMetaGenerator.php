@@ -58,11 +58,11 @@ class TwitterMetaGenerator
 
         $tags[] = '<meta name="twitter:card" content="summary"/>';
         if ($this->getTitle()) {
-            $tags[] = sprintf('<meta name="twitter:title" content="%s"/>', $this->getTitle());
+            $tags[] = sprintf('<meta name="twitter:title" content="%s"/>', htmlentities($this->getTitle()));
         }
 
         if ($this->getDescription()) {
-            $tags[] = sprintf('<meta name="twitter:description" content="%s"/>', $this->getDescription());
+            $tags[] = sprintf('<meta name="twitter:description" content="%s"/>', htmlentities($this->getDescription()));
         }
 
         if ($this->getImageUrl()) {
