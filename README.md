@@ -160,3 +160,7 @@ public function seoContentFields()
 ## License
 
 [BSD-3-Clause](LICENSE.md)
+
+## Version
+
+1.0.4
