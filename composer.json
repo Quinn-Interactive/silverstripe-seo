@@ -1,5 +1,5 @@
 {
-  "name": "vulcandigital/silverstripe-seo",
+  "name": "quinninteractive/silverstripe-seo",
   "description": "An all-in-one SEO module for SilverStripe",
   "type": "silverstripe-vendormodule",
   "keywords": ["silverstripe", "seo", "facebook", "twitter", "opengraph", "search", "optimization", "optimisation"],
@@ -37,5 +37,7 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "abandoned": true
+  "replace": {
+    "vulcandigital/silverstripe-seo": "1.0.3"
+  }
 }
