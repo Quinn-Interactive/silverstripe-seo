@@ -7,7 +7,18 @@
   "authors": [
     {
       "name": "Reece Alexander",
-      "homepage": "https://vulcandigital.co.nz"
+      "homepage": "https://vulcandigital.co.nz",
+      "role": "author"
+    },
+    {
+      "name": "Fred Condo",
+      "homepage": "https://quinn.com",
+      "role": "maintainer"
+    },
+    {
+      "name": "Phil Quinn",
+      "homepage": "https://quinn.com",
+      "role": "maintainer"
     }
   ],
   "require": {
