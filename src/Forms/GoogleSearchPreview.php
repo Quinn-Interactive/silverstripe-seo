@@ -40,7 +40,7 @@ class GoogleSearchPreview extends LiteralField
         $renderedTitle = $domParser->find('title', 0);
 
         $body = $domParser->find('body', 0);
-        
+
         if ($body) {
             foreach ($body->find('header,footer,nav') as $header) {
                 $header->outertext = '';
@@ -49,8 +49,8 @@ class GoogleSearchPreview extends LiteralField
 
         $firstParagraph = $domParser->find('p', 0);
 
-        Requirements::javascript('vulcandigital/silverstripe-seo:dist/javascript/main.min.js');
-        Requirements::css('vulcandigital/silverstripe-seo:dist/css/styles.min.css');
+        Requirements::javascript('quinninteractive/silverstripe-seo:dist/javascript/main.min.js');
+        Requirements::css('quinninteractive/silverstripe-seo:dist/css/styles.min.css');
 
         parent::__construct($name, ArrayData::create([
             'Title'           => $title,
