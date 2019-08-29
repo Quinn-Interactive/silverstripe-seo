@@ -59,11 +59,11 @@ class FacebookMetaGenerator
         $tags = [];
 
         if ($this->getTitle()) {
-            $tags[] = sprintf('<meta property="og:title" content="%s"/>', $this->getTitle());
+            $tags[] = sprintf('<meta property="og:title" content="%s"/>', htmlentities($this->getTitle()));
         }
 
         if ($this->getDescription()) {
-            $tags[] = sprintf('<meta property="og:description" content="%s"/>', $this->getDescription());
+            $tags[] = sprintf('<meta property="og:description" content="%s"/>', htmlentities($this->getDescription()));
         }
 
         if ($this->getType()) {
