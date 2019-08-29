@@ -41,8 +41,8 @@ class HealthAnalysisField extends LiteralField
     public function __construct($name, $title, SiteTree $page)
     {
         $this->setPage($page);
-        Requirements::javascript('vulcandigital/silverstripe-seo:dist/javascript/main.min.js');
-        Requirements::css('vulcandigital/silverstripe-seo:dist/css/styles.min.css');
+        Requirements::javascript('quinninteractive/silverstripe-seo:dist/javascript/main.min.js');
+        Requirements::css('quinninteractive/silverstripe-seo:dist/css/styles.min.css');
 
         parent::__construct($name, ArrayData::create(['Title' => $title, 'Results' => $this->runAnalyses()])->renderWith(self::class));
     }
