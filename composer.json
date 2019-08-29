@@ -47,8 +47,5 @@
     ]
   },
   "minimum-stability": "dev",
-  "prefer-stable": true,
-  "replace": {
-    "vulcandigital/silverstripe-seo": "1.0.3"
-  }
+  "prefer-stable": true
 }
