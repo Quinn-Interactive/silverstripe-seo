@@ -2,15 +2,11 @@
 
 namespace Vulcan\Seo\Extensions;
 
-use SilverStripe\CMS\Controllers\ModelAsController;
-use SilverStripe\Control\Controller;
-use SilverStripe\Core\ClassInfo;
+use KubAT\PhpSimple\HtmlDomParser;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\ORM\DataExtension;
-use KubAT\PhpSimple\HtmlDomParser;
-use Vulcan\Seo\Analysis\Analysis;
 use Vulcan\Seo\Forms\GoogleSearchPreview;
 use Vulcan\Seo\Forms\HealthAnalysisField;
 
@@ -22,6 +18,8 @@ use Vulcan\Seo\Forms\HealthAnalysisField;
  */
 class PageHealthExtension extends DataExtension
 {
+    const EMPTY_HTML = '<p></p>';
+
     /**
      * @var string|null
      */
@@ -60,11 +58,15 @@ class PageHealthExtension extends DataExtension
     {
         if (!$this->renderedHtml) {
             $controllerName = $this->owner->getControllerName();
+            if ('SilverStripe\UserForms\Control\UserDefinedFormController' == $controllerName) {
+                // remove the Form since it crashes
+                $this->owner->Form = false;
+            }
             $this->renderedHtml = $controllerName::singleton()->render($this->owner);
         }
 
         if ($this->renderedHtml === false) {
-            $this->renderedHtml = '<p></p>';
+            $this->renderedHtml = self::EMPTY_HTML;
         }
 
         return $this->renderedHtml;
