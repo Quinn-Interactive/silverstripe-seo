@@ -2,11 +2,11 @@
 
 namespace Vulcan\Seo\Analysis;
 
+use KubAT\PhpSimple\HtmlDomParser;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\View\ArrayData;
-use KubAT\PhpSimple\HtmlDomParser;
 use Vulcan\Seo\Extensions\PageHealthExtension;
 
 /**
@@ -17,13 +17,20 @@ abstract class Analysis
 {
     use Injectable, Configurable;
 
+    protected $domParser;
+
     /** @var \Page|PageHealthExtension */
     protected $page;
 
     /** @var int The result, set after {@link inspect()} completes successfully */
     protected $result;
 
-    protected $domParser;
+    /**
+     * One of: default, danger, warning or success
+     *
+     * @var string
+     */
+    protected $resultLevel;
 
     /**
      * Allows you to hide certain levels (default, danger, success) from appearing in the content analysis.
@@ -43,13 +50,6 @@ abstract class Analysis
     ];
 
     /**
-     * One of: default, danger, warning or success
-     *
-     * @var string
-     */
-    protected $resultLevel;
-
-    /**
      * Analysis constructor.
      *
      * @param SiteTree $page
@@ -57,6 +57,60 @@ abstract class Analysis
     public function __construct(SiteTree $page)
     {
         $this->setPage($page);
+    }
+
+    /**
+     * Fetches the rendered content from the dom parser. This is why it's important that your templates are semantically
+     * correct. `<div>` tags should be used for layout and positioning purposes and using `<p>` tags for content is
+     * semantically correct. Semantically correct pages tend to rank higher in search engines for various reasons (such
+     * as how effectively crawlers parse your website etc.).
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        $parser = $this->getRenderedHtmlDomParser();
+        $output = [];
+        foreach ($parser->find('p,h1,h2,h3,h4,h5') as $item) {
+            $output[] = strip_tags(html_entity_decode($item->innertext()));
+        }
+
+        $output = array_filter($output);
+        return implode(' ', $output);
+    }
+
+    /**
+     * @return SiteTree|PageHealthExtension
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * @return \simple_html_dom\simple_html_dom
+     */
+    public function getRenderedHtmlDomParser()
+    {
+        if ($this->domParser) {
+            return $this->domParser;
+        }
+
+        $this->domParser = HtmlDomParser::str_get_html(file_get_contents($this->getPage()->AbsoluteLink()));
+
+        foreach ($this->domParser->find('header,footer,nav') as $item) {
+            $item->outertext = '';
+        }
+
+        return $this->domParser;
+    }
+
+    /**
+     * @return int
+     */
+    public function getResult()
+    {
+        return $this->result;
     }
 
     /**
@@ -87,7 +141,7 @@ abstract class Analysis
             throw new \InvalidArgumentException(sprintf('The specified indicator (%s) in the response for key %s is not a valid level, valid levels are: %s', $responses[$result][1], $result, implode(', ', $this->config()->get('indicator_levels'))));
         }
 
-        $this->result = $result;
+        $this->result      = $result;
         $this->resultLevel = $responses[$result][1];
 
         return ArrayData::create([
@@ -97,18 +151,6 @@ abstract class Analysis
             'Level'    => $this->resultLevel,
             'Hidden'   => $this->resultLevel === 'hidden' ? true : in_array($this->resultLevel, $this->config()->get('hidden_levels'))
         ]);
-    }
-
-
-    /**
-     * You must override this in your subclass and perform your own checks. An integer must be returned
-     * that references an index of the array you return in your response() method override in your subclass.
-     *
-     * @return int
-     */
-    public function run()
-    {
-        throw new \RuntimeException('You must override the run method in ' . static::class . ' and return an integer as a response that references a key in your array that your responses() override returns');
     }
 
     /**
@@ -127,6 +169,17 @@ abstract class Analysis
     }
 
     /**
+     * You must override this in your subclass and perform your own checks. An integer must be returned
+     * that references an index of the array you return in your response() method override in your subclass.
+     *
+     * @return int
+     */
+    public function run()
+    {
+        throw new \RuntimeException('You must override the run method in ' . static::class . ' and return an integer as a response that references a key in your array that your responses() override returns');
+    }
+
+    /**
      * @param SiteTree $page
      * @return $this
      */
@@ -134,59 +187,5 @@ abstract class Analysis
     {
         $this->page = $page;
         return $this;
-    }
-
-    /**
-     * @return SiteTree|PageHealthExtension
-     */
-    public function getPage()
-    {
-        return $this->page;
-    }
-
-    /**
-     * @return int
-     */
-    public function getResult()
-    {
-        return $this->result;
-    }
-
-    /**
-     * @return \simple_html_dom\simple_html_dom
-     */
-    public function getRenderedHtmlDomParser()
-    {
-        if ($this->domParser) {
-            return $this->domParser;
-        }
-
-        $this->domParser = HtmlDomParser::str_get_html(file_get_contents($this->getPage()->AbsoluteLink()));
-
-        foreach ($this->domParser->find('header,footer,nav') as $item) {
-            $item->outertext = '';
-        }
-
-        return $this->domParser;
-    }
-
-    /**
-     * Fetches the rendered content from the dom parser. This is why it's important that your templates are semantically
-     * correct. `<div>` tags should be used for layout and positioning purposes and using `<p>` tags for content is
-     * semantically correct. Semantically correct pages tend to rank higher in search engines for various reasons (such
-     * as how effectively crawlers parse your website etc.).
-     *
-     * @return string
-     */
-    public function getContent()
-    {
-        $parser = $this->getRenderedHtmlDomParser();
-        $output = [];
-        foreach ($parser->find('p,h1,h2,h3,h4,h5') as $item) {
-            $output[] = strip_tags(html_entity_decode($item->innertext()));
-        }
-
-        $output = array_filter($output);
-        return implode(' ', $output);
     }
 }

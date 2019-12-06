@@ -10,11 +10,25 @@ use SilverStripe\i18n\i18n;
  */
 class MetaDescAnalysis extends Analysis
 {
-    const META_DESC_UNSET = -1;
-    const META_DESC_TOO_SHORT = 0;
-    const META_DESC_TOO_LONG = 1;
     const META_DESC_NO_FOCUS_KEYWORD = 2; // only checked if the focus keyword has been defined
-    const META_DESC_SUCCESS = 3;
+    const META_DESC_SUCCESS          = 3;
+    const META_DESC_TOO_LONG         = 1;
+    const META_DESC_TOO_SHORT        = 0;
+    const META_DESC_UNSET            = -1;
+
+    /**
+     * @return array
+     */
+    public function responses()
+    {
+        return [
+            static::META_DESC_UNSET            => [i18n::_t('VULCANSEO.Analysis.MetaDescNotSet', 'The meta description has not been set; a potentially unwanted snippet may be taken from the page and displayed instead'), 'danger'],
+            static::META_DESC_TOO_SHORT        => [i18n::_t('VULCANSEO.Analysis.MetaDescTooShort', 'The meta description is too short'), 'danger'],
+            static::META_DESC_TOO_LONG         => [i18n::_t('VULCANSEO.Analysis.MetaDescTooLong', 'The meta description is too long'), 'danger'],
+            static::META_DESC_NO_FOCUS_KEYWORD => [i18n::_t('VULCANSEO.Analysis.MetaDescMissingFocusKeyword', 'The meta description does not contain the focus keyword'), 'warning'],
+            static::META_DESC_SUCCESS          => [i18n::_t('VULCANSEO.Analysis.MetaDescPerfect', 'The meta description is perfect!'), 'success']
+        ];
+    }
 
     /**
      * You must override this in your subclass and perform your own checks. An integer must be returned
@@ -24,7 +38,7 @@ class MetaDescAnalysis extends Analysis
      */
     public function run()
     {
-        $desc = $this->getPage()->MetaDescription;
+        $desc    = $this->getPage()->MetaDescription;
         $keyword = $this->getPage()->FocusKeyword;
 
         if (!$desc) {
@@ -44,19 +58,5 @@ class MetaDescAnalysis extends Analysis
         }
 
         return static::META_DESC_SUCCESS;
-    }
-
-    /**
-     * @return array
-     */
-    public function responses()
-    {
-        return [
-            static::META_DESC_UNSET => [i18n::_t('VULCANSEO.Analysis.MetaDescNotSet', 'The meta description has not been set, a potentially unwanted snippet may be taken from the page and displayed instead'), 'danger'],
-            static::META_DESC_TOO_SHORT => [i18n::_t('VULCANSEO.Analysis.MetaDescTooShort', 'The meta description is too short'), 'danger'],
-            static::META_DESC_TOO_LONG => [i18n::_t('VULCANSEO.Analysis.MetaDescTooLong', 'The meta description is too long'), 'danger'],
-            static::META_DESC_NO_FOCUS_KEYWORD => [i18n::_t('VULCANSEO.Analysis.MetaDescMissingFocusKeyword', 'The meta description does not contain the focus keyword'), 'warning'],
-            static::META_DESC_SUCCESS => [i18n::_t('VULCANSEO.Analysis.MetaDescPerfect', 'The meta description is perfect!'), 'success']
-        ];
     }
 }

@@ -4,7 +4,6 @@ namespace Vulcan\Seo\Builders;
 
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
-use SilverStripe\i18n\i18n;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\SiteConfig\SiteConfig;
 use Vulcan\Seo\Extensions\SiteConfigSettingsExtension;
@@ -20,7 +19,7 @@ class TwitterMetaGenerator
     /**
      * @var string|null
      */
-    protected $title;
+    protected $creator;
 
     /**
      * @var string|null
@@ -30,7 +29,7 @@ class TwitterMetaGenerator
     /**
      * @var string|null
      */
-    protected $creator;
+    protected $imageHeight;
 
     /**
      * @var string|null
@@ -45,7 +44,45 @@ class TwitterMetaGenerator
     /**
      * @var string|null
      */
-    protected $imageHeight;
+    protected $title;
+
+    /**
+     * @return mixed
+     */
+    public function getCreator()
+    {
+        return $this->creator;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        $obj = DBHTMLText::create();
+
+        if (!$this->description) {
+            return null;
+        }
+
+        return $obj->setValue($this->description)->LimitCharacters(297);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImageUrl()
+    {
+        return $this->imageUrl;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
     /**
      * @return array
@@ -54,7 +91,7 @@ class TwitterMetaGenerator
     {
         /** @var SiteConfig|SiteConfigSettingsExtension $siteConfig */
         $siteConfig = SiteConfig::current_site_config();
-        $tags = [];
+        $tags       = [];
 
         $tags[] = '<meta name="twitter:card" content="summary"/>';
         if ($this->getTitle()) {
@@ -80,13 +117,13 @@ class TwitterMetaGenerator
     }
 
     /**
-     * @param mixed $title
+     * @param string $creator
      *
      * @return TwitterMetaGenerator
      */
-    public function setTitle($title)
+    public function setCreator($creator)
     {
-        $this->title = $title;
+        $this->creator = str_replace('@', '', $creator);
         return $this;
     }
 
@@ -117,51 +154,13 @@ class TwitterMetaGenerator
     }
 
     /**
-     * @param string $creator
+     * @param mixed $title
      *
      * @return TwitterMetaGenerator
      */
-    public function setCreator($creator)
+    public function setTitle($title)
     {
-        $this->creator = str_replace('@', '', $creator);
+        $this->title = $title;
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCreator()
-    {
-        return $this->creator;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        $obj = DBHTMLText::create();
-
-        if (!$this->description) {
-            return null;
-        }
-
-        return $obj->setValue($this->description)->LimitCharacters(297);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getImageUrl()
-    {
-        return $this->imageUrl;
     }
 }

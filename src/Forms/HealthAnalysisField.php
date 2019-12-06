@@ -17,19 +17,19 @@ use Vulcan\Seo\Extensions\PageHealthExtension;
  */
 class HealthAnalysisField extends LiteralField
 {
-    protected $schemaComponent = 'HealthAnalysisField';
-
-    protected $template = self::class;
-
-    /**
-     * @var int
-     */
-    protected $result;
 
     /**
      * @var \Page
      */
     protected $page;
+
+    /**
+     * @var int
+     */
+    protected $result;
+    protected $schemaComponent = 'HealthAnalysisField';
+
+    protected $template = self::class;
 
     /**
      * HealthAnalysisField constructor.
@@ -48,25 +48,6 @@ class HealthAnalysisField extends LiteralField
     }
 
     /**
-     * Runs all analyses and returns an ArrayList
-     *
-     * @return ArrayList
-     */
-    public function runAnalyses()
-    {
-        $analyses = $this->getAnalyses();
-        $output = ArrayList::create([]);
-
-        foreach ($analyses as $analysisClass) {
-            /** @var Analysis $analysis */
-            $analysis = $analysisClass::create($this->getPage());
-            $output->push($analysis->inspect());
-        }
-
-        return $output;
-    }
-
-    /**
      * Fetches a list of all Analysis subclasses
      *
      * @return array
@@ -74,7 +55,7 @@ class HealthAnalysisField extends LiteralField
     public function getAnalyses()
     {
         $classes = ClassInfo::subclassesFor(Analysis::class);
-        $output = [];
+        $output  = [];
 
         /** @var Analysis $class */
         foreach ($classes as $class) {
@@ -89,6 +70,33 @@ class HealthAnalysisField extends LiteralField
     }
 
     /**
+     * @return SiteTree|PageHealthExtension
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * Runs all analyses and returns an ArrayList
+     *
+     * @return ArrayList
+     */
+    public function runAnalyses()
+    {
+        $analyses = $this->getAnalyses();
+        $output   = ArrayList::create([]);
+
+        foreach ($analyses as $analysisClass) {
+            /** @var Analysis $analysis */
+            $analysis = $analysisClass::create($this->getPage());
+            $output->push($analysis->inspect());
+        }
+
+        return $output;
+    }
+
+    /**
      * @param SiteTree $page
      * @return $this
      */
@@ -96,13 +104,5 @@ class HealthAnalysisField extends LiteralField
     {
         $this->page = $page;
         return $this;
-    }
-
-    /**
-     * @return SiteTree|PageHealthExtension
-     */
-    public function getPage()
-    {
-        return $this->page;
     }
 }

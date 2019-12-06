@@ -18,14 +18,14 @@ use Vulcan\Seo\Extensions\PageSeoExtension;
  */
 class GoogleSearchPreview extends LiteralField
 {
-    protected $schemaComponent = 'GoogleSearchPreview';
-
-    protected $template = self::class;
 
     /**
      * @var int
      */
     protected $result;
+    protected $schemaComponent = 'GoogleSearchPreview';
+
+    protected $template = self::class;
 
     /**
      * HealthAnalysisField constructor.
@@ -76,18 +76,6 @@ class GoogleSearchPreview extends LiteralField
     }
 
     /**
-     * @param $int
-     *
-     * @return $this
-     */
-    public function setResult($int)
-    {
-        $this->result = $int;
-
-        return $this;
-    }
-
-    /**
      * Highlights parts of the $haystack that match the focus keyword as a whole, case insensitive
      *
      * @param $haystack
@@ -102,6 +90,18 @@ class GoogleSearchPreview extends LiteralField
         }
 
         return preg_replace('/\b(' . $needle . ')\b/i', '<strong>$0</strong>', $haystack);
+    }
+
+    /**
+     * @param $int
+     *
+     * @return $this
+     */
+    public function setResult($int)
+    {
+        $this->result = $int;
+
+        return $this;
     }
 
     /**
@@ -132,7 +132,7 @@ class GoogleSearchPreview extends LiteralField
         }
 
         $needles = explode('-', $needle);
-        $output = $urlSegment;
+        $output  = $urlSegment;
 
         foreach ($needles as $needle) {
             $output = preg_replace('/(' . $needle . ')/i', '<strong>$0</strong>', $output);

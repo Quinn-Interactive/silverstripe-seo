@@ -10,24 +10,15 @@ use Vulcan\Seo\Seo;
  */
 class WordCountAnalysis extends Analysis
 {
-    const WORD_COUNT_BELOW_MIN = 0;
     const WORD_COUNT_ABOVE_MIN = 1;
+    const WORD_COUNT_BELOW_MIN = 0;
 
     /**
-     * You must override this in your subclass and perform your own checks. An integer must be returned
-     * that references an index of the array you return in your response() method override in your subclass.
-     *
      * @return int
      */
-    public function run()
+    public function getWordCount()
     {
-        $wordCount = $this->getWordCount();
-
-        if ($wordCount < 300) {
-            return static::WORD_COUNT_BELOW_MIN;
-        }
-
-        return static::WORD_COUNT_ABOVE_MIN;
+        return count(array_filter(explode(' ', Seo::collateContentFields($this->getPage()))));
     }
 
     /**
@@ -48,10 +39,19 @@ class WordCountAnalysis extends Analysis
     }
 
     /**
+     * You must override this in your subclass and perform your own checks. An integer must be returned
+     * that references an index of the array you return in your response() method override in your subclass.
+     *
      * @return int
      */
-    public function getWordCount()
+    public function run()
     {
-        return count(array_filter(explode(' ', Seo::collateContentFields($this->getPage()))));
+        $wordCount = $this->getWordCount();
+
+        if ($wordCount < 300) {
+            return static::WORD_COUNT_BELOW_MIN;
+        }
+
+        return static::WORD_COUNT_ABOVE_MIN;
     }
 }
