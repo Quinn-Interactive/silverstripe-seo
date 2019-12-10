@@ -1,6 +1,6 @@
 <?php
 
-namespace Vulcan\Seo\Extensions;
+namespace QuinnInteractive\Seo\Extensions;
 
 use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\Image;
@@ -13,14 +13,14 @@ use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
-use Vulcan\Seo\Builders\FacebookMetaGenerator;
-use Vulcan\Seo\Seo;
 use SilverStripe\VersionedAdmin\Controllers\HistoryViewerController;
 use SilverStripe\Control\Controller;
+use QuinnInteractive\Seo\Builders\FacebookMetaGenerator;
+use QuinnInteractive\Seo\Seo;
 
 /**
  * Class PageSeoExtension
- * @package Vulcan\Seo\Extensions
+ * @package QuinnInteractive\Seo\Extensions
  *
  * @property string FacebookPageType
  * @property string FacebookPageTitle

@@ -1,10 +1,10 @@
 <?php
 
-namespace Vulcan\Seo\Analysis;
+namespace QuinnInteractive\Seo\Analysis;
 
 /**
  * Class FocusKeywordUniqueAnalysis
- * @package Vulcan\Seo\Analysis
+ * @package QuinnInteractive\Seo\Analysis
  */
 class FocusKeywordUniqueAnalysis extends Analysis
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Vulcan\Seo\Analysis;
+namespace QuinnInteractive\Seo\Analysis;
 
 use SilverStripe\i18n\i18n;
 
 /**
  * Class MetaDescAnalysis
- * @package Vulcan\Seo\Analysis
+ * @package QuinnInteractive\Seo\Analysis
  */
 class MetaDescAnalysis extends Analysis
 {

@@ -1,17 +1,17 @@
 <?php
 
-namespace Vulcan\Seo\Analysis;
+namespace QuinnInteractive\Seo\Analysis;
 
 use KubAT\PhpSimple\HtmlDomParser;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\View\ArrayData;
-use Vulcan\Seo\Extensions\PageHealthExtension;
+use QuinnInteractive\Seo\Extensions\PageHealthExtension;
 
 /**
  * Class Analysis
- * @package Vulcan\Seo\Analysis
+ * @package QuinnInteractive\Seo\Analysis
  */
 abstract class Analysis
 {

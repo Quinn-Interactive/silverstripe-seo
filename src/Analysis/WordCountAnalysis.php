@@ -1,12 +1,12 @@
 <?php
 
-namespace Vulcan\Seo\Analysis;
+namespace QuinnInteractive\Seo\Analysis;
 
-use Vulcan\Seo\Seo;
+use QuinnInteractive\Seo\Seo;
 
 /**
  * Class WordCountAnalysis
- * @package Vulcan\Seo\Analysis
+ * @package QuinnInteractive\Seo\Analysis
  */
 class WordCountAnalysis extends Analysis
 {

@@ -34,8 +34,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Vulcan\\Seo\\": "src/",
-      "Vulcan\\Seo\\Tests\\": "tests/"
+      "QuinnInteractive\\Seo\\": "src/",
+      "QuinnInteractive\\Seo\\Tests\\": "tests/"
     }
   },
   "extra": {

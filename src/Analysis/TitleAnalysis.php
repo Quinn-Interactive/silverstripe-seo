@@ -1,10 +1,10 @@
 <?php
 
-namespace Vulcan\Seo\Analysis;
+namespace QuinnInteractive\Seo\Analysis;
 
 /**
  * Class TitleAnalysis
- * @package Vulcan\Seo\Analysis
+ * @package QuinnInteractive\Seo\Analysis
  */
 class TitleAnalysis extends Analysis
 {

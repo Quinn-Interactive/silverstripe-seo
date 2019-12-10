@@ -1,6 +1,6 @@
 <?php
 
-namespace Vulcan\Seo\Extensions;
+namespace QuinnInteractive\Seo\Extensions;
 
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Forms\FieldList;
@@ -12,7 +12,7 @@ use SilverStripe\ORM\FieldType\DBHTMLText;
 
 /**
  * Class SiteConfigSettingsExtension
- * @package Vulcan\Seo\Extensions
+ * @package QuinnInteractive\Seo\Extensions
  *
  * @property string GoogleAnalytics
  * @property string FacebookPixel

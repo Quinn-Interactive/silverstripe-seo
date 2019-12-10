@@ -1,6 +1,6 @@
 <?php
 
-namespace Vulcan\Seo\Extensions;
+namespace QuinnInteractive\Seo\Extensions;
 
 use KubAT\PhpSimple\HtmlDomParser;
 use SilverStripe\Forms\FieldList;
@@ -8,14 +8,14 @@ use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\View\Requirements;
-use Vulcan\Seo\Forms\GoogleSearchPreview;
-use Vulcan\Seo\Forms\HealthAnalysisField;
 use SilverStripe\VersionedAdmin\Controllers\HistoryViewerController;
 use SilverStripe\Control\Controller;
+use QuinnInteractive\Seo\Forms\GoogleSearchPreview;
+use QuinnInteractive\Seo\Forms\HealthAnalysisField;
 
 /**
  * Class PageHealthExtension
- * @package Vulcan\Seo\Extensions
+ * @package QuinnInteractive\Seo\Extensions
  *
  * @property string FocusKeyword
  */

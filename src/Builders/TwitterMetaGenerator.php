@@ -1,16 +1,16 @@
 <?php
 
-namespace Vulcan\Seo\Builders;
+namespace QuinnInteractive\Seo\Builders;
 
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\SiteConfig\SiteConfig;
-use Vulcan\Seo\Extensions\SiteConfigSettingsExtension;
+use QuinnInteractive\Seo\Extensions\SiteConfigSettingsExtension;
 
 /**
  * Class FacebookMetaGenerator
- * @package Vulcan\Seo\Builders
+ * @package QuinnInteractive\Seo\Builders
  */
 class TwitterMetaGenerator
 {

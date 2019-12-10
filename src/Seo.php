@@ -1,20 +1,20 @@
 <?php
 
-namespace Vulcan\Seo;
+namespace QuinnInteractive\Seo;
 
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\SiteConfig\SiteConfig;
-use Vulcan\Seo\Builders\FacebookMetaGenerator;
-use Vulcan\Seo\Builders\TwitterMetaGenerator;
-use Vulcan\Seo\Extensions\PageHealthExtension;
-use Vulcan\Seo\Extensions\PageSeoExtension;
-use Vulcan\Seo\Extensions\SiteConfigSettingsExtension;
+use QuinnInteractive\Seo\Builders\FacebookMetaGenerator;
+use QuinnInteractive\Seo\Builders\TwitterMetaGenerator;
+use QuinnInteractive\Seo\Extensions\PageHealthExtension;
+use QuinnInteractive\Seo\Extensions\PageSeoExtension;
+use QuinnInteractive\Seo\Extensions\SiteConfigSettingsExtension;
 
 /**
  * Class Seo
- * @package Vulcan\Seo
+ * @package QuinnInteractive\Seo
  */
 class Seo
 {

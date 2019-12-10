@@ -1,12 +1,12 @@
 <?php
 
-namespace Vulcan\Seo\Analysis;
+namespace QuinnInteractive\Seo\Analysis;
 
 use SilverStripe\View\Parsers\URLSegmentFilter;
 
 /**
  * Class FocusKeywordUrlAnalysis
- * @package Vulcan\Seo\Analysis
+ * @package QuinnInteractive\Seo\Analysis
  */
 class FocusKeywordUrlAnalysis extends Analysis
 {
