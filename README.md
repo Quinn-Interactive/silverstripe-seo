@@ -163,4 +163,4 @@ public function seoContentFields()
 
 ## Version
 
-1.0.7
+2.x-dev
