@@ -1,6 +1,6 @@
 <?php
 
-namespace Vulcan\Seo\Extensions;
+namespace QuinnInteractive\Seo\Extensions;
 
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
@@ -8,7 +8,7 @@ use SilverStripe\ORM\DataExtension;
 
 /**
  * Class MemberExtension
- * @package Vulcan\Seo\Extensions
+ * @package QuinnInteractive\Seo\Extensions
  *
  * @property string TwitterAccountName
  */

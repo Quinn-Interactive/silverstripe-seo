@@ -1,17 +1,17 @@
 <?php
 
-namespace Vulcan\Seo\Analysis;
+namespace QuinnInteractive\Seo\Analysis;
 
 use KubAT\PhpSimple\HtmlDomParser;
+use QuinnInteractive\Seo\Extensions\PageHealthExtension;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\View\ArrayData;
-use Vulcan\Seo\Extensions\PageHealthExtension;
 
 /**
  * Class Analysis
- * @package Vulcan\Seo\Analysis
+ * @package QuinnInteractive\Seo\Analysis
  */
 abstract class Analysis
 {
@@ -126,21 +126,32 @@ abstract class Analysis
             throw new \InvalidArgumentException('Expected integer for response, got ' . gettype($result) . ' instead');
         }
         if (empty($responses = $this->responses())) {
-            throw new \InvalidArgumentException('Expected run() to return an integer, got ' . gettype($result) . ' instead');
+            throw new \InvalidArgumentException('Expected run() to return an integer, got '
+                . gettype($result)
+                . ' instead');
         }
-
         if (!isset($responses[$result])) {
-            throw new \InvalidArgumentException('Expected ' . $result . ' to be a key of the array that responses() returns, except the key ' . $result . ' does not exist');
+            throw new \InvalidArgumentException(sprintf(
+                'Expected %s to be a key of the array that responses() returns, except the key %s does not exist',
+                $result,
+                $result
+            ));
         }
-
         if (count($responses[$result]) !== 2) {
-            throw new \InvalidArgumentException('Expected the response for result ' . $result . ' to be an array containing two items, first is the message, second is the indicator status: danger, warning, success, default');
+            throw new \InvalidArgumentException(sprintf(
+                'Expected the response for result %s to be an array containing two items: ' .
+                'first is the message & second is the indicator status: danger, warning, success, default',
+                $result
+            ));
         }
-
         if (!in_array($responses[$result][1], $this->config()->get('indicator_levels'))) {
-            throw new \InvalidArgumentException(sprintf('The specified indicator (%s) in the response for key %s is not a valid level, valid levels are: %s', $responses[$result][1], $result, implode(', ', $this->config()->get('indicator_levels'))));
+            throw new \InvalidArgumentException(sprintf(
+                'The specified indicator (%s) in the response for key %s is not a valid level, valid levels are: %s',
+                $responses[$result][1],
+                $result,
+                implode(', ', $this->config()->get('indicator_levels'))
+            ));
         }
-
         $this->result      = $result;
         $this->resultLevel = $responses[$result][1];
 
@@ -149,7 +160,9 @@ abstract class Analysis
             'Result'   => $result,
             'Response' => $responses[$result][0],
             'Level'    => $this->resultLevel,
-            'Hidden'   => $this->resultLevel === 'hidden' ? true : in_array($this->resultLevel, $this->config()->get('hidden_levels'))
+            'Hidden'   => $this->resultLevel === 'hidden'
+                ? true
+                : in_array($this->resultLevel, $this->config()->get('hidden_levels'))
         ]);
     }
 
@@ -176,7 +189,11 @@ abstract class Analysis
      */
     public function run()
     {
-        throw new \RuntimeException('You must override the run method in ' . static::class . ' and return an integer as a response that references a key in your array that your responses() override returns');
+        throw new \RuntimeException(srintf(
+            'You must override the run method in %s and return an integer as a response that references '
+            . 'a key in your array that your responses() override returns',
+            static::class
+        ));
     }
 
     /**

@@ -1,12 +1,12 @@
 <?php
 
-namespace Vulcan\Seo\Analysis;
+namespace QuinnInteractive\Seo\Analysis;
 
 use SilverStripe\View\Parsers\URLSegmentFilter;
 
 /**
  * Class FocusKeywordUrlAnalysis
- * @package Vulcan\Seo\Analysis
+ * @package QuinnInteractive\Seo\Analysis
  */
 class FocusKeywordUrlAnalysis extends Analysis
 {
@@ -42,7 +42,8 @@ class FocusKeywordUrlAnalysis extends Analysis
                 'default'
             ],
             static::FOCUS_KEYWORD_NOT_IN_URL => [
-                'The focus keyword is not in the url segment; consider changing this and if you do SilverStripe will automatically redirect your old URL!',
+                'The focus keyword is not in the url segment; ' .
+                'consider changing this and if you do SilverStripe will automatically redirect your old URL!',
                 'warning'
             ],
             static::FOCUS_KEYWORD_SUCCESS => ['The focus keyword is in the url segment; this is great!', 'success'],

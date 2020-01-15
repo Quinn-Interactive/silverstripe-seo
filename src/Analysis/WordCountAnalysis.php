@@ -1,12 +1,12 @@
 <?php
 
-namespace Vulcan\Seo\Analysis;
+namespace QuinnInteractive\Seo\Analysis;
 
-use Vulcan\Seo\Seo;
+use QuinnInteractive\Seo\Seo;
 
 /**
  * Class WordCountAnalysis
- * @package Vulcan\Seo\Analysis
+ * @package QuinnInteractive\Seo\Analysis
  */
 class WordCountAnalysis extends Analysis
 {
@@ -28,11 +28,17 @@ class WordCountAnalysis extends Analysis
     {
         return [
             static::WORD_COUNT_BELOW_MIN => [
-                'The content of this page contains ' . $this->getWordCount() . ' words which is less than the 300 recommended minimum',
+                sprintf(
+                    'The content of this page contains %s words which is less than the 300 recommended minimum',
+                    $this->getWordCount()
+                ),
                 'danger'
             ],
             static::WORD_COUNT_ABOVE_MIN => [
-                'The content of this page contains ' . $this->getWordCount() . ' which is above the 300 recommended minimum',
+                sprintf(
+                    'The content of this page contains %s words which is above the 300 recommended minimum',
+                    $this->getWordCount()
+                ),
                 'success'
             ],
         ];

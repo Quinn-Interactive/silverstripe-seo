@@ -1,10 +1,10 @@
 <?php
 
-namespace Vulcan\Seo\Analysis;
+namespace QuinnInteractive\Seo\Analysis;
 
 /**
  * Class FocusKeywordUniqueAnalysis
- * @package Vulcan\Seo\Analysis
+ * @package QuinnInteractive\Seo\Analysis
  */
 class FocusKeywordUniqueAnalysis extends Analysis
 {
@@ -32,7 +32,8 @@ class FocusKeywordUniqueAnalysis extends Analysis
                 'default'
             ],
             static::FOCUS_KEYWORD_INUSE   => [
-                'The focus keyword you want this page to rank for is already being used on another page; consider changing that if you truly want this page to rank',
+                'The focus keyword you want this page to rank for is already being used on another page; ' .
+                'consider changing that if you truly want this page to rank',
                 'danger'
             ],
             static::FOCUS_KEYWORD_SUCCESS => ['The focus keyword has never been used before—nice!', 'success']

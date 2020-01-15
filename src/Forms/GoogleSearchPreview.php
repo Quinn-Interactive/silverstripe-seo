@@ -1,7 +1,9 @@
 <?php
 
-namespace Vulcan\Seo\Forms;
+namespace QuinnInteractive\Seo\Forms;
 
+use QuinnInteractive\Seo\Extensions\PageHealthExtension;
+use QuinnInteractive\Seo\Extensions\PageSeoExtension;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\Director;
 use SilverStripe\Forms\LiteralField;
@@ -9,12 +11,10 @@ use SilverStripe\View\ArrayData;
 use SilverStripe\View\Parsers\URLSegmentFilter;
 use SilverStripe\View\Requirements;
 use simple_html_dom\simple_html_dom;
-use Vulcan\Seo\Extensions\PageHealthExtension;
-use Vulcan\Seo\Extensions\PageSeoExtension;
 
 /**
  * Class GoogleSearchPreview
- * @package Vulcan\Seo\Forms
+ * @package QuinnInteractive\Seo\Forms
  */
 class GoogleSearchPreview extends LiteralField
 {
