@@ -179,7 +179,9 @@ class FacebookMetaGenerator
     public function setImageUrl($imageUrl)
     {
         if ($imageUrl && (substr($imageUrl, 0, 1) === '/' || substr($imageUrl, 0, 4) !== 'http')) {
-            throw new \InvalidArgumentException('A relative or invalid URL was detected; you must provide the full absolute URL');
+            throw new \InvalidArgumentException(
+                'A relative or invalid URL was detected; you must provide the full absolute URL'
+            );
         }
 
         $this->imageUrl = $imageUrl;
@@ -217,7 +219,11 @@ class FacebookMetaGenerator
     public function setType($type)
     {
         if (!in_array($type, array_keys(static::getValidTypes()))) {
-            throw new \Exception("That type [${type}] is not a valid type; please see: https://developers.facebook.com/docs/reference/opengraph/");
+            throw new \Exception(sprintf(
+                'That type [%s] is not a valid type; please see: %s',
+                $type,
+                'https://developers.facebook.com/docs/reference/opengraph/'
+            ));
         }
 
         $this->type = $type;
@@ -232,7 +238,9 @@ class FacebookMetaGenerator
     public function setUrl($url)
     {
         if ($url && (substr($url, 0, 1) === '/' || substr($url, 0, 4) !== 'http')) {
-            throw new \InvalidArgumentException('A relative URL was detected; you must provide the full absolute URL instead');
+            throw new \InvalidArgumentException(
+                'A relative URL was detected; you must provide the full absolute URL instead'
+            );
         }
 
         $this->url = $url;
