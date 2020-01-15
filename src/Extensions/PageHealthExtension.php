@@ -7,8 +7,11 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\ORM\DataExtension;
+use SilverStripe\View\Requirements;
 use Vulcan\Seo\Forms\GoogleSearchPreview;
 use Vulcan\Seo\Forms\HealthAnalysisField;
+use SilverStripe\VersionedAdmin\Controllers\HistoryViewerController;
+use SilverStripe\Control\Controller;
 
 /**
  * Class PageHealthExtension
@@ -30,23 +33,13 @@ class PageHealthExtension extends DataExtension
     ];
 
     /**
-     * @param FieldList $fields
+     * @return \Page|static
      */
-    public function updateCMSFields(FieldList $fields)
+    public function getOwner()
     {
-        parent::updateCMSFields($fields);
-
-        if ($this->owner instanceof \SilverStripe\ErrorPage\ErrorPage) {
-            return;
-        }
-
-        $fields->addFieldsToTab('Root.Main', [
-            ToggleCompositeField::create('SEOHealthAnalysis', 'SEO Health Analysis', [
-                GoogleSearchPreview::create('GoogleSearchPreview', 'Search Preview', $this->getOwner(), $this->getRenderedHtmlDomParser()),
-                TextField::create('FocusKeyword', 'Set focus keyword'),
-                HealthAnalysisField::create('ContentAnalysis', 'Content Analysis', $this->getOwner()),
-            ])
-        ], 'Metadata');
+        /** @var \Page $owner */
+        $owner = parent::getOwner();
+        return $owner;
     }
 
     /**
@@ -62,7 +55,9 @@ class PageHealthExtension extends DataExtension
                 // remove the Form since it crashes
                 $this->owner->Form = false;
             }
+            Requirements::clear(); // we only want the HTML, not any of the js or css
             $this->renderedHtml = $controllerName::singleton()->render($this->owner);
+            Requirements::restore(); // put the js/css requirements back when we're done
         }
 
         if ($this->renderedHtml === false) {
@@ -83,16 +78,6 @@ class PageHealthExtension extends DataExtension
     }
 
     /**
-     * @return \Page|static
-     */
-    public function getOwner()
-    {
-        /** @var \Page $owner */
-        $owner = parent::getOwner();
-        return $owner;
-    }
-
-    /**
      * Override this if you have more than just `Content` (or don't have `Content` at all). Fields should
      * be in the order for which they appear for a frontend user
      *
@@ -103,5 +88,27 @@ class PageHealthExtension extends DataExtension
         return [
             'Content'
         ];
+    }
+
+    /**
+     * @param FieldList $fields
+     */
+    public function updateCMSFields(FieldList $fields)
+    {
+        parent::updateCMSFields($fields);
+        if (Controller::curr() instanceof HistoryViewerController) { // avoid breaking the history comparison UI
+            return;
+        }
+        if ($this->owner instanceof \SilverStripe\ErrorPage\ErrorPage) {
+            return;
+        }
+
+        $fields->addFieldsToTab('Root.Main', [
+            ToggleCompositeField::create('SEOHealthAnalysis', 'SEO Health Analysis', [
+                GoogleSearchPreview::create('GoogleSearchPreview', 'Search Preview', $this->getOwner(), $this->getRenderedHtmlDomParser()),
+                TextField::create('FocusKeyword', 'Set focus keyword'),
+                HealthAnalysisField::create('ContentAnalysis', 'Content Analysis', $this->getOwner()),
+            ])
+        ], 'Metadata');
     }
 }

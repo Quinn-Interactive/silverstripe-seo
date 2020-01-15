@@ -1,7 +1,6 @@
 ---
 Name: silverstripe-seo
 ---
-
 Page:
   extensions:
     - Vulcan\Seo\Extensions\PageHealthExtension

@@ -24,16 +24,16 @@ class SiteConfigSettingsExtension extends DataExtension
 {
     use Configurable;
 
+    private static $casting = [
+        'GoogleAnalytics' => 'HTMLText'
+    ];
+
     private static $db = [
         'GoogleAnalytics'    => 'Text',
         'FacebookPixel'      => 'Text',
         'TwitterPixel'       => 'Text',
         'SnapPixel'          => 'Text',
         'TwitterAccountName' => 'Varchar(80)'
-    ];
-
-    private static $casting = [
-        'GoogleAnalytics' => 'HTMLText'
     ];
 
     public function updateCMSFields(FieldList $fields)
@@ -43,7 +43,7 @@ class SiteConfigSettingsExtension extends DataExtension
         $fbPixelHelp = 'https://www.facebook.com/business/help/952192354843755';
         $twPixelHelp = 'https://business.twitter.com/en/solutions/twitter-ads/website-clicks/set-up-conversion-tracking.html';
         $snPixelHelp = 'https://businesshelp.snapchat.com/en-US/article/snap-pixel';
-        $gaHelp = 'https://support.google.com/analytics/answer/1008080?hl=en';
+        $gaHelp      = 'https://support.google.com/analytics/answer/1008080?hl=en';
 
         $fields->addFieldsToTab('Root.VulcanSEO', [
             TextField::create('TwitterAccountName'),

@@ -78,6 +78,64 @@ class Seo
     }
 
     /**
+     * Creates the Facebook/OpenGraph meta tags
+     *
+     * @param \Page|PageSeoExtension|Object $owner
+     *
+     * @return array
+     */
+    public static function getFacebookMetaTags($owner)
+    {
+        $imageWidth  = $owner->FacebookPageImage()->exists() ? $owner->FacebookPageImage()->getWidth() : null;
+        $imageHeight = $owner->FacebookPageImage()->exists() ? $owner->FacebookPageImage()->getHeight() : null;
+
+        $generator = FacebookMetaGenerator::create();
+        $generator->setTitle($owner->FacebookPageTitle ?: $owner->Title);
+        $generator->setDescription($owner->FacebookPageDescription ?: $owner->MetaDescription ?: $owner->Content);
+        $generator->setImageUrl(($owner->FacebookPageImage()->exists()) ? $owner->FacebookPageImage()->AbsoluteLink() : null);
+        $generator->setImageDimensions($imageWidth, $imageHeight);
+        $generator->setType($owner->FacebookPageType ?: 'website');
+        $generator->setUrl($owner->AbsoluteLink());
+
+        return $generator->process();
+    }
+
+    /**
+     * @return array
+     */
+    public static function getGoogleAnalytics()
+    {
+        /** @var SiteConfig|SiteConfigSettingsExtension $sc */
+        $sc = SiteConfig::current_site_config();
+
+        return ($sc->GoogleAnalytics) ? [$sc->GoogleAnalytics] : [];
+    }
+
+    /**
+     * Get all PixelFields
+     * @return array
+     */
+    public static function getPixels()
+    {
+        $output     = [];
+        $siteConfig = SiteConfig::current_site_config();
+        $ours       = array_keys(SiteConfigSettingsExtension::config()->get('db'));
+        $db         = SiteConfig::config()->get('db');
+
+        foreach ($db as $k => $v) {
+            if (strstr($k, 'Pixel') && in_array($k, $ours)) {
+                if (is_null($siteConfig->{$k})) {
+                    continue;
+                }
+
+                $output[] = $siteConfig->{$k};
+            }
+        }
+
+        return $output;
+    }
+
+    /**
      * Creates the twitter meta tags
      *
      * @param \Page|PageSeoExtension|Object $owner
@@ -96,63 +154,5 @@ class Seo
         }
 
         return $generator->process();
-    }
-
-    /**
-     * Creates the Facebook/OpenGraph meta tags
-     *
-     * @param \Page|PageSeoExtension|Object $owner
-     *
-     * @return array
-     */
-    public static function getFacebookMetaTags($owner)
-    {
-        $imageWidth = $owner->FacebookPageImage()->exists() ? $owner->FacebookPageImage()->getWidth() : null;
-        $imageHeight = $owner->FacebookPageImage()->exists() ? $owner->FacebookPageImage()->getHeight() : null;
-
-        $generator = FacebookMetaGenerator::create();
-        $generator->setTitle($owner->FacebookPageTitle ?: $owner->Title);
-        $generator->setDescription($owner->FacebookPageDescription ?: $owner->MetaDescription ?: $owner->Content);
-        $generator->setImageUrl(($owner->FacebookPageImage()->exists()) ? $owner->FacebookPageImage()->AbsoluteLink() : null);
-        $generator->setImageDimensions($imageWidth, $imageHeight);
-        $generator->setType($owner->FacebookPageType ?: 'website');
-        $generator->setUrl($owner->AbsoluteLink());
-
-        return $generator->process();
-    }
-
-    /**
-     * Get all PixelFields
-     * @return array
-     */
-    public static function getPixels()
-    {
-        $output = [];
-        $siteConfig = SiteConfig::current_site_config();
-        $ours = array_keys(SiteConfigSettingsExtension::config()->get('db'));
-        $db = SiteConfig::config()->get('db');
-
-        foreach ($db as $k => $v) {
-            if (strstr($k, 'Pixel') && in_array($k, $ours)) {
-                if (is_null($siteConfig->{$k})) {
-                    continue;
-                }
-
-                $output[] = $siteConfig->{$k};
-            }
-        }
-
-        return $output;
-    }
-
-    /**
-     * @return array
-     */
-    public static function getGoogleAnalytics()
-    {
-        /** @var SiteConfig|SiteConfigSettingsExtension $sc */
-        $sc = SiteConfig::current_site_config();
-
-        return ($sc->GoogleAnalytics) ? [$sc->GoogleAnalytics] : [];
     }
 }

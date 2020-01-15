@@ -19,22 +19,12 @@ class FacebookMetaGenerator
     /**
      * @var string|null
      */
-    protected $title;
-
-    /**
-     * @var string|null
-     */
     protected $description;
 
     /**
-     * @var string
-     */
-    protected $type = 'website';
-
-    /**
      * @var string|null
      */
-    protected $url;
+    protected $imageHeight;
 
     /**
      * @var string|null
@@ -49,7 +39,63 @@ class FacebookMetaGenerator
     /**
      * @var string|null
      */
-    protected $imageHeight;
+    protected $title;
+
+    /**
+     * @var string
+     */
+    protected $type = 'website';
+
+    /**
+     * @var string|null
+     */
+    protected $url;
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        $obj = DBHTMLText::create();
+
+        if (!$this->description) {
+            return null;
+        }
+
+        return $obj->setValue($this->description)->LimitCharacters(297);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImageUrl()
+    {
+        return $this->imageUrl;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
 
     /**
      * @return array
@@ -90,17 +136,6 @@ class FacebookMetaGenerator
     }
 
     /**
-     * @param mixed $title
-     *
-     * @return FacebookMetaGenerator
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-        return $this;
-    }
-
-    /**
      * @param mixed $description
      *
      * @return FacebookMetaGenerator
@@ -108,52 +143,6 @@ class FacebookMetaGenerator
     public function setDescription($description)
     {
         $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * @param mixed $type
-     *
-     * @return FacebookMetaGenerator
-     * @throws \Exception
-     */
-    public function setType($type)
-    {
-        if (!in_array($type, array_keys(static::getValidTypes()))) {
-            throw new \Exception("That type [$type] is not a valid type, please see: https://developers.facebook.com/docs/reference/opengraph/");
-        }
-
-        $this->type = $type;
-        return $this;
-    }
-
-    /**
-     * @param mixed $url
-     *
-     * @return FacebookMetaGenerator
-     */
-    public function setUrl($url)
-    {
-        if ($url && (substr($url, 0, 1) === '/' || substr($url, 0, 4) !== 'http')) {
-            throw new \InvalidArgumentException('A relative URL was detected, your must provide the full absolute URL instead');
-        }
-
-        $this->url = $url;
-        return $this;
-    }
-
-    /**
-     * @param mixed $imageUrl
-     *
-     * @return FacebookMetaGenerator
-     */
-    public function setImageUrl($imageUrl)
-    {
-        if ($imageUrl && (substr($imageUrl, 0, 1) === '/' || substr($imageUrl, 0, 4) !== 'http')) {
-            throw new \InvalidArgumentException('A relative or invalid URL was detected, your must provide the full absolute URL');
-        }
-
-        $this->imageUrl = $imageUrl;
         return $this;
     }
 
@@ -172,17 +161,6 @@ class FacebookMetaGenerator
     }
 
     /**
-     * @param int $width
-     *
-     * @return $this
-     */
-    public function setImageWidth($width)
-    {
-        $this->imageWidth = $width;
-        return $this;
-    }
-
-    /**
      * @param int $height
      *
      * @return $this
@@ -194,49 +172,71 @@ class FacebookMetaGenerator
     }
 
     /**
-     * @return mixed
+     * @param mixed $imageUrl
+     *
+     * @return FacebookMetaGenerator
      */
-    public function getTitle()
+    public function setImageUrl($imageUrl)
     {
-        return $this->title;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        $obj = DBHTMLText::create();
-
-        if (!$this->description) {
-            return null;
+        if ($imageUrl && (substr($imageUrl, 0, 1) === '/' || substr($imageUrl, 0, 4) !== 'http')) {
+            throw new \InvalidArgumentException('A relative or invalid URL was detected; you must provide the full absolute URL');
         }
 
-        return $obj->setValue($this->description)->LimitCharacters(297);
+        $this->imageUrl = $imageUrl;
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @param int $width
+     *
+     * @return $this
      */
-    public function getType()
+    public function setImageWidth($width)
     {
-        return $this->type;
+        $this->imageWidth = $width;
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @param mixed $title
+     *
+     * @return FacebookMetaGenerator
      */
-    public function getUrl()
+    public function setTitle($title)
     {
-        return $this->url;
+        $this->title = $title;
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @param mixed $type
+     *
+     * @return FacebookMetaGenerator
+     * @throws \Exception
      */
-    public function getImageUrl()
+    public function setType($type)
     {
-        return $this->imageUrl;
+        if (!in_array($type, array_keys(static::getValidTypes()))) {
+            throw new \Exception("That type [${type}] is not a valid type; please see: https://developers.facebook.com/docs/reference/opengraph/");
+        }
+
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @param mixed $url
+     *
+     * @return FacebookMetaGenerator
+     */
+    public function setUrl($url)
+    {
+        if ($url && (substr($url, 0, 1) === '/' || substr($url, 0, 4) !== 'http')) {
+            throw new \InvalidArgumentException('A relative URL was detected; you must provide the full absolute URL instead');
+        }
+
+        $this->url = $url;
+        return $this;
     }
 
     /**
