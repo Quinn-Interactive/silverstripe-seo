@@ -7,6 +7,7 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\ORM\DataExtension;
+use SilverStripe\View\Requirements;
 use Vulcan\Seo\Forms\GoogleSearchPreview;
 use Vulcan\Seo\Forms\HealthAnalysisField;
 
@@ -52,7 +53,9 @@ class PageHealthExtension extends DataExtension
                 // remove the Form since it crashes
                 $this->owner->Form = false;
             }
+            Requirements::clear(); // we only want the HTML, not any of the js or css
             $this->renderedHtml = $controllerName::singleton()->render($this->owner);
+            Requirements::restore(); // put the js/css requirements back when we're done
         }
 
         if ($this->renderedHtml === false) {
