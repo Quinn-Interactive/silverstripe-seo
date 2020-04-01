@@ -1,19 +1,19 @@
 <?php
 
-namespace Vulcan\Seo\Forms;
+namespace QuinnInteractive\Seo\Forms;
 
+use QuinnInteractive\Seo\Analysis\Analysis;
+use QuinnInteractive\Seo\Extensions\PageHealthExtension;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\View\ArrayData;
 use SilverStripe\View\Requirements;
-use Vulcan\Seo\Analysis\Analysis;
-use Vulcan\Seo\Extensions\PageHealthExtension;
 
 /**
  * Class HealthAnalysisField
- * @package Vulcan\Seo\Forms
+ * @package QuinnInteractive\Seo\Forms
  */
 class HealthAnalysisField extends LiteralField
 {
@@ -44,7 +44,12 @@ class HealthAnalysisField extends LiteralField
         Requirements::javascript('quinninteractive/silverstripe-seo:dist/javascript/main.min.js');
         Requirements::css('quinninteractive/silverstripe-seo:dist/css/styles.min.css');
 
-        parent::__construct($name, ArrayData::create(['Title' => $title, 'Results' => $this->runAnalyses()])->renderWith(self::class));
+        parent::__construct($name, ArrayData::create(
+            [
+                'Title'      => $title,
+                'Results'    => $this->runAnalyses(),
+            ]
+        )->renderWith(self::class));
     }
 
     /**

@@ -1,12 +1,12 @@
 <?php
 
-namespace Vulcan\Seo\Tests\Extensions;
+namespace QuinnInteractive\Seo\Tests\Extensions;
 
 use SilverStripe\Control\Director;
 use SilverStripe\Dev\FunctionalTest;
 use SilverStripe\ORM\FieldType\DBDatetime;
-use Vulcan\Seo\Extensions\PageSeoExtension;
-use Vulcan\Seo\Seo;
+use QuinnInteractive\Seo\Extensions\PageSeoExtension;
+use QuinnInteractive\Seo\Seo;
 
 class PageSeoExtensionTest extends FunctionalTest
 {

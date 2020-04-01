@@ -1,16 +1,16 @@
 <?php
 
-namespace Vulcan\Seo\Builders;
+namespace QuinnInteractive\Seo\Builders;
 
+use QuinnInteractive\Seo\Extensions\SiteConfigSettingsExtension;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\SiteConfig\SiteConfig;
-use Vulcan\Seo\Extensions\SiteConfigSettingsExtension;
 
 /**
  * Class FacebookMetaGenerator
- * @package Vulcan\Seo\Builders
+ * @package QuinnInteractive\Seo\Builders
  */
 class TwitterMetaGenerator
 {
@@ -124,6 +124,7 @@ class TwitterMetaGenerator
     public function setCreator($creator)
     {
         $this->creator = str_replace('@', '', $creator);
+
         return $this;
     }
 
@@ -135,6 +136,7 @@ class TwitterMetaGenerator
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -146,10 +148,12 @@ class TwitterMetaGenerator
     public function setImageUrl($imageUrl)
     {
         if ($imageUrl && (substr($imageUrl, 0, 1) === '/' || substr($imageUrl, 0, 4) !== 'http')) {
-            throw new \InvalidArgumentException('A relative or invalid URL was detected, your must provide the full absolute URL');
+            throw new \InvalidArgumentException(
+                'A relative or invalid URL was detected, your must provide the full absolute URL'
+            );
         }
-
         $this->imageUrl = $imageUrl;
+
         return $this;
     }
 
@@ -161,6 +165,7 @@ class TwitterMetaGenerator
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 }

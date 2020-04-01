@@ -1,12 +1,12 @@
 <?php
 
-namespace Vulcan\Seo\Analysis;
+namespace QuinnInteractive\Seo\Analysis;
 
 use SilverStripe\i18n\i18n;
 
 /**
  * Class MetaDescAnalysis
- * @package Vulcan\Seo\Analysis
+ * @package QuinnInteractive\Seo\Analysis
  */
 class MetaDescAnalysis extends Analysis
 {
@@ -22,11 +22,32 @@ class MetaDescAnalysis extends Analysis
     public function responses()
     {
         return [
-            static::META_DESC_UNSET            => [i18n::_t('VULCANSEO.Analysis.MetaDescNotSet', 'The meta description has not been set; a potentially unwanted snippet may be taken from the page and displayed instead'), 'danger'],
-            static::META_DESC_TOO_SHORT        => [i18n::_t('VULCANSEO.Analysis.MetaDescTooShort', 'The meta description is too short'), 'danger'],
-            static::META_DESC_TOO_LONG         => [i18n::_t('VULCANSEO.Analysis.MetaDescTooLong', 'The meta description is too long'), 'danger'],
-            static::META_DESC_NO_FOCUS_KEYWORD => [i18n::_t('VULCANSEO.Analysis.MetaDescMissingFocusKeyword', 'The meta description does not contain the focus keyword'), 'warning'],
-            static::META_DESC_SUCCESS          => [i18n::_t('VULCANSEO.Analysis.MetaDescPerfect', 'The meta description is perfect!'), 'success']
+            static::META_DESC_UNSET
+                => [i18n::_t(
+                    'VULCANSEO.Analysis.MetaDescNotSet',
+                    'The meta description has not been set; ' .
+                    'a potentially unwanted snippet may be taken from the page and displayed instead'
+                ), 'danger'],
+            static::META_DESC_TOO_SHORT
+                => [i18n::_t(
+                    'VULCANSEO.Analysis.MetaDescTooShort',
+                    'The meta description is too short'
+                ), 'danger'],
+            static::META_DESC_TOO_LONG
+                => [i18n::_t(
+                    'VULCANSEO.Analysis.MetaDescTooLong',
+                    'The meta description is too long'
+                ), 'danger'],
+            static::META_DESC_NO_FOCUS_KEYWORD
+                => [i18n::_t(
+                    'VULCANSEO.Analysis.MetaDescMissingFocusKeyword',
+                    'The meta description does not contain the focus keyword'
+                ), 'warning'],
+            static::META_DESC_SUCCESS
+                => [i18n::_t(
+                    'VULCANSEO.Analysis.MetaDescPerfect',
+                    'The meta description is perfect!'
+                ), 'success']
         ];
     }
 

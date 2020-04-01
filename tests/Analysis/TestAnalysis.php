@@ -1,9 +1,9 @@
 <?php
 
-namespace Vulcan\Seo\Tests\Analysis;
+namespace QuinnInteractive\Seo\Tests\Analysis;
 
 use SilverStripe\Dev\TestOnly;
-use Vulcan\Seo\Analysis\Analysis;
+use QuinnInteractive\Seo\Analysis\Analysis;
 
 class TestAnalysis extends Analysis implements TestOnly
 {

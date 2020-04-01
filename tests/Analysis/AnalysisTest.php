@@ -1,6 +1,6 @@
 <?php
 
-namespace Vulcan\Seo\Tests\Analysis;
+namespace QuinnInteractive\Seo\Tests\Analysis;
 
 use SilverStripe\Dev\FunctionalTest;
 

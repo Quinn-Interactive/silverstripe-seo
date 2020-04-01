@@ -1,21 +1,21 @@
 <?php
 
-namespace Vulcan\Seo\Extensions;
+namespace QuinnInteractive\Seo\Extensions;
 
 use KubAT\PhpSimple\HtmlDomParser;
+use QuinnInteractive\Seo\Forms\GoogleSearchPreview;
+use QuinnInteractive\Seo\Forms\HealthAnalysisField;
+use SilverStripe\Control\Controller;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\ORM\DataExtension;
-use SilverStripe\View\Requirements;
-use Vulcan\Seo\Forms\GoogleSearchPreview;
-use Vulcan\Seo\Forms\HealthAnalysisField;
 use SilverStripe\VersionedAdmin\Controllers\HistoryViewerController;
-use SilverStripe\Control\Controller;
+use SilverStripe\View\Requirements;
 
 /**
  * Class PageHealthExtension
- * @package Vulcan\Seo\Extensions
+ * @package QuinnInteractive\Seo\Extensions
  *
  * @property string FocusKeyword
  */
@@ -105,7 +105,12 @@ class PageHealthExtension extends DataExtension
 
         $fields->addFieldsToTab('Root.Main', [
             ToggleCompositeField::create('SEOHealthAnalysis', 'SEO Health Analysis', [
-                GoogleSearchPreview::create('GoogleSearchPreview', 'Search Preview', $this->getOwner(), $this->getRenderedHtmlDomParser()),
+                GoogleSearchPreview::create(
+                    'GoogleSearchPreview',
+                    'Search Preview',
+                    $this->getOwner(),
+                    $this->getRenderedHtmlDomParser()
+                ),
                 TextField::create('FocusKeyword', 'Set focus keyword'),
                 HealthAnalysisField::create('ContentAnalysis', 'Content Analysis', $this->getOwner()),
             ])

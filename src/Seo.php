@@ -1,20 +1,20 @@
 <?php
 
-namespace Vulcan\Seo;
+namespace QuinnInteractive\Seo;
 
+use QuinnInteractive\Seo\Builders\FacebookMetaGenerator;
+use QuinnInteractive\Seo\Builders\TwitterMetaGenerator;
+use QuinnInteractive\Seo\Extensions\PageHealthExtension;
+use QuinnInteractive\Seo\Extensions\PageSeoExtension;
+use QuinnInteractive\Seo\Extensions\SiteConfigSettingsExtension;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\SiteConfig\SiteConfig;
-use Vulcan\Seo\Builders\FacebookMetaGenerator;
-use Vulcan\Seo\Builders\TwitterMetaGenerator;
-use Vulcan\Seo\Extensions\PageHealthExtension;
-use Vulcan\Seo\Extensions\PageSeoExtension;
-use Vulcan\Seo\Extensions\SiteConfigSettingsExtension;
 
 /**
  * Class Seo
- * @package Vulcan\Seo
+ * @package QuinnInteractive\Seo
  */
 class Seo
 {
@@ -92,7 +92,9 @@ class Seo
         $generator = FacebookMetaGenerator::create();
         $generator->setTitle($owner->FacebookPageTitle ?: $owner->Title);
         $generator->setDescription($owner->FacebookPageDescription ?: $owner->MetaDescription ?: $owner->Content);
-        $generator->setImageUrl(($owner->FacebookPageImage()->exists()) ? $owner->FacebookPageImage()->AbsoluteLink() : null);
+        $generator->setImageUrl(($owner->FacebookPageImage()->exists())
+            ? $owner->FacebookPageImage()->AbsoluteLink()
+            : null);
         $generator->setImageDimensions($imageWidth, $imageHeight);
         $generator->setType($owner->FacebookPageType ?: 'website');
         $generator->setUrl($owner->AbsoluteLink());
@@ -121,13 +123,11 @@ class Seo
         $siteConfig = SiteConfig::current_site_config();
         $ours       = array_keys(SiteConfigSettingsExtension::config()->get('db'));
         $db         = SiteConfig::config()->get('db');
-
         foreach ($db as $k => $v) {
             if (strstr($k, 'Pixel') && in_array($k, $ours)) {
                 if (is_null($siteConfig->{$k})) {
                     continue;
                 }
-
                 $output[] = $siteConfig->{$k};
             }
         }
@@ -147,9 +147,12 @@ class Seo
         $generator = TwitterMetaGenerator::create();
         $generator->setTitle($owner->FacebookPageTitle ?: $owner->Title);
         $generator->setDescription($owner->FacebookPageDescription ?: $owner->MetaDescription ?: $owner->Content);
-        $generator->setImageUrl(($owner->FacebookPageImage()->exists()) ? $owner->FacebookPageImage()->AbsoluteLink() : null);
-
-        if (PageSeoExtension::config()->get('enable_creator_tag') && $owner->Creator()->exists() && $owner->Creator()->TwitterAccountName) {
+        $generator->setImageUrl(($owner->FacebookPageImage()->exists())
+            ? $owner->FacebookPageImage()->AbsoluteLink()
+            : null);
+        if (PageSeoExtension::config()->get('enable_creator_tag') &&
+            $owner->Creator()->exists() &&
+            $owner->Creator()->TwitterAccountName) {
             $generator->setCreator($owner->Creator()->TwitterAccountName);
         }
 

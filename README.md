@@ -30,11 +30,11 @@ An all-in-one SEO module for SilverStripe.
 <meta property="article:modified_time" content="2018-04-16T21:52:52+10:00" />
 ```
 
-If you think you can add something beneficial to this output, please don't hesitate to submit a PR or open an issue to discuss it's addition
+If you think you can add something beneficial to this output, please don't hesitate to submit a PR or open an issue to discuss its addition. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Requirements
 
-* silverstripe/cms: ^4.1
+See [composer.json](composer.json) for details.
 
 ## Installation
 
@@ -50,7 +50,7 @@ The necessary extensions are automatically applied after installation of this mo
 
 Health analyses have been abstracted to give developers the ability to create their own analysis checks.
 
-To do this, you simply need to create a new class that extends `Vulcan\Seo\Analysis\Analysis`
+To do this, you simply need to create a new class that extends `QuinnInteractive\Seo\Analysis\Analysis`.
 
 As an example, let's create a new analysis that checks to see if `Hello World!` is the title of the current page.
 
@@ -63,14 +63,14 @@ First create the following file:
 
 namespace Vendor\Project\Analysis;
 
-use Vulcan\Seo\Analysis\Analysis;
+use QuinnInteractive\Seo\Analysis\Analysis;
 
-class HelloWorldTitleAnalysis extends Analysis 
+class HelloWorldTitleAnalysis extends Analysis
 {
     const FAILED = 0;
     const SUCCESS = 1;
 
-    public function run() 
+    public function run()
     {
         if (!strstr($this->getPage()->Title, 'Hello World!')) {
             return static::FAILED;
@@ -79,10 +79,10 @@ class HelloWorldTitleAnalysis extends Analysis
         return static::SUCCESS;
     }
 
-    public function responses() 
+    public function responses()
     {
         return [
-            static::FAILED => ['The string "Hello World!" does not appear in the page title', 'danger'],
+            static::FAILED  => ['The string "Hello World!" does not appear in the page title', 'danger'],
             static::SUCCESS => ['Hoorah!!! "Hello World!" appears in the page title', 'success'],
         ];
     }
@@ -91,9 +91,9 @@ class HelloWorldTitleAnalysis extends Analysis
 
 Then dev/build. You will immediately see this new analysis running in the CMS under the "SEO Health Analysis" accordion when editing any page, then change the title to include "Hello World" and you will notice the indicator will display success.
 
-One thing to keep in mind is, that the analysis always has access to the `\Page` object that it is running against, via `$this->getPage()`, so your responses can also be dynamic.
+One thing to keep in mind is that the analysis always has access to the `\Page` object that it is running against via `$this->getPage()`, so your responses can also be dynamic.
 
-> If you have created an analysis and think it would be beneficial as an addition to this module then we urge you to submit a Pull Request and you will receive full credit for your work
+If you have created an analysis and think it would be beneficial as an addition to this module then we urge you to submit a Pull Request and you will receive full credit for your work. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### Explained: `run()`
 
@@ -125,7 +125,7 @@ and when this particular user creates a page, the `twitter:creator` meta tag wil
 You can disable this via YML:
 
 ```yml
-Vulcan\Seo\Extensions\PageSeoExtension:
+QuinnInteractive\Seo\Extensions\PageSeoExtension:
     enable_creator_tag: false
 ```
 
@@ -138,14 +138,14 @@ They should be ordered in the correct order that they appear for the end user
 In your `\Page` subclass you would have:
 
 ```php
-public function seoContentFields() 
+public function seoContentFields()
 {
     return [
         'Content',
         'MyBlock.Title',
         'MyBlock.Content',
         'BottomTitle',
-        'BottomContent'    
+        'BottomContent',
     ];
 }
 ```
@@ -163,4 +163,4 @@ public function seoContentFields()
 
 ## Version
 
-1.0.7
+1.0.8
