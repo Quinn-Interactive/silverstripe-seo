@@ -72,7 +72,7 @@ class PageSeoExtension extends DataExtension
      *
      * @param $tags
      */
-    public function getMetaTags(&$tags)
+    public function MetaTags(&$tags)
     {
         $tags = explode(PHP_EOL, $tags);
         $tags = array_merge(
