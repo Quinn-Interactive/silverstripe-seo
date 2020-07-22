@@ -146,9 +146,9 @@ class Seo
     {
         $generator = TwitterMetaGenerator::create();
         $generator->setTitle($owner->FacebookPageTitle ?: $owner->Title);
-        $generator->setDescription($owner->FacebookPageDescription ?: $owner->MetaDescription ?: $owner->Content);
-        $generator->setImageUrl(($owner->FacebookPageImage()->exists())
-            ? $owner->FacebookPageImage()->AbsoluteLink()
+        $generator->setDescription($owner->TwitterPageDescription ?: $owner->MetaDescription ?: $owner->Content);
+        $generator->setImageUrl(($owner->TwitterPageImage()->exists())
+            ? $owner->TwitterPageImage()->AbsoluteLink()
             : null);
         if (PageSeoExtension::config()->get('enable_creator_tag') &&
             $owner->Creator()->exists() &&
