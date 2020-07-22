@@ -9,7 +9,7 @@ use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\SiteConfig\SiteConfig;
 
 /**
- * Class FacebookMetaGenerator
+ * Class TwitterMetaGenerator
  * @package QuinnInteractive\Seo\Builders
  */
 class TwitterMetaGenerator
