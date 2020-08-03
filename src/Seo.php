@@ -7,6 +7,7 @@ use QuinnInteractive\Seo\Builders\TwitterMetaGenerator;
 use QuinnInteractive\Seo\Extensions\PageHealthExtension;
 use QuinnInteractive\Seo\Extensions\PageSeoExtension;
 use QuinnInteractive\Seo\Extensions\SiteConfigSettingsExtension;
+use SilverStripe\Control\Controller;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\ORM\FieldType\DBDatetime;
