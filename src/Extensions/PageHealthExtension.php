@@ -95,25 +95,26 @@ class PageHealthExtension extends DataExtension
      */
     public function updateCMSFields(FieldList $fields)
     {
-        parent::updateCMSFields($fields);
-        if (Controller::curr() instanceof HistoryViewerController) { // avoid breaking the history comparison UI
+        if (!$fields->dataFieldByName('FocusKeyword')) {
+            if (Controller::curr() instanceof HistoryViewerController) { // avoid breaking the history comparison UI
             return;
-        }
-        if ($this->owner instanceof \SilverStripe\ErrorPage\ErrorPage) {
-            return;
-        }
+            }
+            if ($this->owner instanceof \SilverStripe\ErrorPage\ErrorPage) {
+                return;
+            }
 
-        $fields->addFieldsToTab('Root.Main', [
-            ToggleCompositeField::create('SEOHealthAnalysis', 'SEO Health Analysis', [
-                GoogleSearchPreview::create(
-                    'GoogleSearchPreview',
-                    'Search Preview',
-                    $this->getOwner(),
-                    $this->getRenderedHtmlDomParser()
-                ),
-                TextField::create('FocusKeyword', 'Set focus keyword'),
-                HealthAnalysisField::create('ContentAnalysis', 'Content Analysis', $this->getOwner()),
-            ])
-        ], 'Metadata');
+            $fields->addFieldsToTab('Root.Main', [
+                ToggleCompositeField::create('SEOHealthAnalysis', 'SEO Health Analysis', [
+                    GoogleSearchPreview::create(
+                        'GoogleSearchPreview',
+                        'Search Preview',
+                        $this->getOwner(),
+                        $this->getRenderedHtmlDomParser()
+                    ),
+                    TextField::create('FocusKeyword', 'Set focus keyword'),
+                    HealthAnalysisField::create('ContentAnalysis', 'Content Analysis', $this->getOwner()),
+                ])
+            ], 'Metadata');
+        }
     }
 }
