@@ -1,0 +1,15 @@
+---
+Name: silverstripe-seo-fluent
+Only:
+  classexists: TractorCow\Fluent\Extension\FluentSiteTreeExtension
+---
+Page:
+  translate:
+    - FocusKeyword
+    - FacebookPageType
+    - FacebookPageTitle
+    - FacebookPageDescription
+    - TwitterPageTitle
+    - TwitterPageDescription
+    - FacebookPageImageID
+    - TwitterPageImageID
