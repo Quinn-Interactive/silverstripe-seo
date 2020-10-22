@@ -3,13 +3,13 @@ Name: silverstripe-seo
 ---
 Page:
   extensions:
-    - QuinnInteractive\Seo\Extensions\PageHealthExtension
-    - QuinnInteractive\Seo\Extensions\PageSeoExtension
+    QISEOPageHealthExtension: QuinnInteractive\Seo\Extensions\PageHealthExtension
+    QISEOPageSeoExtension: QuinnInteractive\Seo\Extensions\PageSeoExtension
 
 SilverStripe\SiteConfig\SiteConfig:
   extensions:
-    - QuinnInteractive\Seo\Extensions\SiteConfigSettingsExtension
+    QISEOSiteConfigSettingsExtension: QuinnInteractive\Seo\Extensions\SiteConfigSettingsExtension
 
 SilverStripe\Security\Member:
   extensions:
-    - QuinnInteractive\Seo\Extensions\MemberExtension
+    QISEOMemberExtension: QuinnInteractive\Seo\Extensions\MemberExtension
