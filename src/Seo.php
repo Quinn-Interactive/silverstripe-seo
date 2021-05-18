@@ -37,6 +37,10 @@ class Seo
             $content[] = $owner->relObject($field)->forTemplate();
         }
 
+        if ($owner->hasMethod('updateCollateContentFields')) {
+            $content = $owner->updateCollateContentFields($content);
+        }
+
         $content = implode(' ', $content);
 
         return strtolower(strip_tags($content));
