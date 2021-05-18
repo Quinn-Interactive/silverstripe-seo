@@ -10,6 +10,7 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
 use SilverStripe\ORM\DataExtension;
+use SilverStripe\VersionedAdmin\Controllers\CMSPageHistoryViewerController;
 use SilverStripe\VersionedAdmin\Controllers\HistoryViewerController;
 use SilverStripe\View\Requirements;
 
@@ -95,10 +96,13 @@ class PageHealthExtension extends DataExtension
      */
     public function updateCMSFields(FieldList $fields)
     {
-        parent::updateCMSFields($fields);
-        if (Controller::curr() instanceof HistoryViewerController) { // avoid breaking the history comparison UI
+        if (
+            Controller::curr() instanceof HistoryViewerController ||
+            Controller::curr() instanceof CMSPageHistoryViewerController
+        ) { // avoid breaking the history comparison UI
             return;
         }
+
         if ($this->owner instanceof \SilverStripe\ErrorPage\ErrorPage) {
             return;
         }
