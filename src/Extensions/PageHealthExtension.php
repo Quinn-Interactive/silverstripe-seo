@@ -107,17 +107,21 @@ class PageHealthExtension extends DataExtension
             return;
         }
 
-        $fields->addFieldsToTab('Root.Main', [
-            ToggleCompositeField::create('SEOHealthAnalysis', 'SEO Health Analysis', [
-                GoogleSearchPreview::create(
-                    'GoogleSearchPreview',
-                    'Search Preview',
-                    $this->getOwner(),
-                    $this->getRenderedHtmlDomParser()
-                ),
-                TextField::create('FocusKeyword', 'Set focus keyword'),
-                HealthAnalysisField::create('ContentAnalysis', 'Content Analysis', $this->getOwner()),
-            ])
-        ], 'Metadata');
+        $dom = $this->getRenderedHtmlDomParser();
+
+        if ($dom) {
+            $fields->addFieldsToTab('Root.Main', [
+                ToggleCompositeField::create('SEOHealthAnalysis', 'SEO Health Analysis', [
+                    GoogleSearchPreview::create(
+                        'GoogleSearchPreview',
+                        'Search Preview',
+                        $this->getOwner(),
+                        $dom
+                    ),
+                    TextField::create('FocusKeyword', 'Set focus keyword'),
+                    HealthAnalysisField::create('ContentAnalysis', 'Content Analysis', $this->getOwner()),
+                ])
+            ], 'Metadata');
+        }
     }
 }
