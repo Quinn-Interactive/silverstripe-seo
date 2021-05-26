@@ -39,6 +39,12 @@ class FocusKeywordContentAnalysis extends Analysis
     public function getContentFromDom()
     {
         $dom    = $this->getPage()->getRenderedHtmlDomParser();
+        
+        if (!$dom) {
+           return '';
+        }
+
+        
         $result = $dom->find('body', 0);
 
         return strtolower(strip_tags($result ? $result->innertext() : ''));
