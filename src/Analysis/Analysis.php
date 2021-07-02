@@ -189,7 +189,7 @@ abstract class Analysis
      */
     public function run()
     {
-        throw new \RuntimeException(srintf(
+        throw new \RuntimeException(sprintf(
             'You must override the run method in %s and return an integer as a response that references '
             . 'a key in your array that your responses() override returns',
             static::class
