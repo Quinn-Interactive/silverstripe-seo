@@ -150,6 +150,16 @@ public function seoContentFields()
 }
 ```
 
+In your `\Page` subclass you could add an updateCollateContentFields to provide custom content that is not possible with seoContentFields:
+
+```php
+public function updateCollateContentFields($content) {
+    // Content is an array of strings with content in the order in which they appear to the user
+    $content[] = 'This is example content';
+    return $content;
+}
+```
+
 ## Roadmap (subject to change)
 
 * Finish implementing internationalisation to this module and its analyses
@@ -163,4 +173,4 @@ public function seoContentFields()
 
 ## Version
 
-1.0.12
+1.0.13

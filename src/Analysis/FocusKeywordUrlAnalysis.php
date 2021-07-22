@@ -34,19 +34,21 @@ class FocusKeywordUrlAnalysis extends Analysis
     {
         return [
             static::FOCUS_KEYWORD_IRRELEVANT => [
-                'The focus keyword is irrelevant on the home page; this message will not display',
+                _t( __CLASS__ . '.FOCUS_KEYWORD_IRRELEVANT', 'The focus keyword is irrelevant on the home page; this message will not display'),
                 'default'
             ],
             static::FOCUS_KEYWORD_UNSET => [
-                'The focus keyword has not been set; consider setting this to improve content analysis',
+                _t( __CLASS__ . '.FOCUS_KEYWORD_UNSET', 'The focus keyword has not been set; consider setting this to improve content analysis'),
                 'default'
             ],
             static::FOCUS_KEYWORD_NOT_IN_URL => [
-                'The focus keyword is not in the url segment; ' .
-                'consider changing this and if you do SilverStripe will automatically redirect your old URL!',
+                _t( __CLASS__ . '.FOCUS_KEYWORD_NOT_IN_URL', 'The focus keyword is not in the url segment; consider changing this and if you do SilverStripe will automatically redirect your old URL!'),
                 'warning'
             ],
-            static::FOCUS_KEYWORD_SUCCESS => ['The focus keyword is in the url segment; this is great!', 'success'],
+            static::FOCUS_KEYWORD_SUCCESS => [
+                _t( __CLASS__ . '.FOCUS_KEYWORD_SUCCESS', 'The focus keyword is in the url segment; this is great!'),
+                'success'
+            ],
         ];
     }
 

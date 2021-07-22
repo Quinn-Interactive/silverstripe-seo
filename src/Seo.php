@@ -7,9 +7,11 @@ use QuinnInteractive\Seo\Builders\TwitterMetaGenerator;
 use QuinnInteractive\Seo\Extensions\PageHealthExtension;
 use QuinnInteractive\Seo\Extensions\PageSeoExtension;
 use QuinnInteractive\Seo\Extensions\SiteConfigSettingsExtension;
+use SilverStripe\Control\Controller;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\Security\Security;
 use SilverStripe\SiteConfig\SiteConfig;
 
 /**
@@ -35,6 +37,10 @@ class Seo
         $content = [];
         foreach ($contentFields as $field) {
             $content[] = $owner->relObject($field)->forTemplate();
+        }
+
+        if ($owner->hasMethod('updateCollateContentFields')) {
+            $content = $owner->updateCollateContentFields($content);
         }
 
         $content = implode(' ', $content);
@@ -64,6 +70,20 @@ class Seo
     }
 
     /**
+     * Gets the current action. Good for static routes like Security where the index is a 404
+     * @return string|null
+     */
+    public static function getCurrentAction()
+    {
+        $action = null;
+        if (Controller::curr() instanceof Security) {
+            $action = Controller::curr()->getAction();
+        }
+
+        return $action;
+    }
+
+    /**
      * Creates the canonical url link
      *
      * @param \Page|PageSeoExtension|Object $owner
@@ -73,7 +93,7 @@ class Seo
     public static function getCanonicalUrlLink($owner)
     {
         return [
-            sprintf('<link rel="canonical" href="%s"/>', $owner->AbsoluteLink())
+            sprintf('<link rel="canonical" href="%s"/>', $owner->AbsoluteLink(static::getCurrentAction()))
         ];
     }
 
@@ -97,7 +117,7 @@ class Seo
             : null);
         $generator->setImageDimensions($imageWidth, $imageHeight);
         $generator->setType($owner->FacebookPageType ?: 'website');
-        $generator->setUrl($owner->AbsoluteLink());
+        $generator->setUrl($owner->AbsoluteLink(static::getCurrentAction()));
 
         return $generator->process();
     }
