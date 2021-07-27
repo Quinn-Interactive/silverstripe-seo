@@ -68,6 +68,35 @@ class PageSeoExtension extends DataExtension
     ];
 
     /**
+     * @param $tags
+     */
+    public function MetaComponents(&$tags)
+    {
+        $addTag = function ($tagName, $tag) use (&$tags) {
+            $tags[$tagName] = [
+                'attributes' => [
+                    'rel' => $tagName,
+                    'content' => $tag,
+                ],
+            ];
+        };
+
+        $addTag('canonical', Seo::getCanonicalUrlLink($this->getOwner()));
+
+        foreach (Seo::getFacebookMetaTags($this->getOwner()) as $tagName => $tag) {
+            $addTag($tagName, $tag);
+        }
+
+        foreach (Seo::getTwitterMetaTags($this->getOwner()) as $tagName => $tag) {
+            $addTag($tagName, $tag);
+        }
+
+        foreach (Seo::getArticleTags($this->getOwner()) as $tagName => $tag) {
+            $addTag($tagName, $tag);
+        }
+    }
+
+    /**
      * Extension point for SiteTree to merge all tags with the standard meta tags
      *
      * @param $tags
@@ -77,10 +106,6 @@ class PageSeoExtension extends DataExtension
         $tags = explode(PHP_EOL, $tags);
         $tags = array_merge(
             $tags,
-            Seo::getCanonicalUrlLink($this->getOwner()),
-            Seo::getFacebookMetaTags($this->getOwner()),
-            Seo::getTwitterMetaTags($this->getOwner()),
-            Seo::getArticleTags($this->getOwner()),
             Seo::getGoogleAnalytics(),
             Seo::getPixels()
         );

@@ -31,7 +31,7 @@ class PageSeoExtensionTest extends FunctionalTest
 
     public function testCanonicalLink()
     {
-        $this->assertContains(Director::absoluteBaseURL(), Seo::getCanonicalUrlLink($this->page)[0]);
+        $this->assertContains(Director::absoluteBaseURL(), Seo::getCanonicalUrlLink($this->page));
     }
 
     public function testArticleTags()
@@ -44,22 +44,32 @@ class PageSeoExtensionTest extends FunctionalTest
 
         $this->assertContains(
             $created->Rfc3339(),
-            Seo::getArticleTags($this->page)[0]
+            Seo::getArticleTags($this->page)
         );
         $this->assertContains(
             $lastEdited->Rfc3339(),
-            Seo::getArticleTags($this->page)[1]
+            Seo::getArticleTags($this->page)
         );
     }
 
-    public function testMetaTags()
+    public function testMetaComponents()
     {
-        $tags = $this->page->MetaTags(false);
+        $tags = $this->page->MetaComponents();
 
-        $this->assertContains(Seo::getCanonicalUrlLink($this->page)[0], $tags);
-        $this->assertContains(Seo::getArticleTags($this->page)[0], $tags);
-        $this->assertContains(Seo::getArticleTags($this->page)[1], $tags);
-        $this->assertContains(implode(PHP_EOL, Seo::getFacebookMetaTags($this->page)), $tags);
-        $this->assertContains(implode(PHP_EOL, Seo::getTwitterMetaTags($this->page)), $tags);
+        $this->assertContains(Seo::getCanonicalUrlLink($this->page), $tags['canonical']['attributes']);
+
+        $this->assertContains(Seo::getArticleTags($this->page)['article:published_time'], $tags['article:published_time']['attributes']);
+        $this->assertContains(Seo::getArticleTags($this->page)['article:modified_time'], $tags['article:modified_time']['attributes']);
+
+        $this->assertContains(Seo::getFacebookMetaTags($this->page)['og:title'], $tags['og:title']['attributes']);
+        $this->assertContains(Seo::getFacebookMetaTags($this->page)['og:description'], $tags['og:description']['attributes']);
+        $this->assertContains(Seo::getFacebookMetaTags($this->page)['og:type'], $tags['og:type']['attributes']);
+        $this->assertContains(Seo::getFacebookMetaTags($this->page)['og:url'], $tags['og:url']['attributes']);
+        $this->assertContains(Seo::getFacebookMetaTags($this->page)['og:locale'], $tags['og:locale']['attributes']);
+        $this->assertContains(Seo::getFacebookMetaTags($this->page)['og:site_name'], $tags['og:site_name']['attributes']);
+
+        $this->assertContains(Seo::getTwitterMetaTags($this->page)['twitter:card'], $tags['twitter:card']['attributes']);
+        $this->assertContains(Seo::getTwitterMetaTags($this->page)['twitter:title'], $tags['twitter:title']['attributes']);
+        $this->assertContains(Seo::getTwitterMetaTags($this->page)['twitter:description'], $tags['twitter:description']['attributes']);
     }
 }
