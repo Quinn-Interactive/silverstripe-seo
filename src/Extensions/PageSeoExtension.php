@@ -72,10 +72,10 @@ class PageSeoExtension extends DataExtension
      */
     public function MetaComponents(&$tags)
     {
-        $addTag = function ($tagName, $tag) use (&$tags) {
+        $addTag = function ($tagName, $tag, $type = 'rel') use (&$tags) {
             $tags[$tagName] = [
                 'attributes' => [
-                    'rel' => $tagName,
+                    $type => $tagName,
                     'content' => $tag,
                 ],
             ];
@@ -84,11 +84,11 @@ class PageSeoExtension extends DataExtension
         $addTag('canonical', Seo::getCanonicalUrlLink($this->getOwner()));
 
         foreach (Seo::getFacebookMetaTags($this->getOwner()) as $tagName => $tag) {
-            $addTag($tagName, $tag);
+            $addTag($tagName, $tag, 'property');
         }
 
         foreach (Seo::getTwitterMetaTags($this->getOwner()) as $tagName => $tag) {
-            $addTag($tagName, $tag);
+            $addTag($tagName, $tag, 'name');
         }
 
         foreach (Seo::getArticleTags($this->getOwner()) as $tagName => $tag) {
