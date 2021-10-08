@@ -173,4 +173,4 @@ public function updateCollateContentFields($content) {
 
 ## Version
 
-1.0.13
+1.0.14
