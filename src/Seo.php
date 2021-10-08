@@ -165,7 +165,7 @@ class Seo
     public static function getTwitterMetaTags($owner)
     {
         $generator = TwitterMetaGenerator::create();
-        $generator->setTitle($owner->FacebookPageTitle ?: $owner->Title);
+        $generator->setTitle($owner->TwitterPageTitle ?: $owner->Title);
         $generator->setDescription($owner->TwitterPageDescription ?: $owner->MetaDescription ?: $owner->Content);
         $generator->setImageUrl(($owner->TwitterPageImage()->exists())
             ? $owner->TwitterPageImage()->AbsoluteLink()
