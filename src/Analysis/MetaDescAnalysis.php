@@ -10,11 +10,11 @@ use SilverStripe\i18n\i18n;
  */
 class MetaDescAnalysis extends Analysis
 {
-    const META_DESC_NO_FOCUS_KEYWORD = 2; // only checked if the focus keyword has been defined
-    const META_DESC_SUCCESS          = 3;
-    const META_DESC_TOO_LONG         = 1;
-    const META_DESC_TOO_SHORT        = 0;
-    const META_DESC_UNSET            = -1;
+    public const META_DESC_NO_FOCUS_KEYWORD = 2; // only checked if the focus keyword has been defined
+    public const META_DESC_SUCCESS = 3;
+    public const META_DESC_TOO_LONG = 1;
+    public const META_DESC_TOO_SHORT = 0;
+    public const META_DESC_UNSET = -1;
 
     /**
      * @return array
