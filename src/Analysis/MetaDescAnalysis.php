@@ -59,7 +59,7 @@ class MetaDescAnalysis extends Analysis
      */
     public function run()
     {
-        $desc    = $this->getPage()->MetaDescription;
+        $desc = $this->getPage()->MetaDescription;
         $keyword = $this->getPage()->FocusKeyword;
 
         if (!$desc) {
