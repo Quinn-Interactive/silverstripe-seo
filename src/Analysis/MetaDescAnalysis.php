@@ -2,6 +2,7 @@
 
 namespace QuinnInteractive\Seo\Analysis;
 
+use SilverStripe\Core\Config\Configurable;
 use SilverStripe\i18n\i18n;
 
 /**
@@ -10,11 +11,15 @@ use SilverStripe\i18n\i18n;
  */
 class MetaDescAnalysis extends Analysis
 {
+    use Configurable;
+
     public const META_DESC_NO_FOCUS_KEYWORD = 2; // only checked if the focus keyword has been defined
     public const META_DESC_SUCCESS = 3;
     public const META_DESC_TOO_LONG = 1;
     public const META_DESC_TOO_SHORT = 0;
     public const META_DESC_UNSET = -1;
+    private static $meta_desc_target_length = 160;
+    private static $meta_desc_too_long_threshold = 320;
 
     /**
      * @return array
@@ -66,11 +71,11 @@ class MetaDescAnalysis extends Analysis
             return static::META_DESC_UNSET;
         }
 
-        if (strlen($desc) < 160) {
+        if (strlen($desc) < static::config()->get('meta_desc_target_length')) {
             return static::META_DESC_TOO_SHORT;
         }
 
-        if (strlen($desc) > 320) {
+        if (strlen($desc) > static::config()->get('meta_desc_too_long_threshold')) {
             return static::META_DESC_TOO_LONG;
         }
 
