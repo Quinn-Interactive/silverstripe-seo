@@ -129,6 +129,16 @@ QuinnInteractive\Seo\Extensions\PageSeoExtension:
     enable_creator_tag: false
 ```
 
+### Length of meta description
+
+The module has 2 configuration options pertaining to the length of the meta description. The sample YAML below demonstrates them with their default values. You don't have to make such a file unless you want different values from the defaults.
+
+```yaml
+QuinnInteractive\Seo\Analysis\MetaDescAnalysis:
+  meta_desc_target_length: 160
+  meta_desc_too_long_threshold: 320
+```
+
 ## Assumptions
 
 This module assumes that you make use of the default `Content` field provided by `\Page`. If a specific page does not then you can specify one or multiple fields that contain your content.
@@ -173,4 +183,4 @@ public function updateCollateContentFields($content) {
 
 ## Version
 
-1.0.14
+1.1.0
