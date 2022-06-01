@@ -49,7 +49,7 @@ class PageSeoExtension extends DataExtension
     ];
 
     /**
-     * The "creator tag" is the meta tag for Twitter to specify the creators Twitter account. Enabled by default
+     * The "creator tag" is the meta tag for Twitter to specify the creator's Twitter account. Enabled by default
      *
      * @config
      * @var bool

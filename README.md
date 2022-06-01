@@ -119,10 +119,9 @@ private static $hidden_levels = [
 
 ### `enable_creator_tag`
 
-By default, this module adds an extension to `\SilverStripe\Security\Member` that adds a single field named `TwitterAccountName`, if this is set
-and when this particular user creates a page, the `twitter:creator` meta tag will automatically generate with the Members account name
+By default, this module adds an extension to `\SilverStripe\Security\Member` that adds a single field named `TwitterAccountName`. If this is set, when this particular user creates a page, the `twitter:creator` meta tag will be generated with the Member's account name
 
-You can disable this via YML:
+You can disable this via YAML:
 
 ```yml
 QuinnInteractive\Seo\Extensions\PageSeoExtension:
