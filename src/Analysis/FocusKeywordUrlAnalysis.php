@@ -24,7 +24,11 @@ class FocusKeywordUrlAnalysis extends Analysis
      */
     public function getKeyword()
     {
-        return strtolower($this->getPage()->FocusKeyword);
+        if ($keyword = $this->getPage()->FocusKeyword) {
+            return strtolower($keyword);
+        }
+
+        return '';
     }
 
     /**
