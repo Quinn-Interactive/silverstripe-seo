@@ -15,7 +15,7 @@ class PageSeoExtensionTest extends FunctionalTest
     /** @var \Page|PageSeoExtension */
     protected $page;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
