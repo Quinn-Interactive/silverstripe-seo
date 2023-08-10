@@ -35,7 +35,11 @@ class PageSeoExtension extends DataExtension
 {
     use Configurable;
 
-    private static $tab_name = 'Root.Seo';
+    private static string $tab_name = 'Root.Seo';
+
+    private static bool $start_closed = true;
+
+    private static bool $use_composite_field = true;
 
     private static $cascade_deletes = [
         'FacebookPageImage',
@@ -105,51 +109,68 @@ class PageSeoExtension extends DataExtension
     public function updateCMSFields(FieldList $fields)
     {
         parent::updateCMSFields($fields);
+
         $suppressMessaging = false;
+
         if (Controller::curr() instanceof HistoryViewerController) { // avoid cluttering the history comparison UI
             $suppressMessaging = true;
         }
 
-        $fields->addFieldsToTab($this->config()->get('tab_name'), [
-            ToggleCompositeField::create('FacebookSeoComposite', 'Facebook SEO', [
-                DropdownField::create('FacebookPageType', 'Type', FacebookMetaGenerator::getValidTypes()),
-                TextField::create('FacebookPageTitle', 'Title')
-                    ->setAttribute('placeholder', $this->getOwner()->Title)
-                    ->setRightTitle($suppressMessaging ? '' : 'If blank, inherits default page title')
-                    ->setTargetLength(45, 25, 70),
-                UploadField::create('FacebookPageImage', 'Image')
-                    ->setRightTitle($suppressMessaging
-                        ? ''
-                        : 'Facebook recommends images to be 1200 x 630 pixels. ' .
-                        'If no image is provided, Facebook will choose the first image that appears on the page, ' .
-                        'which usually has bad results')
-                    ->setFolderName('seo'),
-                TextareaField::create('FacebookPageDescription', 'Description')
-                    ->setAttribute('placeholder', $this->getOwner()->MetaDescription ?:
-                        $this->getOwner()->dbObject('Content')->LimitCharacters(297))
-                    ->setRightTitle($suppressMessaging
-                        ? ''
-                        : 'If blank, inherits meta description if it exists ' .
-                        'or gets the first 297 characters from content')
-                    ->setTargetLength(200, 160, 320),
-            ]),
-            ToggleCompositeField::create('TwitterSeoComposite', 'Twitter SEO', [
-                TextField::create('TwitterPageTitle', 'Title')
-                    ->setAttribute('placeholder', $this->getOwner()->Title)
-                    ->setRightTitle($suppressMessaging ? '' : 'If blank, inherits default page title')
-                    ->setTargetLength(45, 25, 70),
-                UploadField::create('TwitterPageImage', 'Image')
-                    ->setRightTitle($suppressMessaging ? '' : 'Must be at least 280x150 pixels')
-                    ->setFolderName('seo'),
-                TextareaField::create('TwitterPageDescription', 'Description')
-                    ->setAttribute('placeholder', $this->getOwner()->MetaDescription ?:
-                        $this->getOwner()->dbObject('Content')->LimitCharacters(297))
-                    ->setRightTitle($suppressMessaging
-                        ? ''
-                        : 'If blank, inherits meta description if it exists ' .
-                        'or gets the first 297 characters from content')
-                    ->setTargetLength(200, 160, 320),
-            ])
-        ], 'Metadata');
+        $openGraphFields = [
+            DropdownField::create('FacebookPageType', 'Type', FacebookMetaGenerator::getValidTypes()),
+            TextField::create('FacebookPageTitle', 'Title')
+                ->setAttribute('placeholder', $this->getOwner()->Title)
+                ->setRightTitle($suppressMessaging ? '' : 'If blank, inherits default page title')
+                ->setTargetLength(45, 25, 70),
+            UploadField::create('FacebookPageImage', 'Image')
+                ->setRightTitle($suppressMessaging
+                    ? ''
+                    : 'Facebook recommends images to be 1200 x 630 pixels. ' .
+                    'If no image is provided, Facebook will choose the first image that appears on the page, ' .
+                    'which usually has bad results')
+                ->setFolderName('seo'),
+            TextareaField::create('FacebookPageDescription', 'Description')
+                ->setAttribute('placeholder', $this->getOwner()->MetaDescription ?:
+                    $this->getOwner()->dbObject('Content')->LimitCharacters(297))
+                ->setRightTitle($suppressMessaging
+                    ? ''
+                    : 'If blank, inherits meta description if it exists ' .
+                    'or gets the first 297 characters from content')
+                ->setTargetLength(200, 160, 320),
+        ];
+
+
+        $fields->addFieldsToTab(
+            $this->config()->get('tab_name'),
+            $this->config()->get('use_composite_field') ? [
+                ToggleCompositeField::create('FacebookSeoComposite', 'Open Graph', $openGraphFields)
+                    ->setStartClosed($this->config()->get('start_closed')),
+            ] : $openGraphFields,
+            'Metadata'
+        );
+
+        $fields->addFieldsToTab(
+            $this->config()->get('tab_name'),
+            [
+                ToggleCompositeField::create('TwitterSeoComposite', 'Twitter SEO', [
+                    TextField::create('TwitterPageTitle', 'Title')
+                        ->setAttribute('placeholder', $this->getOwner()->Title)
+                        ->setRightTitle($suppressMessaging ? '' : 'If blank, inherits default page title')
+                        ->setTargetLength(45, 25, 70),
+                    UploadField::create('TwitterPageImage', 'Image')
+                        ->setRightTitle($suppressMessaging ? '' : 'Must be at least 280x150 pixels')
+                        ->setFolderName('seo'),
+                    TextareaField::create('TwitterPageDescription', 'Description')
+                        ->setAttribute('placeholder', $this->getOwner()->MetaDescription ?:
+                            $this->getOwner()->dbObject('Content')->LimitCharacters(297))
+                        ->setRightTitle($suppressMessaging
+                            ? ''
+                            : 'If blank, inherits meta description if it exists ' .
+                            'or gets the first 297 characters from content')
+                        ->setTargetLength(200, 160, 320),
+                ])
+            ],
+            'Metadata'
+        );
     }
 }

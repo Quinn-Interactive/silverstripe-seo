@@ -26,7 +26,9 @@ class PageHealthExtension extends DataExtension
 
     private static $tab_name = 'Root.Seo';
 
-    private static $move_default_meta_fields = true;
+    private static bool $move_default_meta_fields = true;
+
+    private static bool $start_closed = true;
 
     /**
      * @var string|null
@@ -124,7 +126,7 @@ class PageHealthExtension extends DataExtension
                     ),
                     TextField::create('FocusKeyword', 'Set focus keyword'),
                     HealthAnalysisField::create('ContentAnalysis', 'Content Analysis', $this->getOwner()),
-                ])
+                ])->setStartClosed($this->owner->config()->get('start_closed'))
             ], 'Metadata');
 
             if ($this->owner->config()->get('move_default_meta_fields')) {
