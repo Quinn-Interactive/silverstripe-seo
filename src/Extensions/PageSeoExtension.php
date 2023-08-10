@@ -35,6 +35,8 @@ class PageSeoExtension extends DataExtension
 {
     use Configurable;
 
+    private static $tab_name = 'Root.Seo';
+
     private static $cascade_deletes = [
         'FacebookPageImage',
         'TwitterPageImage'
@@ -108,7 +110,7 @@ class PageSeoExtension extends DataExtension
             $suppressMessaging = true;
         }
 
-        $fields->addFieldsToTab('Root.Main', [
+        $fields->addFieldsToTab($this->config()->get('tab_name'), [
             ToggleCompositeField::create('FacebookSeoComposite', 'Facebook SEO', [
                 DropdownField::create('FacebookPageType', 'Type', FacebookMetaGenerator::getValidTypes()),
                 TextField::create('FacebookPageTitle', 'Title')
@@ -124,7 +126,7 @@ class PageSeoExtension extends DataExtension
                     ->setFolderName('seo'),
                 TextareaField::create('FacebookPageDescription', 'Description')
                     ->setAttribute('placeholder', $this->getOwner()->MetaDescription ?:
-                     $this->getOwner()->dbObject('Content')->LimitCharacters(297))
+                        $this->getOwner()->dbObject('Content')->LimitCharacters(297))
                     ->setRightTitle($suppressMessaging
                         ? ''
                         : 'If blank, inherits meta description if it exists ' .
@@ -145,7 +147,7 @@ class PageSeoExtension extends DataExtension
                     ->setRightTitle($suppressMessaging
                         ? ''
                         : 'If blank, inherits meta description if it exists ' .
-                            'or gets the first 297 characters from content')
+                        'or gets the first 297 characters from content')
                     ->setTargetLength(200, 160, 320),
             ])
         ], 'Metadata');
