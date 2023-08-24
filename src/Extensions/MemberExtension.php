@@ -27,6 +27,8 @@ class MemberExtension extends DataExtension
             $fields->addFieldsToTab('Root.Main', [
                 TextField::create('TwitterAccountName')
             ], 'Password');
+        } else {
+            $fields->removeByName('TwitterAccountName');
         }
     }
 }
