@@ -23,7 +23,7 @@
   ],
   "require": {
     "silverstripe/cms": "^4.1 || ^5.0",
-    "jonom/silverstripe-text-target-length": "dev-ss5-support",
+    "jonom/silverstripe-text-target-length": "^2.0",
     "wilr/silverstripe-googlesitemaps": "^2.1",
     "kub-at/php-simple-html-dom-parser": "^1.7"
   },
