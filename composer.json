@@ -22,11 +22,10 @@
     }
   ],
   "require": {
-    "silverstripe/cms": "^4.1",
-    "jonom/silverstripe-text-target-length": "^2",
+    "silverstripe/cms": "^4.1 || ^5.0",
+    "jonom/silverstripe-text-target-length": "^2.0",
     "wilr/silverstripe-googlesitemaps": "^2.1",
-    "kub-at/php-simple-html-dom-parser": "^1.7",
-    "axllent/silverstripe-trailing-slash": "^2.1"
+    "kub-at/php-simple-html-dom-parser": "^1.7"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.7",
