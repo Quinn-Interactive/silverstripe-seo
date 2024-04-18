@@ -57,8 +57,8 @@ class GoogleSearchPreview extends LiteralField
             'Page'            => $page,
             'AbsoluteLink'    => Controller::join_links(
                 Director::absoluteBaseURL(),
-                str_replace($page->URLSegment, '', $page->Link()),
-                $this->urlSegmentHighlight($page->URLSegment, $page->FocusKeyword)
+                str_replace($page->URLSegment ?? '', '', $page->Link()),
+                $this->urlSegmentHighlight($page->URLSegment ?? '', $page->FocusKeyword ?? '')
             ),
             'MetaDescription' => $page->MetaDescription ? $this->highlight(
                 $page->MetaDescription,
