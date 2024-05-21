@@ -64,8 +64,8 @@ class Seo
         $modified = $owner->dbObject('LastEdited');
 
         return [
-            sprintf('<meta property="article:published_time" content="%s" />', $published->Rfc3339()),
-            sprintf('<meta property="article:modified_time" content="%s" />', $modified->Rfc3339()),
+            'article:published_time' => $published->Rfc3339(),
+            'article:modified_time' => $modified->Rfc3339(),
         ];
     }
 
@@ -92,9 +92,7 @@ class Seo
      */
     public static function getCanonicalUrlLink($owner)
     {
-        return [
-            sprintf('<link rel="canonical" href="%s"/>', $owner->AbsoluteLink(static::getCurrentAction()))
-        ];
+        return $owner->AbsoluteLink(static::getCurrentAction());
     }
 
     /**
