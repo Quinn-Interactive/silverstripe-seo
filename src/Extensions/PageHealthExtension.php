@@ -24,6 +24,12 @@ class PageHealthExtension extends DataExtension
 {
     const EMPTY_HTML = '<p></p>';
 
+    private static $tab_name = 'Root.Seo';
+
+    private static bool $move_default_meta_fields = true;
+
+    private static bool $start_closed = true;
+
     /**
      * @var string|null
      */
@@ -103,14 +109,14 @@ class PageHealthExtension extends DataExtension
             return;
         }
 
-        if ($this->owner instanceof \SilverStripe\ErrorPage\ErrorPage) {
+        if (class_exists('\SilverStripe\ErrorPage\ErrorPage') && $this->owner instanceof \SilverStripe\ErrorPage\ErrorPage) {
             return;
         }
 
         $dom = $this->getRenderedHtmlDomParser();
 
         if ($dom) {
-            $fields->addFieldsToTab('Root.Main', [
+            $fields->addFieldsToTab($this->owner->config()->get('tab_name'), [
                 ToggleCompositeField::create('SEOHealthAnalysis', 'SEO Health Analysis', [
                     GoogleSearchPreview::create(
                         'GoogleSearchPreview',
@@ -120,8 +126,17 @@ class PageHealthExtension extends DataExtension
                     ),
                     TextField::create('FocusKeyword', 'Set focus keyword'),
                     HealthAnalysisField::create('ContentAnalysis', 'Content Analysis', $this->getOwner()),
-                ])
+                ])->setStartClosed($this->owner->config()->get('start_closed'))
             ], 'Metadata');
+
+            if ($this->owner->config()->get('move_default_meta_fields')) {
+                $meta = $fields->fieldByName('Root.Main.Metadata');
+
+                if ($meta) {
+                    $fields->removeByName('Metadata');
+                    $fields->addFieldToTab($this->owner->config()->get('tab_name'), $meta);
+                }
+            }
         }
     }
 }
