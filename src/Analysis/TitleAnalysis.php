@@ -55,8 +55,8 @@ class TitleAnalysis extends Analysis
      */
     public function run()
     {
-        $title   = $this->getPage()->Title;
-        $keyword = $this->getPage()->FocusKeyword;
+        $title   = $this->getPage()->Title ?? '';
+        $keyword = $this->getPage()->FocusKeyword ?? '';
 
         if (strtolower($title) == 'home') {
             return static::TITLE_IS_HOME;

@@ -57,15 +57,15 @@ class GoogleSearchPreview extends LiteralField
             'Page'            => $page,
             'AbsoluteLink'    => Controller::join_links(
                 Director::absoluteBaseURL(),
-                str_replace($page->URLSegment, '', $page->Link()),
-                $this->urlSegmentHighlight($page->URLSegment, $page->FocusKeyword)
+                str_replace($page->URLSegment ?? '', '', $page->Link()),
+                $this->urlSegmentHighlight($page->URLSegment ?? '', $page->FocusKeyword ?? '')
             ),
             'MetaDescription' => $page->MetaDescription ? $this->highlight(
-                $page->MetaDescription,
+                $this->limitDescriptionLength($page->MetaDescription),
                 $page->FocusKeyword
             ) : null,
             'FirstParagraph'  => $firstParagraph ? $this->highlight(
-                $firstParagraph->innertext(),
+                $this->limitDescriptionLength($firstParagraph->innertext()),
                 $page->FocusKeyword
             ) : null,
             'RenderedTitle'   => $renderedTitle ? $this->highlight(
@@ -73,6 +73,10 @@ class GoogleSearchPreview extends LiteralField
                 $page->FocusKeyword
             ) : null
         ])->renderWith(self::class));
+    }
+
+    public function limitDescriptionLength($text) {
+        return DBField::create_field('Text', $text)->LimitCharactersToClosestWord(160);
     }
 
     /**
