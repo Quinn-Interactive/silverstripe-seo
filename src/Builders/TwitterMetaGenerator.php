@@ -93,24 +93,24 @@ class TwitterMetaGenerator
         $siteConfig = SiteConfig::current_site_config();
         $tags       = [];
 
-        $tags[] = '<meta name="twitter:card" content="summary"/>';
+        $tags['twitter:card'] = 'summary';
         if ($this->getTitle()) {
-            $tags[] = sprintf('<meta name="twitter:title" content="%s"/>', htmlentities($this->getTitle()));
+            $tags['twitter:title'] = htmlentities($this->getTitle());
         }
 
         if ($this->getDescription()) {
-            $tags[] = sprintf('<meta name="twitter:description" content="%s"/>', htmlentities($this->getDescription()));
+            $tags['twitter:description'] = htmlentities($this->getDescription());
         }
 
         if ($this->getImageUrl()) {
-            $tags[] = sprintf('<meta name="twitter:image" content="%s"/>', $this->getImageUrl());
+            $tags['twitter:image'] = $this->getImageUrl();
         }
         if ($this->getCreator()) {
-            $tags[] = sprintf('<meta name="twitter:creator" content="@%s"/>', $this->getCreator());
+            $tags['twitter:creator'] = "@{$this->getCreator()}";
         }
 
         if ($siteConfig->TwitterAccountName) {
-            $tags[] = sprintf('<meta name="twitter:site" content="@%s" />', $siteConfig->TwitterAccountName);
+            $tags['twitter:site'] = "@$siteConfig->TwitterAccountName";
         }
 
         return $tags;

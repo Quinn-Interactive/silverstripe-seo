@@ -105,32 +105,32 @@ class FacebookMetaGenerator
         $tags = [];
 
         if ($this->getTitle()) {
-            $tags[] = sprintf('<meta property="og:title" content="%s"/>', htmlentities($this->getTitle()));
+            $tags['og:title'] = htmlentities($this->getTitle());
         }
 
         if ($this->getDescription()) {
-            $tags[] = sprintf('<meta property="og:description" content="%s"/>', htmlentities($this->getDescription()));
+            $tags['og:description'] = htmlentities($this->getDescription());
         }
 
         if ($this->getType()) {
-            $tags[] = sprintf('<meta property="og:type" content="%s"/>', $this->getType());
+            $tags['og:type'] = $this->getType();
         }
 
         if ($this->getUrl()) {
-            $tags[] = sprintf('<meta property="og:url" content="%s"/>', $this->getUrl());
+            $tags['og:url'] = $this->getUrl();
         }
 
         if ($this->getImageUrl()) {
-            $tags[] = sprintf('<meta property="og:image" content="%s"/>', $this->getImageUrl());
+            $tags['og:image'] = $this->getImageUrl();
         }
 
         if ($this->imageWidth && $this->imageHeight) {
-            $tags[] = sprintf('<meta property="og:image:width" content="%s" />', $this->imageWidth);
-            $tags[] = sprintf('<meta property="og:image:height" content="%s" />', $this->imageHeight);
+            $tags['og:image:width'] = $this->imageWidth;
+            $tags['og:image:height'] =  $this->imageHeight;
         }
 
-        $tags[] = sprintf('<meta property="og:locale" content="%s" />', i18n::get_locale());
-        $tags[] = sprintf('<meta property="og:site_name" content="%s" />', SiteConfig::current_site_config()->Title);
+        $tags['og:locale'] = i18n::get_locale();
+        $tags['og:site_name'] = SiteConfig::current_site_config()->Title;
 
         return $tags;
     }
