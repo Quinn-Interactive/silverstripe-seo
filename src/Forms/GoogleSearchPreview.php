@@ -92,10 +92,10 @@ class GoogleSearchPreview extends LiteralField
     public function highlight($haystack, $needle)
     {
         if (!$needle) {
-            return strip_tags($haystack);
+            return strip_tags((string) $haystack);
         }
 
-        return preg_replace('/\b(' . $needle . ')\b/i', '<strong>$0</strong>', strip_tags($haystack));
+        return preg_replace('/\b(' . $needle . ')\b/i', '<strong>$0</strong>', strip_tags((string) $haystack));
     }
 
     /**

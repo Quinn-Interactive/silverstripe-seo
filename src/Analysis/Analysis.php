@@ -72,7 +72,7 @@ abstract class Analysis
         $parser = $this->getRenderedHtmlDomParser();
         $output = [];
         foreach ($parser->find('p,h1,h2,h3,h4,h5') as $item) {
-            $output[] = strip_tags(html_entity_decode($item->innertext()));
+            $output[] = strip_tags(html_entity_decode((string) $item->innertext()));
         }
 
         $output = array_filter($output);

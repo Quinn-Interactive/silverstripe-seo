@@ -144,7 +144,7 @@ class Seo
         $ours       = array_keys(SiteConfigSettingsExtension::config()->get('db'));
         $db         = SiteConfig::config()->get('db');
         foreach ($db as $k => $v) {
-            if (strstr($k, 'Pixel') && in_array($k, $ours)) {
+            if (strstr((string) $k, 'Pixel') && in_array($k, $ours)) {
                 if (is_null($siteConfig->{$k})) {
                     continue;
                 }

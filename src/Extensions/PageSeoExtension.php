@@ -80,7 +80,7 @@ class PageSeoExtension extends DataExtension
      */
     public function MetaTags(&$tags)
     {
-        $tags = explode(PHP_EOL, $tags);
+        $tags = explode(PHP_EOL, (string) $tags);
         $tags = array_merge(
             $tags,
             Seo::getCanonicalUrlLink($this->getOwner()),

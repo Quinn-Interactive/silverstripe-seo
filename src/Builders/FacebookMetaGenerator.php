@@ -105,11 +105,11 @@ class FacebookMetaGenerator
         $tags = [];
 
         if ($this->getTitle()) {
-            $tags[] = sprintf('<meta property="og:title" content="%s"/>', htmlentities($this->getTitle()));
+            $tags[] = sprintf('<meta property="og:title" content="%s"/>', htmlentities((string) $this->getTitle()));
         }
 
         if ($this->getDescription()) {
-            $tags[] = sprintf('<meta property="og:description" content="%s"/>', htmlentities($this->getDescription()));
+            $tags[] = sprintf('<meta property="og:description" content="%s"/>', htmlentities((string) $this->getDescription()));
         }
 
         if ($this->getType()) {
@@ -174,7 +174,7 @@ class FacebookMetaGenerator
      */
     public function setImageUrl(mixed $imageUrl)
     {
-        if ($imageUrl && (str_starts_with($imageUrl, '/') || !str_starts_with($imageUrl, 'http'))) {
+        if ($imageUrl && (str_starts_with((string) $imageUrl, '/') || !str_starts_with((string) $imageUrl, 'http'))) {
             throw new \InvalidArgumentException(
                 'A relative or invalid URL was detected; you must provide the full absolute URL'
             );
@@ -228,7 +228,7 @@ class FacebookMetaGenerator
      */
     public function setUrl(mixed $url)
     {
-        if ($url && (str_starts_with($url, '/') || !str_starts_with($url, 'http'))) {
+        if ($url && (str_starts_with((string) $url, '/') || !str_starts_with((string) $url, 'http'))) {
             throw new \InvalidArgumentException(
                 'A relative URL was detected; you must provide the full absolute URL instead'
             );
