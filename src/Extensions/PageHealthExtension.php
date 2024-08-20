@@ -2,6 +2,7 @@
 
 namespace QuinnInteractive\Seo\Extensions;
 
+use SilverStripe\ErrorPage\ErrorPage;
 use KubAT\PhpSimple\HtmlDomParser;
 use QuinnInteractive\Seo\Forms\GoogleSearchPreview;
 use QuinnInteractive\Seo\Forms\HealthAnalysisField;
@@ -22,7 +23,7 @@ use SilverStripe\View\Requirements;
  */
 class PageHealthExtension extends DataExtension
 {
-    const EMPTY_HTML = '<p></p>';
+    public const EMPTY_HTML = '<p></p>';
 
     private static $tab_name = 'Root.Seo';
 
@@ -109,7 +110,7 @@ class PageHealthExtension extends DataExtension
             return;
         }
 
-        if (class_exists('\SilverStripe\ErrorPage\ErrorPage') && $this->owner instanceof \SilverStripe\ErrorPage\ErrorPage) {
+        if (class_exists('\SilverStripe\ErrorPage\ErrorPage') && $this->owner instanceof ErrorPage) {
             return;
         }
 

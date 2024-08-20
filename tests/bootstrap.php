@@ -1,7 +1,10 @@
 <?php
 
-if (!class_exists('Page') && class_exists('\SilverStripe\CMS\Model\SiteTree')) {
-    class Page extends \SilverStripe\CMS\Model\SiteTree
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\CMS\Controllers\ContentController;
+
+if (!class_exists('Page') && class_exists(SiteTree::class)) {
+    class Page extends SiteTree
     {
         private static $table_name = 'Page';
 
@@ -11,8 +14,8 @@ if (!class_exists('Page') && class_exists('\SilverStripe\CMS\Model\SiteTree')) {
     }
 }
 
-if (!class_exists('PageController') && class_exists('\SilverStripe\CMS\Controllers\ContentController')) {
-    class PageController extends \SilverStripe\CMS\Controllers\ContentController
+if (!class_exists('PageController') && class_exists(ContentController::class)) {
+    class PageController extends ContentController
     {
     }
 }

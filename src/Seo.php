@@ -111,7 +111,7 @@ class Seo
 
         $generator = FacebookMetaGenerator::create();
         $generator->setTitle($owner->FacebookPageTitle ?: $owner->Title);
-        $generator->setDescription($owner->FacebookPageDescription ?: $owner->MetaDescription ?: $owner->Content);
+        $generator->setDescription(($owner->FacebookPageDescription ?: $owner->MetaDescription) ?: $owner->Content);
         $generator->setImageUrl(($owner->FacebookPageImage()->exists())
             ? $owner->FacebookPageImage()->AbsoluteLink()
             : null);
@@ -166,7 +166,7 @@ class Seo
     {
         $generator = TwitterMetaGenerator::create();
         $generator->setTitle($owner->TwitterPageTitle ?: $owner->Title);
-        $generator->setDescription($owner->TwitterPageDescription ?: $owner->MetaDescription ?: $owner->Content);
+        $generator->setDescription(($owner->TwitterPageDescription ?: $owner->MetaDescription) ?: $owner->Content);
         $generator->setImageUrl(($owner->TwitterPageImage()->exists())
             ? $owner->TwitterPageImage()->AbsoluteLink()
             : null);

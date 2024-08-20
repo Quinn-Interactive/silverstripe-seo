@@ -129,11 +129,9 @@ class TwitterMetaGenerator
     }
 
     /**
-     * @param mixed $description
-     *
      * @return TwitterMetaGenerator
      */
-    public function setDescription($description)
+    public function setDescription(mixed $description)
     {
         $this->description = $description;
 
@@ -141,13 +139,11 @@ class TwitterMetaGenerator
     }
 
     /**
-     * @param mixed $imageUrl
-     *
      * @return TwitterMetaGenerator
      */
-    public function setImageUrl($imageUrl)
+    public function setImageUrl(mixed $imageUrl)
     {
-        if ($imageUrl && (substr($imageUrl, 0, 1) === '/' || substr($imageUrl, 0, 4) !== 'http')) {
+        if ($imageUrl && (str_starts_with($imageUrl, '/') || !str_starts_with($imageUrl, 'http'))) {
             throw new \InvalidArgumentException(
                 'A relative or invalid URL was detected, your must provide the full absolute URL'
             );
@@ -158,11 +154,9 @@ class TwitterMetaGenerator
     }
 
     /**
-     * @param mixed $title
-     *
      * @return TwitterMetaGenerator
      */
-    public function setTitle($title)
+    public function setTitle(mixed $title)
     {
         $this->title = $title;
 

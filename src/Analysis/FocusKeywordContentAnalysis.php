@@ -8,9 +8,9 @@ namespace QuinnInteractive\Seo\Analysis;
  */
 class FocusKeywordContentAnalysis extends Analysis
 {
-    const FOCUS_KEYWORD_NOT_FOUND = 0;
-    const FOCUS_KEYWORD_SUCCESS   = 1;
-    const FOCUS_KEYWORD_UNSET     = -1;
+    public const FOCUS_KEYWORD_NOT_FOUND = 0;
+    public const FOCUS_KEYWORD_SUCCESS   = 1;
+    public const FOCUS_KEYWORD_UNSET     = -1;
 
     private static $hidden_levels = [
         'default'
