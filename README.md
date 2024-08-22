@@ -138,6 +138,14 @@ QuinnInteractive\Seo\Analysis\MetaDescAnalysis:
   meta_desc_too_long_threshold: 320
 ```
 
+### Other Options
+
+Other options can be found in the `private static` variables in the following files. They can be overridden in YAML in the usual way.
+
+- PageHealthExtension.php
+- PageSeoExtension.php
+- SiteConfigSettingsExtension.php
+
 ## Assumptions
 
 This module assumes that you make use of the default `Content` field provided by `\Page`. If a specific page does not then you can specify one or multiple fields that contain your content.
