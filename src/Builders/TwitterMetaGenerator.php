@@ -95,11 +95,11 @@ class TwitterMetaGenerator
 
         $tags[] = '<meta name="twitter:card" content="summary"/>';
         if ($this->getTitle()) {
-            $tags[] = sprintf('<meta name="twitter:title" content="%s"/>', htmlentities($this->getTitle()));
+            $tags[] = sprintf('<meta name="twitter:title" content="%s"/>', htmlentities((string) $this->getTitle()));
         }
 
         if ($this->getDescription()) {
-            $tags[] = sprintf('<meta name="twitter:description" content="%s"/>', htmlentities($this->getDescription()));
+            $tags[] = sprintf('<meta name="twitter:description" content="%s"/>', htmlentities((string) $this->getDescription()));
         }
 
         if ($this->getImageUrl()) {
@@ -129,11 +129,9 @@ class TwitterMetaGenerator
     }
 
     /**
-     * @param mixed $description
-     *
      * @return TwitterMetaGenerator
      */
-    public function setDescription($description)
+    public function setDescription(mixed $description)
     {
         $this->description = $description;
 
@@ -141,13 +139,11 @@ class TwitterMetaGenerator
     }
 
     /**
-     * @param mixed $imageUrl
-     *
      * @return TwitterMetaGenerator
      */
-    public function setImageUrl($imageUrl)
+    public function setImageUrl(mixed $imageUrl)
     {
-        if ($imageUrl && (substr($imageUrl, 0, 1) === '/' || substr($imageUrl, 0, 4) !== 'http')) {
+        if ($imageUrl && (str_starts_with((string) $imageUrl, '/') || !str_starts_with((string) $imageUrl, 'http'))) {
             throw new \InvalidArgumentException(
                 'A relative or invalid URL was detected, your must provide the full absolute URL'
             );
@@ -158,11 +154,9 @@ class TwitterMetaGenerator
     }
 
     /**
-     * @param mixed $title
-     *
      * @return TwitterMetaGenerator
      */
-    public function setTitle($title)
+    public function setTitle(mixed $title)
     {
         $this->title = $title;
 

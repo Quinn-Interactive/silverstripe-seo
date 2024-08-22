@@ -111,7 +111,7 @@ class Seo
 
         $generator = FacebookMetaGenerator::create();
         $generator->setTitle($owner->FacebookPageTitle ?: $owner->Title);
-        $generator->setDescription($owner->FacebookPageDescription ?: $owner->MetaDescription ?: $owner->Content);
+        $generator->setDescription(($owner->FacebookPageDescription ?: $owner->MetaDescription) ?: $owner->Content);
         $generator->setImageUrl(($owner->FacebookPageImage()->exists())
             ? $owner->FacebookPageImage()->AbsoluteLink()
             : null);
@@ -144,7 +144,7 @@ class Seo
         $ours       = array_keys(SiteConfigSettingsExtension::config()->get('db'));
         $db         = SiteConfig::config()->get('db');
         foreach ($db as $k => $v) {
-            if (strstr($k, 'Pixel') && in_array($k, $ours)) {
+            if (strstr((string) $k, 'Pixel') && in_array($k, $ours)) {
                 if (is_null($siteConfig->{$k})) {
                     continue;
                 }
@@ -166,7 +166,7 @@ class Seo
     {
         $generator = TwitterMetaGenerator::create();
         $generator->setTitle($owner->TwitterPageTitle ?: $owner->Title);
-        $generator->setDescription($owner->TwitterPageDescription ?: $owner->MetaDescription ?: $owner->Content);
+        $generator->setDescription(($owner->TwitterPageDescription ?: $owner->MetaDescription) ?: $owner->Content);
         $generator->setImageUrl(($owner->TwitterPageImage()->exists())
             ? $owner->TwitterPageImage()->AbsoluteLink()
             : null);

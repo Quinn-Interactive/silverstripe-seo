@@ -8,13 +8,13 @@ namespace QuinnInteractive\Seo\Analysis;
  */
 class TitleAnalysis extends Analysis
 {
-    const TITLE_FOCUS_KEYWORD_POSITION = 4;
-    const TITLE_IS_HOME                = -1;
-    const TITLE_NO_FOCUS_KEYWORD       = 3; // only checked if the focus keyword has been defined
-    const TITLE_OK_BUT_SHORT           = 1;
-    const TITLE_SUCCESS                = 5;
-    const TITLE_TOO_LONG               = 2;
-    const TITLE_TOO_SHORT              = 0;
+    public const TITLE_FOCUS_KEYWORD_POSITION = 4;
+    public const TITLE_IS_HOME                = -1;
+    public const TITLE_NO_FOCUS_KEYWORD       = 3; // only checked if the focus keyword has been defined
+    public const TITLE_OK_BUT_SHORT           = 1;
+    public const TITLE_SUCCESS                = 5;
+    public const TITLE_TOO_LONG               = 2;
+    public const TITLE_TOO_SHORT              = 0;
 
     /**
      * @return array

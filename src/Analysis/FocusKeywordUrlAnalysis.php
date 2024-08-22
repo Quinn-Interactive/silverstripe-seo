@@ -10,10 +10,10 @@ use SilverStripe\View\Parsers\URLSegmentFilter;
  */
 class FocusKeywordUrlAnalysis extends Analysis
 {
-    const FOCUS_KEYWORD_IRRELEVANT = -2;
-    const FOCUS_KEYWORD_NOT_IN_URL = 0;
-    const FOCUS_KEYWORD_SUCCESS    = 1;
-    const FOCUS_KEYWORD_UNSET      = -1;
+    public const FOCUS_KEYWORD_IRRELEVANT = -2;
+    public const FOCUS_KEYWORD_NOT_IN_URL = 0;
+    public const FOCUS_KEYWORD_SUCCESS    = 1;
+    public const FOCUS_KEYWORD_UNSET      = -1;
 
     private static $hidden_levels = [
         'default'
@@ -38,19 +38,19 @@ class FocusKeywordUrlAnalysis extends Analysis
     {
         return [
             static::FOCUS_KEYWORD_IRRELEVANT => [
-                _t( __CLASS__ . '.FOCUS_KEYWORD_IRRELEVANT', 'The focus keyword is irrelevant on the home page; this message will not display'),
+                _t( self::class . '.FOCUS_KEYWORD_IRRELEVANT', 'The focus keyword is irrelevant on the home page; this message will not display'),
                 'default'
             ],
             static::FOCUS_KEYWORD_UNSET => [
-                _t( __CLASS__ . '.FOCUS_KEYWORD_UNSET', 'The focus keyword has not been set; consider setting this to improve content analysis'),
+                _t( self::class . '.FOCUS_KEYWORD_UNSET', 'The focus keyword has not been set; consider setting this to improve content analysis'),
                 'default'
             ],
             static::FOCUS_KEYWORD_NOT_IN_URL => [
-                _t( __CLASS__ . '.FOCUS_KEYWORD_NOT_IN_URL', 'The focus keyword is not in the url segment; consider changing this and if you do SilverStripe will automatically redirect your old URL!'),
+                _t( self::class . '.FOCUS_KEYWORD_NOT_IN_URL', 'The focus keyword is not in the url segment; consider changing this and if you do SilverStripe will automatically redirect your old URL!'),
                 'warning'
             ],
             static::FOCUS_KEYWORD_SUCCESS => [
-                _t( __CLASS__ . '.FOCUS_KEYWORD_SUCCESS', 'The focus keyword is in the url segment; this is great!'),
+                _t( self::class . '.FOCUS_KEYWORD_SUCCESS', 'The focus keyword is in the url segment; this is great!'),
                 'success'
             ],
         ];

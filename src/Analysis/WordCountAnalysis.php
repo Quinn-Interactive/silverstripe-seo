@@ -10,8 +10,8 @@ use QuinnInteractive\Seo\Seo;
  */
 class WordCountAnalysis extends Analysis
 {
-    const WORD_COUNT_ABOVE_MIN = 1;
-    const WORD_COUNT_BELOW_MIN = 0;
+    public const WORD_COUNT_ABOVE_MIN = 1;
+    public const WORD_COUNT_BELOW_MIN = 0;
 
     /**
      * @return int

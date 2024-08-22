@@ -2,6 +2,7 @@
 
 namespace QuinnInteractive\Seo\Forms;
 
+use SilverStripe\Forms\FormField;
 use QuinnInteractive\Seo\Extensions\PageHealthExtension;
 use QuinnInteractive\Seo\Extensions\PageSeoExtension;
 use SilverStripe\Control\Controller;
@@ -32,7 +33,7 @@ class GoogleSearchPreview extends LiteralField
      * HealthAnalysisField constructor.
      *
      * @param string                                     $name
-     * @param \SilverStripe\Forms\FormField|string       $title
+     * @param FormField|string $title
      * @param \Page|PageHealthExtension|PageSeoExtension $page
      * @param simple_html_dom                            $domParser
      */
@@ -91,10 +92,10 @@ class GoogleSearchPreview extends LiteralField
     public function highlight($haystack, $needle)
     {
         if (!$needle) {
-            return strip_tags($haystack);
+            return strip_tags((string) $haystack);
         }
 
-        return preg_replace('/\b(' . $needle . ')\b/i', '<strong>$0</strong>', strip_tags($haystack));
+        return preg_replace('/\b(' . $needle . ')\b/i', '<strong>$0</strong>', strip_tags((string) $haystack));
     }
 
     /**
