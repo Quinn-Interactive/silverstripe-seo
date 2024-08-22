@@ -25,7 +25,7 @@ class PageHealthExtension extends DataExtension
 {
     public const EMPTY_HTML = '<p></p>';
 
-    private static $tab_name = 'Root.Seo';
+    private static $tab_name = 'Root.SEO';
 
     private static bool $move_default_meta_fields = true;
 

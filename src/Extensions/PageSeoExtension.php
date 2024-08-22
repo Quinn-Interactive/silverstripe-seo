@@ -35,7 +35,7 @@ class PageSeoExtension extends DataExtension
 {
     use Configurable;
 
-    private static string $tab_name = 'Root.Seo';
+    private static string $tab_name = 'Root.SEO';
 
     private static bool $start_closed = true;
 

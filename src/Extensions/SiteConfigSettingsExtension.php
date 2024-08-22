@@ -24,6 +24,8 @@ class SiteConfigSettingsExtension extends DataExtension
 {
     use Configurable;
 
+    private static string $tab_name = 'Root.SEO';
+
     private static $casting = [
         'GoogleAnalytics' => 'HTMLText'
     ];
@@ -44,7 +46,7 @@ class SiteConfigSettingsExtension extends DataExtension
         $snPixelHelp = 'https://businesshelp.snapchat.com/en-US/article/snap-pixel';
         $gaHelp      = 'https://support.google.com/analytics/answer/1008080?hl=en';
 
-        $fields->addFieldsToTab('Root.SEO', [
+        $fields->addFieldsToTab($this->config()->get('tab_name'), [
             TextField::create('TwitterAccountName'),
             TextareaField::create('GoogleAnalytics', 'Google Analytics')->setRightTitle($this->getHelpLink($gaHelp)),
             ToggleCompositeField::create(null, 'Pixels', [
