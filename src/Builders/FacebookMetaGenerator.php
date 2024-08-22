@@ -105,11 +105,11 @@ class FacebookMetaGenerator
         $tags = [];
 
         if ($this->getTitle()) {
-            $tags[] = sprintf('<meta property="og:title" content="%s"/>', htmlentities($this->getTitle()));
+            $tags[] = sprintf('<meta property="og:title" content="%s"/>', htmlentities((string) $this->getTitle()));
         }
 
         if ($this->getDescription()) {
-            $tags[] = sprintf('<meta property="og:description" content="%s"/>', htmlentities($this->getDescription()));
+            $tags[] = sprintf('<meta property="og:description" content="%s"/>', htmlentities((string) $this->getDescription()));
         }
 
         if ($this->getType()) {
@@ -136,11 +136,9 @@ class FacebookMetaGenerator
     }
 
     /**
-     * @param mixed $description
-     *
      * @return FacebookMetaGenerator
      */
-    public function setDescription($description)
+    public function setDescription(mixed $description)
     {
         $this->description = $description;
         return $this;
@@ -172,13 +170,11 @@ class FacebookMetaGenerator
     }
 
     /**
-     * @param mixed $imageUrl
-     *
      * @return FacebookMetaGenerator
      */
-    public function setImageUrl($imageUrl)
+    public function setImageUrl(mixed $imageUrl)
     {
-        if ($imageUrl && (substr($imageUrl, 0, 1) === '/' || substr($imageUrl, 0, 4) !== 'http')) {
+        if ($imageUrl && (str_starts_with((string) $imageUrl, '/') || !str_starts_with((string) $imageUrl, 'http'))) {
             throw new \InvalidArgumentException(
                 'A relative or invalid URL was detected; you must provide the full absolute URL'
             );
@@ -200,23 +196,20 @@ class FacebookMetaGenerator
     }
 
     /**
-     * @param mixed $title
-     *
      * @return FacebookMetaGenerator
      */
-    public function setTitle($title)
+    public function setTitle(mixed $title)
     {
         $this->title = $title;
         return $this;
     }
 
     /**
-     * @param mixed $type
      *
      * @return FacebookMetaGenerator
      * @throws \Exception
      */
-    public function setType($type)
+    public function setType(mixed $type)
     {
         if (!in_array($type, array_keys(static::getValidTypes()))) {
             throw new \Exception(sprintf(
@@ -231,13 +224,11 @@ class FacebookMetaGenerator
     }
 
     /**
-     * @param mixed $url
-     *
      * @return FacebookMetaGenerator
      */
-    public function setUrl($url)
+    public function setUrl(mixed $url)
     {
-        if ($url && (substr($url, 0, 1) === '/' || substr($url, 0, 4) !== 'http')) {
+        if ($url && (str_starts_with((string) $url, '/') || !str_starts_with((string) $url, 'http'))) {
             throw new \InvalidArgumentException(
                 'A relative URL was detected; you must provide the full absolute URL instead'
             );

@@ -2,6 +2,7 @@
 
 namespace QuinnInteractive\Seo\Forms;
 
+use SilverStripe\Forms\FormField;
 use QuinnInteractive\Seo\Analysis\Analysis;
 use QuinnInteractive\Seo\Extensions\PageHealthExtension;
 use SilverStripe\CMS\Model\SiteTree;
@@ -35,7 +36,7 @@ class HealthAnalysisField extends LiteralField
      * HealthAnalysisField constructor.
      *
      * @param string                               $name
-     * @param \SilverStripe\Forms\FormField|string $title
+     * @param FormField|string $title
      * @param \Page                                $page
      */
     public function __construct($name, $title, SiteTree $page)

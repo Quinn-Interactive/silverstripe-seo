@@ -8,9 +8,9 @@ namespace QuinnInteractive\Seo\Analysis;
  */
 class FocusKeywordUniqueAnalysis extends Analysis
 {
-    const FOCUS_KEYWORD_INUSE   = 0;
-    const FOCUS_KEYWORD_SUCCESS = 1;
-    const FOCUS_KEYWORD_UNSET   = -1;
+    public const FOCUS_KEYWORD_INUSE   = 0;
+    public const FOCUS_KEYWORD_SUCCESS = 1;
+    public const FOCUS_KEYWORD_UNSET   = -1;
 
     /**
      * @return string
