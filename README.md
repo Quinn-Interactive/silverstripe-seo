@@ -177,6 +177,54 @@ public function updateCollateContentFields($content) {
 }
 ```
 
+# how to include your own canonical link:
+```yml
+
+---
+Name: app_seo
+After: '#silverstripe-seo'
+---
+Page:
+  extensions:
+    - MyClient\App\Extensions\MetaTagsExtension
+
+```
+```php
+<?php
+
+namespace MyClient\App\Extensions;
+
+use SilverStripe\Core\Config\Config;
+use SilverStripe\ORM\DataExtension;
+
+class MetaTagsExtension extends DataExtension
+{
+    /**
+     * Extension point for SiteTree to merge all tags with the standard meta tags
+     *
+     * @param $tags
+     */
+    public function MetaTags(&$tags)
+    {
+        $tags = explode(PHP_EOL, $tags);
+        foreach($tags as $key => $tag) {
+            if(strpos($tag, 'canonical') !== false) {
+                $url = 'https://';
+                $url.= Config::inst()->get('Page', 'canonical_domain');
+                $url.= filter_var(($_SERVER['REQUEST_URI'] ?? ''), FILTER_SANITIZE_URL);
+
+                $tags[$key] = preg_replace('/href="[^"]*"/', 'href="'.$url.'"', $tags[$key]);
+
+                break;
+            }
+        }
+        $tags = implode(PHP_EOL, $tags);
+    }
+}
+
+
+```
+
 ## Roadmap (subject to change)
 
 * Finish implementing internationalisation to this module and its analyses
