@@ -96,7 +96,19 @@ class HealthAnalysisField extends LiteralField
         foreach ($analyses as $analysisClass) {
             /** @var Analysis $analysis */
             $analysis = $analysisClass::create($this->getPage());
-            $output->push($analysis->inspect());
+            try {
+                $output->push($analysis->inspect());
+            } catch (\Exception $e) {
+                $output->push(
+                    ArrayData::create(
+                        [
+                            'Title'   => 'An error occurred',
+                            'Message' => $e->getMessage(),
+                            'Type'    => 'danger',
+                        ]
+                    )
+                );
+            }
         }
 
         return $output;
