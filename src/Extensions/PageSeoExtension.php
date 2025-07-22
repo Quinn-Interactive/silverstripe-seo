@@ -74,6 +74,73 @@ class PageSeoExtension extends DataExtension
     ];
 
     /**
+     * getSEOCanonicalUrlLink
+     *
+     * @return array
+     */
+    public function getSEOCanonicalUrlLink(): array
+    {
+        $tags = Seo::getCanonicalUrlLink($this->getOwner());
+        $this->getOwner()->invokeWithExtensions('updateSEOCanonicalUrlLink', $tags);
+        return $tags;
+    }
+    /**
+     * getSEOFacebookMetaTags
+     *
+     * @return array
+     */
+    public function getSEOFacebookMetaTags(): array
+    {
+        $tags = Seo::getFacebookMetaTags($this->getOwner());
+        $this->getOwner()->invokeWithExtensions('updateSEOFacebookMetaTags', $tags);
+        return $tags;
+    }
+    /**
+     * getSEOTwitterMetaTags
+     *
+     * @return array
+     */
+    public function getSEOTwitterMetaTags(): array
+    {
+        $tags = Seo::getTwitterMetaTags($this->getOwner());
+        $this->getOwner()->invokeWithExtensions('updateSEOTwitterMetaTags', $tags);
+        return $tags;
+    }
+    /**
+     * getSEOArticleTags
+     *
+     * @return array
+     */
+    public function getSEOArticleTags(): array
+    {
+        $tags = Seo::getArticleTags($this->getOwner());
+        $this->getOwner()->invokeWithExtensions('updateSEOArticleMetaTags', $tags);
+        return $tags;
+    }
+    /**
+     * getSEOGoogleAnalytics
+     *
+     * @return array
+     */
+    public function getSEOGoogleAnalytics(): array
+    {
+        $tags = Seo::getGoogleAnalytics($this->getOwner());
+        $this->getOwner()->invokeWithExtensions('updateSEOGoogleAnalytics', $tags);
+        return $tags;
+    }
+    /**
+     * getSEOPixels
+     *
+     * @return array
+     */
+    public function getSEOPixels(): array
+    {
+        $tags = Seo::getPixels($this->getOwner());
+        $this->invokeExtension($this->getOwner(), 'updateSEOPixels', $tags);
+        return $tags;
+    }
+
+    /**
      * Extension point for SiteTree to merge all tags with the standard meta tags
      *
      * @param $tags
@@ -83,12 +150,12 @@ class PageSeoExtension extends DataExtension
         $tags = explode(PHP_EOL, (string) $tags);
         $tags = array_merge(
             $tags,
-            Seo::getCanonicalUrlLink($this->getOwner()),
-            Seo::getFacebookMetaTags($this->getOwner()),
-            Seo::getTwitterMetaTags($this->getOwner()),
-            Seo::getArticleTags($this->getOwner()),
-            Seo::getGoogleAnalytics(),
-            Seo::getPixels()
+            $this->getSEOCanonicalUrlLink(),
+            $this->getSEOFacebookMetaTags(),
+            $this->getSEOTwitterMetaTags(),
+            $this->getSEOArticleTags(),
+            $this->getSEOGoogleAnalytics(),
+            $this->getSEOPixels()
         );
 
         $tags = implode(PHP_EOL, $tags);
@@ -138,7 +205,6 @@ class PageSeoExtension extends DataExtension
                     'or gets the first 297 characters from content')
                 ->setTargetLength(200, 160, 320),
         ];
-
 
         $fields->addFieldsToTab(
             $this->config()->get('tab_name'),
