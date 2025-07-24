@@ -2,9 +2,9 @@
 
 namespace QuinnInteractive\Seo\Extensions;
 
+use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
-use SilverStripe\ORM\DataExtension;
 
 /**
  * Class MemberExtension
@@ -12,7 +12,7 @@ use SilverStripe\ORM\DataExtension;
  *
  * @property string TwitterAccountName
  */
-class MemberExtension extends DataExtension
+class MemberExtension extends Extension
 {
     private static $db = [
         'TwitterAccountName' => 'Varchar(80)'

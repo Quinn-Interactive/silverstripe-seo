@@ -10,7 +10,7 @@ use SilverStripe\Control\Controller;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 use SilverStripe\VersionedAdmin\Controllers\CMSPageHistoryViewerController;
 use SilverStripe\VersionedAdmin\Controllers\HistoryViewerController;
 use SilverStripe\View\Requirements;
@@ -21,7 +21,7 @@ use SilverStripe\View\Requirements;
  *
  * @property string FocusKeyword
  */
-class PageHealthExtension extends DataExtension
+class PageHealthExtension extends Extension
 {
     public const EMPTY_HTML = '<p></p>';
 

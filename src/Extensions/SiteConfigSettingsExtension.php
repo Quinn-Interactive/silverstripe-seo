@@ -3,11 +3,11 @@
 namespace QuinnInteractive\Seo\Extensions;
 
 use SilverStripe\Core\Config\Configurable;
+use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextareaField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
-use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 
 /**
@@ -20,7 +20,7 @@ use SilverStripe\ORM\FieldType\DBHTMLText;
  * @property string SnapPixel
  * @property string TwitterAccountName
  */
-class SiteConfigSettingsExtension extends DataExtension
+class SiteConfigSettingsExtension extends Extension
 {
     use Configurable;
 

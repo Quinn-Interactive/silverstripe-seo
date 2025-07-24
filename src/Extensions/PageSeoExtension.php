@@ -2,6 +2,7 @@
 
 namespace QuinnInteractive\Seo\Extensions;
 
+use PharIo\Manifest\Extension;
 use QuinnInteractive\Seo\Builders\FacebookMetaGenerator;
 use QuinnInteractive\Seo\Seo;
 use SilverStripe\AssetAdmin\Forms\UploadField;
@@ -13,7 +14,6 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextareaField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
-use SilverStripe\ORM\DataExtension;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
 use SilverStripe\VersionedAdmin\Controllers\HistoryViewerController;
@@ -31,7 +31,7 @@ use SilverStripe\VersionedAdmin\Controllers\HistoryViewerController;
  * @method Image FacebookPageImage()
  * @method Member|MemberExtension Creator()
  */
-class PageSeoExtension extends DataExtension
+class PageSeoExtension extends Extension
 {
     use Configurable;
 
