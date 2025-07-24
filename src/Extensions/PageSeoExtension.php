@@ -163,8 +163,6 @@ class PageSeoExtension extends Extension
 
     public function onBeforeWrite()
     {
-        parent::onBeforeWrite();
-
         if (!$this->getOwner()->ID && !$this->getOwner()->Creator()->exists() && $member = Security::getCurrentUser()) {
             $this->getOwner()->CreatorID = $member->ID;
         }
@@ -175,8 +173,6 @@ class PageSeoExtension extends Extension
      */
     public function updateCMSFields(FieldList $fields)
     {
-        parent::updateCMSFields($fields);
-
         $suppressMessaging = false;
 
         if (Controller::curr() instanceof HistoryViewerController) { // avoid cluttering the history comparison UI

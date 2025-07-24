@@ -14,7 +14,8 @@ use SilverStripe\SiteConfig\SiteConfig;
  */
 class TwitterMetaGenerator
 {
-    use Injectable, Configurable;
+    use Injectable;
+    use Configurable;
 
     /**
      * @var string|null

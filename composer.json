@@ -35,6 +35,7 @@
         "jonom/silverstripe-text-target-length": "^2.0",
         "kub-at/php-simple-html-dom-parser": "^1.9",
         "silverstripe/cms": "^6",
+        "silverstripe/asset-admin": "*",
         "wilr/silverstripe-googlesitemaps": "^4"
     },
     "require-dev": {
