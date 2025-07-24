@@ -8,12 +8,12 @@ use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\Image;
 use SilverStripe\Control\Controller;
 use SilverStripe\Core\Config\Configurable;
+use SilverStripe\Core\Extension;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextareaField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
-use SilverStripe\ORM\DataExtension;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
 use SilverStripe\VersionedAdmin\Controllers\HistoryViewerController;
@@ -31,7 +31,7 @@ use SilverStripe\VersionedAdmin\Controllers\HistoryViewerController;
  * @method Image FacebookPageImage()
  * @method Member|MemberExtension Creator()
  */
-class PageSeoExtension extends DataExtension
+class PageSeoExtension extends Extension
 {
     use Configurable;
 
@@ -163,8 +163,6 @@ class PageSeoExtension extends DataExtension
 
     public function onBeforeWrite()
     {
-        parent::onBeforeWrite();
-
         if (!$this->getOwner()->ID && !$this->getOwner()->Creator()->exists() && $member = Security::getCurrentUser()) {
             $this->getOwner()->CreatorID = $member->ID;
         }
@@ -175,13 +173,24 @@ class PageSeoExtension extends DataExtension
      */
     public function updateCMSFields(FieldList $fields)
     {
-        parent::updateCMSFields($fields);
-
         $suppressMessaging = false;
 
         if (Controller::curr() instanceof HistoryViewerController) { // avoid cluttering the history comparison UI
             $suppressMessaging = true;
         }
+
+        $fields->removeByName([
+            'FacebookPageType',
+            'FacebookPageImage',
+            'FacebookPageTitle',
+            'FacebookPageDescription',
+            'FacebookPageImageID',
+            'TwitterPageTitle',
+            'TwitterPageImage',
+            'TwitterPageDescription',
+            'TwitterPageImageID',
+            'CreatorID'
+        ]);
 
         $openGraphFields = [
             DropdownField::create('FacebookPageType', 'Type', FacebookMetaGenerator::getValidTypes()),

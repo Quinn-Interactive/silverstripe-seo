@@ -7,7 +7,7 @@ use QuinnInteractive\Seo\Extensions\PageHealthExtension;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
-use SilverStripe\View\ArrayData;
+use SilverStripe\Model\ArrayData;
 
 /**
  * Class Analysis
@@ -115,10 +115,8 @@ abstract class Analysis
 
     /**
      * @throws \InvalidArgumentException
-     *
-     * @return ArrayData
      */
-    public function inspect()
+    public function inspect(): ArrayData
     {
         $result = $this->run();
 
