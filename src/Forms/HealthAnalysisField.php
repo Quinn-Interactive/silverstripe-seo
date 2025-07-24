@@ -8,8 +8,8 @@ use QuinnInteractive\Seo\Extensions\PageHealthExtension;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Forms\LiteralField;
-use SilverStripe\ORM\ArrayList;
-use SilverStripe\View\ArrayData;
+use SilverStripe\Model\ArrayData;
+use SilverStripe\Model\List\ArrayList;
 use SilverStripe\View\Requirements;
 
 /**

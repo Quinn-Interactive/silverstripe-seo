@@ -2,13 +2,13 @@
 
 namespace QuinnInteractive\Seo\Extensions;
 
-use PharIo\Manifest\Extension;
 use QuinnInteractive\Seo\Builders\FacebookMetaGenerator;
 use QuinnInteractive\Seo\Seo;
 use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\Image;
 use SilverStripe\Control\Controller;
 use SilverStripe\Core\Config\Configurable;
+use SilverStripe\Core\Extension;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextareaField;
