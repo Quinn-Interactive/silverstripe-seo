@@ -179,6 +179,19 @@ class PageSeoExtension extends Extension
             $suppressMessaging = true;
         }
 
+        $fields->removeByName([
+            'FacebookPageType',
+            'FacebookPageImage',
+            'FacebookPageTitle',
+            'FacebookPageDescription',
+            'FacebookPageImageID',
+            'TwitterPageTitle',
+            'TwitterPageImage',
+            'TwitterPageDescription',
+            'TwitterPageImageID',
+            'CreatorID'
+        ]);
+
         $openGraphFields = [
             DropdownField::create('FacebookPageType', 'Type', FacebookMetaGenerator::getValidTypes()),
             TextField::create('FacebookPageTitle', 'Title')

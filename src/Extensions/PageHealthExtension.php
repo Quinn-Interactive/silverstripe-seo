@@ -114,6 +114,8 @@ class PageHealthExtension extends Extension
             return;
         }
 
+        $fields->removeByName('FocusKeyword');
+
         $dom = $this->getRenderedHtmlDomParser();
 
         if ($dom) {
