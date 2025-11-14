@@ -2,10 +2,6 @@
 
 namespace QuinnInteractive\Seo\Analysis;
 
-/**
- * Class TitleAnalysis
- * @package QuinnInteractive\Seo\Analysis
- */
 class TitleAnalysis extends Analysis
 {
     public const TITLE_FOCUS_KEYWORD_POSITION = 4;
@@ -74,11 +70,11 @@ class TitleAnalysis extends Analysis
             return static::TITLE_TOO_LONG;
         }
 
-        if ($keyword && !strstr(strtolower($title), strtolower($keyword))) {
+        if ($keyword && !strstr(strtolower($title), strtolower((string) $keyword))) {
             return static::TITLE_NO_FOCUS_KEYWORD;
         }
 
-        if ($keyword && strtolower(substr($title, 0, strlen($keyword))) !== strtolower($keyword)) {
+        if ($keyword && strtolower(substr($title, 0, strlen((string) $keyword))) !== strtolower((string) $keyword)) {
             return static::TITLE_FOCUS_KEYWORD_POSITION;
         }
 

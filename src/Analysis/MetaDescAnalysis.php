@@ -5,10 +5,6 @@ namespace QuinnInteractive\Seo\Analysis;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\i18n\i18n;
 
-/**
- * Class MetaDescAnalysis
- * @package QuinnInteractive\Seo\Analysis
- */
 class MetaDescAnalysis extends Analysis
 {
     use Configurable;
@@ -79,7 +75,7 @@ class MetaDescAnalysis extends Analysis
             return static::META_DESC_TOO_LONG;
         }
 
-        if ($keyword && !strstr(strtolower($desc), strtolower($keyword))) {
+        if ($keyword && !strstr(strtolower($desc), strtolower((string) $keyword))) {
             return static::META_DESC_NO_FOCUS_KEYWORD;
         }
 

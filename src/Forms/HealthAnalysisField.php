@@ -12,22 +12,11 @@ use SilverStripe\ORM\ArrayList;
 use SilverStripe\View\ArrayData;
 use SilverStripe\View\Requirements;
 
-/**
- * Class HealthAnalysisField
- * @package QuinnInteractive\Seo\Forms
- */
 class HealthAnalysisField extends LiteralField
 {
 
-    /**
-     * @var \Page
-     */
-    protected $page;
-
-    /**
-     * @var int
-     */
-    protected $result;
+    protected ?SiteTree $page = null;
+    protected int $result;
     protected $schemaComponent = 'HealthAnalysisField';
 
     protected $template = self::class;
@@ -104,7 +93,7 @@ class HealthAnalysisField extends LiteralField
 
     /**
      * @param SiteTree $page
-     * @return $this
+     * @return self
      */
     public function setPage(SiteTree $page)
     {

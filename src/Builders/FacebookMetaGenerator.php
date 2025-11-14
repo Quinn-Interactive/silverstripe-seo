@@ -8,52 +8,18 @@ use SilverStripe\i18n\i18n;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\SiteConfig\SiteConfig;
 
-/**
- * Class FacebookMetaGenerator
- * @package QuinnInteractive\Seo\Builders
- */
 class FacebookMetaGenerator
 {
     use Injectable, Configurable;
 
-    /**
-     * @var string|null
-     */
-    protected $description;
-
-    /**
-     * @var string|null
-     */
-    protected $imageHeight;
-
-    /**
-     * @var string|null
-     */
-    protected $imageUrl;
-
-    /**
-     * @var string|null
-     */
-    protected $imageWidth;
-
-    /**
-     * @var string|null
-     */
-    protected $title;
-
-    /**
-     * @var string
-     */
+    protected ?int $imageHeight = null;
+    protected ?int $imageWidth = null;
+    protected ?string $description = null;
+    protected ?string $imageUrl = null;
+    protected ?string $title = null;
+    protected ?string $url = null;
     protected $type = 'website';
 
-    /**
-     * @var string|null
-     */
-    protected $url;
-
-    /**
-     * @return mixed
-     */
     public function getDescription()
     {
         $obj = DBHTMLText::create();
@@ -65,42 +31,27 @@ class FacebookMetaGenerator
         return $obj->setValue($this->description)->LimitCharacters(297);
     }
 
-    /**
-     * @return mixed
-     */
     public function getImageUrl()
     {
         return $this->imageUrl;
     }
 
-    /**
-     * @return mixed
-     */
     public function getTitle()
     {
         return $this->title;
     }
 
-    /**
-     * @return mixed
-     */
     public function getType()
     {
         return $this->type;
     }
 
-    /**
-     * @return mixed
-     */
     public function getUrl()
     {
         return $this->url;
     }
 
-    /**
-     * @return array
-     */
-    public function process()
+    public function process(): array
     {
         $tags = [];
 
@@ -148,7 +99,7 @@ class FacebookMetaGenerator
      * @param $width
      * @param $height
      *
-     * @return $this
+     * @return self
      */
     public function setImageDimensions($width, $height)
     {
@@ -161,7 +112,7 @@ class FacebookMetaGenerator
     /**
      * @param int $height
      *
-     * @return $this
+     * @return self
      */
     public function setImageHeight($height)
     {
@@ -187,7 +138,7 @@ class FacebookMetaGenerator
     /**
      * @param int $width
      *
-     * @return $this
+     * @return self
      */
     public function setImageWidth($width)
     {

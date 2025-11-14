@@ -2,10 +2,6 @@
 
 namespace QuinnInteractive\Seo\Analysis;
 
-/**
- * Class FocusKeywordUniqueAnalysis
- * @package QuinnInteractive\Seo\Analysis
- */
 class FocusKeywordUniqueAnalysis extends Analysis
 {
     public const FOCUS_KEYWORD_INUSE   = 0;
@@ -18,7 +14,7 @@ class FocusKeywordUniqueAnalysis extends Analysis
     public function getKeyword()
     {
         if ($keyword = $this->getPage()->FocusKeyword) {
-            return strtolower($keyword);
+            return strtolower((string) $keyword);
         }
 
         return '';
