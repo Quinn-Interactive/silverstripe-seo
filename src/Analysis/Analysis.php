@@ -19,7 +19,6 @@ abstract class Analysis
 
     protected $domParser;
 
-    /** @var \Page|PageHealthExtension */
     protected $page;
 
     /** @var int The result, set after {@link inspect()} completes successfully */

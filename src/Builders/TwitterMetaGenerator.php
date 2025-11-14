@@ -8,10 +8,6 @@ use SilverStripe\Core\Injector\Injectable;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\SiteConfig\SiteConfig;
 
-/**
- * Class TwitterMetaGenerator
- * @package QuinnInteractive\Seo\Builders
- */
 class TwitterMetaGenerator
 {
     use Injectable, Configurable;

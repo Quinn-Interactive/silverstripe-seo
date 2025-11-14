@@ -4,10 +4,6 @@ namespace QuinnInteractive\Seo\Analysis;
 
 use QuinnInteractive\Seo\Seo;
 
-/**
- * Class WordCountAnalysis
- * @package QuinnInteractive\Seo\Analysis
- */
 class WordCountAnalysis extends Analysis
 {
     public const WORD_COUNT_ABOVE_MIN = 1;

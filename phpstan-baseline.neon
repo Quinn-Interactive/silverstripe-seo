@@ -1,0 +1,43 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to method find\(\) on an unknown class simple_html_dom\\simple_html_dom\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Analysis/Analysis.php
+
+		-
+			message: '#^Method QuinnInteractive\\Seo\\Analysis\\Analysis\:\:getRenderedHtmlDomParser\(\) has invalid return type simple_html_dom\\simple_html_dom\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Analysis/Analysis.php
+
+		-
+			message: '#^Call to method find\(\) on an unknown class simple_html_dom\\simple_html_dom\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Analysis/FocusKeywordContentAnalysis.php
+
+		-
+			message: '#^Method QuinnInteractive\\Seo\\Extensions\\PageHealthExtension\:\:getRenderedHtmlDomParser\(\) has invalid return type simple_html_dom\\simple_html_dom\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Extensions/PageHealthExtension.php
+
+		-
+			message: '#^Call to method LimitCharactersToClosestWord\(\) on an unknown class Text\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Forms/GoogleSearchPreview.php
+
+		-
+			message: '#^Call to method find\(\) on an unknown class simple_html_dom\\simple_html_dom\.$#'
+			identifier: class.notFound
+			count: 3
+			path: src/Forms/GoogleSearchPreview.php
+
+		-
+			message: '#^Parameter \$domParser of method QuinnInteractive\\Seo\\Forms\\GoogleSearchPreview\:\:__construct\(\) has invalid type simple_html_dom\\simple_html_dom\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Forms/GoogleSearchPreview.php

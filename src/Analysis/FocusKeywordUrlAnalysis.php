@@ -4,10 +4,6 @@ namespace QuinnInteractive\Seo\Analysis;
 
 use SilverStripe\View\Parsers\URLSegmentFilter;
 
-/**
- * Class FocusKeywordUrlAnalysis
- * @package QuinnInteractive\Seo\Analysis
- */
 class FocusKeywordUrlAnalysis extends Analysis
 {
     public const FOCUS_KEYWORD_IRRELEVANT = -2;
@@ -25,7 +21,7 @@ class FocusKeywordUrlAnalysis extends Analysis
     public function getKeyword()
     {
         if ($keyword = $this->getPage()->FocusKeyword) {
-            return strtolower($keyword);
+            return strtolower((string) $keyword);
         }
 
         return '';
@@ -74,7 +70,7 @@ class FocusKeywordUrlAnalysis extends Analysis
             return static::FOCUS_KEYWORD_IRRELEVANT;
         }
 
-        if (!strstr($this->getPage()->URLSegment, $slug)) {
+        if (!strstr((string) $this->getPage()->URLSegment, $slug)) {
             return static::FOCUS_KEYWORD_NOT_IN_URL;
         }
 

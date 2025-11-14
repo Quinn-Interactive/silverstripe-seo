@@ -14,10 +14,6 @@ use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\Security\Security;
 use SilverStripe\SiteConfig\SiteConfig;
 
-/**
- * Class Seo
- * @package QuinnInteractive\Seo
- */
 class Seo
 {
     use Injectable, Configurable;
@@ -40,7 +36,7 @@ class Seo
         }
 
         if ($owner->hasMethod('updateCollateContentFields')) {
-            $content = $owner->updateCollateContentFields($content);
+            $content = $owner->updateCollateContentFields($content); // @phpstan-ignore method.notFound
         }
 
         $content = implode(' ', $content);

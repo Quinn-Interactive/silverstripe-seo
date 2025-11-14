@@ -2,6 +2,7 @@
 
 namespace QuinnInteractive\Seo\Extensions;
 
+use SilverStripe\Core\Extension;
 use QuinnInteractive\Seo\Builders\FacebookMetaGenerator;
 use QuinnInteractive\Seo\Seo;
 use SilverStripe\AssetAdmin\Forms\UploadField;
@@ -13,25 +14,25 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextareaField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
-use SilverStripe\ORM\DataExtension;
 use SilverStripe\Security\Member;
 use SilverStripe\Security\Security;
 use SilverStripe\VersionedAdmin\Controllers\HistoryViewerController;
 
 /**
- * Class PageSeoExtension
- * @package QuinnInteractive\Seo\Extensions
- *
- * @property string FacebookPageType
- * @property string FacebookPageTitle
- * @property string FacebookPageDescription
- * @property int    FacebookPageImageID
- * @property int    CreatorID
- *
+ * @property ?string $FacebookPageType
+ * @property ?string $FacebookPageTitle
+ * @property ?string $FacebookPageDescription
+ * @property ?string $TwitterPageTitle
+ * @property ?string $TwitterPageDescription
+ * @property int $FacebookPageImageID
+ * @property int $TwitterPageImageID
+ * @property int $CreatorID
  * @method Image FacebookPageImage()
- * @method Member|MemberExtension Creator()
+ * @method Image TwitterPageImage()
+ * @method Member Creator()
+ * @extends Extension<\Page&static>
  */
-class PageSeoExtension extends DataExtension
+class PageSeoExtension extends Extension
 {
     use Configurable;
 
@@ -124,7 +125,7 @@ class PageSeoExtension extends DataExtension
      */
     public function getSEOGoogleAnalytics(): array
     {
-        $tags = Seo::getGoogleAnalytics($this->getOwner());
+        $tags = Seo::getGoogleAnalytics();
         $this->getOwner()->invokeWithExtensions('updateSEOGoogleAnalytics', $tags);
         return $tags;
     }
@@ -135,7 +136,7 @@ class PageSeoExtension extends DataExtension
      */
     public function getSEOPixels(): array
     {
-        $tags = Seo::getPixels($this->getOwner());
+        $tags = Seo::getPixels();
         $this->invokeExtension($this->getOwner(), 'updateSEOPixels', $tags);
         return $tags;
     }
@@ -163,8 +164,6 @@ class PageSeoExtension extends DataExtension
 
     public function onBeforeWrite()
     {
-        parent::onBeforeWrite();
-
         if (!$this->getOwner()->ID && !$this->getOwner()->Creator()->exists() && $member = Security::getCurrentUser()) {
             $this->getOwner()->CreatorID = $member->ID;
         }
@@ -175,8 +174,6 @@ class PageSeoExtension extends DataExtension
      */
     public function updateCMSFields(FieldList $fields)
     {
-        parent::updateCMSFields($fields);
-
         $suppressMessaging = false;
 
         if (Controller::curr() instanceof HistoryViewerController) { // avoid cluttering the history comparison UI

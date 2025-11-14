@@ -1,0 +1,7 @@
+# Sample phpstan.neon
+# Customize this to suit your environment and save as phpstan.neon (not git tracked)
+includes:
+    - phpstan-dist.neon
+    - phpstan-baseline.neon
+parameters:
+    editorUrl: 'vscodium://file/%%file%%:%%line%%'

@@ -14,10 +14,6 @@ use SilverStripe\View\Parsers\URLSegmentFilter;
 use SilverStripe\View\Requirements;
 use simple_html_dom\simple_html_dom;
 
-/**
- * Class GoogleSearchPreview
- * @package QuinnInteractive\Seo\Forms
- */
 class GoogleSearchPreview extends LiteralField
 {
 
@@ -141,7 +137,7 @@ class GoogleSearchPreview extends LiteralField
         $output  = $urlSegment;
 
         foreach ($needles as $needle) {
-            $output = preg_replace('/(' . $needle . ')/i', '<strong>$0</strong>', $output);
+            $output = preg_replace('/(' . $needle . ')/i', '<strong>$0</strong>', (string) $output);
         }
 
         return $output;

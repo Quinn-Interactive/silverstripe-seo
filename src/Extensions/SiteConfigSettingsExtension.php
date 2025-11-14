@@ -2,25 +2,24 @@
 
 namespace QuinnInteractive\Seo\Extensions;
 
+use SilverStripe\Core\Extension;
+use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextareaField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\ToggleCompositeField;
-use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 
 /**
- * Class SiteConfigSettingsExtension
- * @package QuinnInteractive\Seo\Extensions
- *
- * @property string GoogleAnalytics
- * @property string FacebookPixel
- * @property string TwitterPixel
- * @property string SnapPixel
- * @property string TwitterAccountName
+ * @property ?string $GoogleAnalytics
+ * @property ?string $FacebookPixel
+ * @property ?string $TwitterPixel
+ * @property ?string $SnapPixel
+ * @property ?string $TwitterAccountName
+ * @extends Extension<SiteConfig&static>
  */
-class SiteConfigSettingsExtension extends DataExtension
+class SiteConfigSettingsExtension extends Extension
 {
     use Configurable;
 

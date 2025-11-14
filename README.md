@@ -188,6 +188,12 @@ public function updateCollateContentFields($content) {
 
 [BSD-3-Clause](LICENSE.md)
 
+## Branch (semver major version) support
+
+* 1: legacy (unmaintained)
+* 2: Silverstripe 5
+* 3: Silverstripe 6 (future)
+
 ## Version
 
-2.1.0
+2.1.1
