@@ -39,16 +39,6 @@ class PageHealthExtension extends Extension
     ];
 
     /**
-     * @return \Page|static
-     */
-    public function getOwner()
-    {
-        /** @var \Page $owner */
-        $owner = parent::getOwner();
-        return $owner;
-    }
-
-    /**
      * Gets the rendered html (current version, either draft or live)
      *
      * @return string|null

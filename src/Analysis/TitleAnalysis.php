@@ -15,6 +15,7 @@ class TitleAnalysis extends Analysis
     /**
      * @return array
      */
+    #[\Override]
     public function responses()
     {
         return [

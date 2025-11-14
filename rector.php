@@ -10,9 +10,9 @@ return RectorConfig::configure()
     ->withPaths([
         __DIR__ . '/src',
     ])
-    ->withPhpSets(php82: true)
+    ->withPhpSets(php83: true)
     ->withImportNames(importShortClasses: false)
     ->withSets([
-        SilverstripeLevelSetList::UP_TO_SILVERSTRIPE_54,
+        SilverstripeLevelSetList::UP_TO_SILVERSTRIPE_60,
         SilverstripeSetList::CODE_QUALITY,
     ]);

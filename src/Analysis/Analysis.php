@@ -2,12 +2,12 @@
 
 namespace QuinnInteractive\Seo\Analysis;
 
+use SilverStripe\Model\ArrayData;
 use KubAT\PhpSimple\HtmlDomParser;
 use QuinnInteractive\Seo\Extensions\PageHealthExtension;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\Config\Configurable;
 use SilverStripe\Core\Injector\Injectable;
-use SilverStripe\View\ArrayData;
 
 /**
  * Class Analysis

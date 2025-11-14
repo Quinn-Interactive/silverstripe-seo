@@ -2,14 +2,14 @@
 
 namespace QuinnInteractive\Seo\Forms;
 
+use SilverStripe\Model\ArrayData;
+use SilverStripe\Model\List\ArrayList;
 use SilverStripe\Forms\FormField;
 use QuinnInteractive\Seo\Analysis\Analysis;
 use QuinnInteractive\Seo\Extensions\PageHealthExtension;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Core\ClassInfo;
 use SilverStripe\Forms\LiteralField;
-use SilverStripe\ORM\ArrayList;
-use SilverStripe\View\ArrayData;
 use SilverStripe\View\Requirements;
 
 class HealthAnalysisField extends LiteralField

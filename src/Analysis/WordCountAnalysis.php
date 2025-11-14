@@ -20,6 +20,7 @@ class WordCountAnalysis extends Analysis
     /**
      * @return array
      */
+    #[\Override]
     public function responses()
     {
         return [

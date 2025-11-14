@@ -24,6 +24,7 @@ class FocusKeywordUniqueAnalysis extends Analysis
      *
      * @return array
      */
+    #[\Override]
     public function responses()
     {
         return [
