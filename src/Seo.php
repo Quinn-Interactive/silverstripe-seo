@@ -123,9 +123,7 @@ class Seo
      */
     public static function getGoogleAnalytics()
     {
-        /** @var SiteConfig|SiteConfigSettingsExtension $sc */
         $sc = SiteConfig::current_site_config();
-
         return ($sc->GoogleAnalytics) ? [$sc->GoogleAnalytics] : [];
     }
 

@@ -85,7 +85,6 @@ class TwitterMetaGenerator
      */
     public function process()
     {
-        /** @var SiteConfig|SiteConfigSettingsExtension $siteConfig */
         $siteConfig = SiteConfig::current_site_config();
         $tags       = [];
 

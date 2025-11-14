@@ -74,7 +74,7 @@ class GoogleSearchPreview extends LiteralField
     }
 
     public function limitDescriptionLength($text) {
-        return DBField::create_field('Text', $text)->LimitCharactersToClosestWord(160);
+        return DBField::create_field('Text', $text)->LimitCharactersToClosestWord(160); // @phpstan-ignore method.notFound
     }
 
     /**

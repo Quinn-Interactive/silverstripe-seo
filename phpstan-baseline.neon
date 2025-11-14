@@ -25,12 +25,6 @@ parameters:
 			path: src/Extensions/PageHealthExtension.php
 
 		-
-			message: '#^Call to method LimitCharactersToClosestWord\(\) on an unknown class Text\.$#'
-			identifier: class.notFound
-			count: 1
-			path: src/Forms/GoogleSearchPreview.php
-
-		-
 			message: '#^Call to method find\(\) on an unknown class simple_html_dom\\simple_html_dom\.$#'
 			identifier: class.notFound
 			count: 3
