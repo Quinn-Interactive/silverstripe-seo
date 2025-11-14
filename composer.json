@@ -34,6 +34,7 @@
         "php": "^8.2",
         "jonom/silverstripe-text-target-length": "^2.0",
         "kub-at/php-simple-html-dom-parser": "^1.9",
+        "silverstripe/asset-admin": "^2.4",
         "silverstripe/cms": "^5",
         "wilr/silverstripe-googlesitemaps": "^3.1"
     },
@@ -64,6 +65,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
+      "sort-packages": true,
         "allow-plugins": {
             "composer/installers": true,
             "silverstripe/vendor-plugin": true,
