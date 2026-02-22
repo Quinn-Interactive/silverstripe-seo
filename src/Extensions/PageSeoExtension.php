@@ -180,6 +180,16 @@ class PageSeoExtension extends Extension
             $suppressMessaging = true;
         }
 
+        $fields->removeByName([
+            'FacebookPageType', 
+            'FacebookPageTitle', 
+            'FacebookPageImage', 
+            'FacebookPageDescription',
+            'TwitterPageTitle',
+            'TwitterPageImage',
+            'TwitterPageDescription',
+        ]);
+
         $openGraphFields = [
             DropdownField::create('FacebookPageType', 'Type', FacebookMetaGenerator::getValidTypes()),
             TextField::create('FacebookPageTitle', 'Title')
@@ -202,7 +212,6 @@ class PageSeoExtension extends Extension
                     'or gets the first 297 characters from content')
                 ->setTargetLength(200, 160, 320),
         ];
-
         $fields->addFieldsToTab(
             $this->config()->get('tab_name'),
             $this->config()->get('use_composite_field') ? [

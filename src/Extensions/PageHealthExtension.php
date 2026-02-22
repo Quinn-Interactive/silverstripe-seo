@@ -105,6 +105,7 @@ class PageHealthExtension extends Extension
         $dom = $this->getRenderedHtmlDomParser();
 
         if ($dom) {
+            $fields->removeByName(['FocusKeyword']);
             $fields->addFieldsToTab($this->getOwner()->config()->get('tab_name'), [
                 ToggleCompositeField::create('SEOHealthAnalysis', 'SEO Health Analysis', [
                     GoogleSearchPreview::create(
