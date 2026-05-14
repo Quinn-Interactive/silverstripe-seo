@@ -181,9 +181,10 @@ class PageSeoExtension extends Extension
         }
 
         $fields->removeByName([
-            'FacebookPageType', 
-            'FacebookPageTitle', 
-            'FacebookPageImage', 
+            'CreatorID',
+            'FacebookPageType',
+            'FacebookPageTitle',
+            'FacebookPageImage',
             'FacebookPageDescription',
             'TwitterPageTitle',
             'TwitterPageImage',
